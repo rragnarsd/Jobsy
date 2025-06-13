@@ -17,15 +17,8 @@ class JobDescriptionPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            //TODO - Add menu
-            onPressed: () {},
-          ),
-        ],
       ),
-      body: CustomScrollView(
+      body: const CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Card(
@@ -70,17 +63,17 @@ class JobProfession extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Starfsgreinar',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Container(
@@ -88,8 +81,8 @@ class JobProfession extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.grey),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 4,
                       ),
@@ -99,14 +92,14 @@ class JobProfession extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.grey),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 4,
                       ),
@@ -118,15 +111,15 @@ class JobProfession extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
                 child: Divider(),
               ),
-              Text(
+              const Text(
                 'Starfsmerkingar',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Container(
@@ -134,36 +127,36 @@ class JobProfession extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.grey),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 4,
                       ),
                       child: Text('Ritari', style: TextStyle(fontSize: 14)),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.grey),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 4,
                       ),
                       child: Text('Símsvörun', style: TextStyle(fontSize: 14)),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: Colors.grey),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 8,
                         vertical: 4,
                       ),
@@ -188,24 +181,24 @@ class JobType extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Starfstegund',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.grey),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 4,
                   ),
@@ -225,12 +218,12 @@ class JobLocation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
         margin: EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -240,7 +233,7 @@ class JobLocation extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(),
               ),
               Row(
@@ -270,32 +263,32 @@ class JobLanguageSkills extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Tungumálahæfni',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     spacing: 8,
                     children: [
-                      Placeholder(fallbackHeight: 20, fallbackWidth: 40),
-                      Text('Íslenska', style: TextStyle(fontSize: 16)),
+                      const Placeholder(fallbackHeight: 20, fallbackWidth: 40),
+                      const Text('Íslenska', style: TextStyle(fontSize: 16)),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
                           ),
@@ -307,11 +300,11 @@ class JobLanguageSkills extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text('Framúrskarandi', style: TextStyle(fontSize: 16)),
+                  const Text('Framúrskarandi', style: TextStyle(fontSize: 16)),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
                 child: Divider(),
               ),
               Row(
@@ -320,15 +313,15 @@ class JobLanguageSkills extends StatelessWidget {
                   Row(
                     spacing: 8,
                     children: [
-                      Placeholder(fallbackHeight: 20, fallbackWidth: 40),
-                      Text('Enska', style: TextStyle(fontSize: 16)),
+                      const Placeholder(fallbackHeight: 20, fallbackWidth: 40),
+                      const Text('Enska', style: TextStyle(fontSize: 16)),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
                           ),
@@ -340,7 +333,7 @@ class JobLanguageSkills extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text('Mjög góð', style: TextStyle(fontSize: 16)),
+                  const Text('Mjög góð', style: TextStyle(fontSize: 16)),
                 ],
               ),
             ],
@@ -359,12 +352,12 @@ class JobDeadline extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -374,11 +367,11 @@ class JobDeadline extends StatelessWidget {
                   Text('12. júní 2025', style: TextStyle(fontSize: 16)),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(),
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -388,13 +381,13 @@ class JobDeadline extends StatelessWidget {
                   Text('Enginn', style: TextStyle(fontSize: 16)),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(),
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Row(
+                child: const Row(
                   spacing: 8,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -409,13 +402,13 @@ class JobDeadline extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
                     onPressed: () {},
-                    icon: Row(
+                    icon: const Row(
                       children: [
                         Icon(Icons.favorite, color: Colors.orange),
                         SizedBox(width: 8),
@@ -425,7 +418,7 @@ class JobDeadline extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Row(
+                    icon: const Row(
                       children: [
                         Icon(Icons.share, color: Colors.orange),
                         SizedBox(width: 8),
@@ -448,8 +441,8 @@ class JobQualification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
+    return const Padding(
+      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -475,8 +468,8 @@ class JobResponsibility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
+    return const Padding(
+      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -508,8 +501,8 @@ class JobDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Text('Starfslýsing', style: TextStyle(fontSize: 16)),
     );
   }
@@ -520,8 +513,8 @@ class JobTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
+    return const Padding(
+      padding: EdgeInsets.all(16),
       child: Text(
         'Bifvélavirki / Car Mechanic',
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -542,12 +535,12 @@ class JobHeader extends StatelessWidget {
           child: Row(
             children: [
               //TODO - Add Workplace logo
-              Placeholder(fallbackHeight: 100, fallbackWidth: 100),
-              SizedBox(width: 16),
+              const Placeholder(fallbackHeight: 100, fallbackWidth: 100),
+              const SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Landspítali',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
@@ -562,7 +555,7 @@ class JobHeader extends StatelessWidget {
                         builder: (context) => const WorkplacePage(),
                       ),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Text('Vinnustaðurinn', style: TextStyle(fontSize: 16)),
                         Icon(Icons.keyboard_arrow_right, size: 24),

@@ -1,17 +1,22 @@
 import 'package:codehatch/pages/job_description_page.dart';
-import 'package:codehatch/widgets/job_dropdown_btn.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool _showSearch = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffFF6D00),
         title: const Text(
-          'CodeHatch',
+          'Jobsy',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -20,40 +25,19 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              setState(() => _showSearch = !_showSearch);
+            },
+            icon: const Icon(Icons.search),
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(56),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Wrap(
-                spacing: 12,
-                children: const [
-                  CategoryChip(
-                    icon: Icons.work_outline,
-                    label: 'Öll störf',
-                    isSelected: true,
-                  ),
-                  CategoryChip(
-                    icon: Icons.school_outlined,
-                    label: 'Öll námskeið',
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
       ),
       body: CustomScrollView(
         slivers: [
-          AppSearchBar(),
-          AppDivider(),
-          AppJobList(),
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
+          if (_showSearch) const AppSearchBar(),
+          const AppDivider(),
+          const AppJobList(),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
       ),
     );
@@ -65,14 +49,14 @@ class AppDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(16.0),
+    return const SliverPadding(
+      padding: EdgeInsets.all(16.0),
       sliver: SliverToBoxAdapter(
         child: Row(
           children: [
-            Expanded(child: Divider()),
-            Expanded(child: JobDropdownButton()),
-            Expanded(child: Divider()),
+            Expanded(child: Divider(endIndent: 16)),
+            Text('Nýtt í dag (6)'),
+            Expanded(child: Divider(indent: 16)),
           ],
         ),
       ),
@@ -87,8 +71,8 @@ class AppJobList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList.separated(
       itemCount: 10,
-      itemBuilder: (context, index) => JobCard(),
-      separatorBuilder: (context, index) => SizedBox(height: 12),
+      itemBuilder: (context, index) => const JobCard(),
+      separatorBuilder: (context, index) => const SizedBox(height: 12),
     );
   }
 }
@@ -212,8 +196,8 @@ class JobCard extends StatelessWidget {
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         margin: const EdgeInsets.symmetric(horizontal: 16),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        child: const Padding(
+          padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

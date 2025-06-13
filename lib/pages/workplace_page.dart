@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
-class WorkplacePage extends StatelessWidget {
+class WorkplacePage extends StatefulWidget {
   const WorkplacePage({super.key});
 
   @override
+  State<WorkplacePage> createState() => _WorkplacePageState();
+}
+
+class _WorkplacePageState extends State<WorkplacePage> {
+  int selectedTab = 0;
+  //TODO - Add jobs count
+  final int jobsCount = 4;
+
+  @override
   Widget build(BuildContext context) {
-    final List<String> tabs = <String>['Prófill', 'Öll störf'];
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -17,55 +25,49 @@ class WorkplacePage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            //TODO - Add menu
-            onPressed: () {},
-          ),
+      ),
+      body: const CustomScrollView(
+        slivers: [
+          WorkplaceHeader(),
+          WorkplaceInfo(),
+          WorkplaceAwards(),
+          WorkplaceWebsite(),
+          WorkplaceMap(),
+          WorkplaceSize(),
+          WorkplacePerks(),
+          WorkplaceJobs(),
         ],
       ),
-      body: DefaultTabController(
-        length: tabs.length,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            SliverToBoxAdapter(
-              child: Column(
-                //TODO - Custom tabbar
-                children: [
-                  const WorkplaceHeader(),
-                  TabBar(
-                    tabs: tabs.map((String name) {
-                      return Tab(text: name);
-                    }).toList(),
-                    labelColor: const Color(0xffFF6D00),
-                    unselectedLabelColor: Colors.grey,
-                    indicatorColor: const Color(0xffFF6D00),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          body: TabBarView(
-            children: [
-              CustomScrollView(
-                slivers: const [
-                  WorkplaceInfo(),
-                  WorkplaceAwards(),
-                  WorkplaceWebsite(),
-                  WorkplaceMap(),
-                  WorkplaceSize(),
-                  WorkplacePerks(),
-                  WorkplaceJobs(),
-                ],
-              ),
-              const Center(
-                child: Text('Starf', style: TextStyle(fontSize: 24)),
-              ),
-            ],
-          ),
-        ),
+    );
+  }
+}
+
+class MenuTile extends StatelessWidget {
+  const MenuTile({
+    super.key,
+    required this.title,
+    required this.icon,
+    this.onTap,
+  });
+
+  final String title;
+  final IconData icon;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(
+        title,
+
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
       ),
+      onTap:
+          onTap ??
+          () {
+            Navigator.of(context).pop();
+          },
     );
   }
 }
@@ -75,7 +77,7 @@ class WorkplaceDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
+    return const SliverPadding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 8),
       sliver: SliverToBoxAdapter(child: Divider()),
     );
@@ -87,27 +89,29 @@ class WorkplaceHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      margin: const EdgeInsets.all(16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          spacing: 16,
-          children: [
-            Row(
-              children: [
-                Placeholder(fallbackHeight: 80, fallbackWidth: 100),
-                const SizedBox(width: 16),
-                const Text('Landspítali', style: TextStyle(fontSize: 24)),
-              ],
-            ),
-            const Text(
-              'Vinnum með þeim bestu',
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900),
-            ),
-            Placeholder(fallbackHeight: 200, fallbackWidth: double.infinity),
-          ],
+    return const SliverToBoxAdapter(
+      child: Card(
+        color: Colors.white,
+        margin: EdgeInsets.all(16),
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            spacing: 16,
+            children: [
+              Row(
+                children: [
+                  Placeholder(fallbackHeight: 80, fallbackWidth: 100),
+                  SizedBox(width: 16),
+                  Text('Landspítali', style: TextStyle(fontSize: 24)),
+                ],
+              ),
+              Text(
+                'Vinnum með þeim bestu',
+                style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900),
+              ),
+              Placeholder(fallbackHeight: 200, fallbackWidth: double.infinity),
+            ],
+          ),
         ),
       ),
     );
@@ -119,12 +123,12 @@ class WorkplaceInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
-        margin: const EdgeInsets.all(16),
+        margin: EdgeInsets.all(16),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 8,
@@ -147,12 +151,12 @@ class WorkplaceAwards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
         margin: EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -161,7 +165,7 @@ class WorkplaceAwards extends StatelessWidget {
                 title: Text('Framúrskarandi fyrirtæki 2023'),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(),
               ),
               ListTile(
@@ -181,7 +185,7 @@ class WorkplaceWebsite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
         margin: EdgeInsets.all(16),
@@ -203,15 +207,15 @@ class WorkplaceMap extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             children: [
-              SizedBox(height: 24),
-              Icon(Icons.location_on, size: 64, color: Colors.orange),
-              Padding(
-                padding: const EdgeInsets.all(12),
+              const SizedBox(height: 24),
+              const Icon(Icons.location_on, size: 64, color: Colors.orange),
+              const Padding(
+                padding: EdgeInsets.all(12),
                 child: Text('Heimilisfang', style: TextStyle(fontSize: 20)),
               ),
               ElevatedButton(
@@ -220,12 +224,12 @@ class WorkplaceMap extends StatelessWidget {
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   'Opna kort',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
             ],
           ),
         ),
@@ -242,7 +246,7 @@ class WorkplaceJobs extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
-        margin: EdgeInsets.all(16),
+        margin: const EdgeInsets.all(16),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -250,13 +254,13 @@ class WorkplaceJobs extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Nýjustu störfin',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
                   ElevatedButton(
                     onPressed: () {},
-                    child: Text(
+                    child: const Text(
                       'Öll störf',
                       style: TextStyle(
                         fontSize: 14,
@@ -266,19 +270,19 @@ class WorkplaceJobs extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(),
               ),
-              SizedBox(height: 8),
-              Placeholder(fallbackHeight: 80, fallbackWidth: 80),
-              SizedBox(height: 8),
-              Text(
+              const SizedBox(height: 8),
+              const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
+              const SizedBox(height: 8),
+              const Text(
                 'Starf á lager',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: 2),
-              Text('Fastus', style: TextStyle(fontSize: 16)),
+              const SizedBox(height: 2),
+              const Text('Fastus', style: TextStyle(fontSize: 16)),
             ],
           ),
         ),
@@ -292,12 +296,12 @@ class WorkplaceSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
         margin: EdgeInsets.all(16),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          padding: EdgeInsets.symmetric(vertical: 12.0),
           child: Column(
             children: [
               Text(
@@ -321,7 +325,7 @@ class WorkplacePerks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
+    return const SliverToBoxAdapter(
       child: Card(
         color: Colors.white,
         margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -367,12 +371,94 @@ class WorkplaceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       //TODO - Add icons
-      leading: CircleAvatar(),
+      leading: const CircleAvatar(),
       title: Text(
         title,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
       ),
-      subtitle: Text(subtitle, style: TextStyle(fontSize: 16)),
+      subtitle: Text(subtitle, style: const TextStyle(fontSize: 16)),
+    );
+  }
+}
+
+class CustomTabBar extends StatelessWidget {
+  const CustomTabBar({
+    super.key,
+    required this.selectedIndex,
+    required this.onTabSelected,
+    required this.jobsCount,
+  });
+
+  final int selectedIndex;
+  final Function(int) onTabSelected;
+  final int jobsCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () => onTabSelected(0),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            decoration: BoxDecoration(
+              color: selectedIndex == 0 ? Colors.grey[300] : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            alignment: Alignment.center,
+            child: const Text(
+              'Prófill',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        GestureDetector(
+          onTap: () => onTabSelected(1),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            decoration: BoxDecoration(
+              color: selectedIndex == 1 ? Colors.grey[300] : Colors.transparent,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Badge
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffFF6D00),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    jobsCount.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'Öll störf',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
