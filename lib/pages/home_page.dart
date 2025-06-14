@@ -1,4 +1,7 @@
+import 'package:codehatch/pages/courses_page.dart';
 import 'package:codehatch/pages/job_description_page.dart';
+import 'package:codehatch/pages/profile_page.dart';
+import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,13 +17,24 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFF6D00),
-        title: const Text(
-          'Jobsy',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        title: const Text('Laus störf (827)'),
+        leadingWidth: 100,
+        leading: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 8,
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                ),
+                child: const Icon(Icons.person, color: Colors.white, size: 26),
+              ),
+              const Icon(Icons.favorite, color: Colors.white, size: 24),
+            ],
           ),
         ),
         actions: [
@@ -28,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               setState(() => _showSearch = !_showSearch);
             },
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.search, color: Colors.white),
           ),
         ],
       ),
@@ -49,14 +63,15 @@ class AppDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverPadding(
-      padding: EdgeInsets.all(16.0),
+    ThemeData theme = Theme.of(context);
+    return SliverPadding(
+      padding: const EdgeInsets.all(16.0),
       sliver: SliverToBoxAdapter(
         child: Row(
           children: [
-            Expanded(child: Divider(endIndent: 16)),
-            Text('Nýtt í dag (6)'),
-            Expanded(child: Divider(indent: 16)),
+            const Expanded(child: Divider(endIndent: 16)),
+            Text('Nýtt í dag (6)', style: theme.textTheme.bodyMedium),
+            const Expanded(child: Divider(indent: 16)),
           ],
         ),
       ),
@@ -69,114 +84,10 @@ class AppJobList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList.separated(
-      itemCount: 10,
-      itemBuilder: (context, index) => const JobCard(),
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
-    );
-  }
-}
-
-class AppSearchBar extends StatelessWidget {
-  const AppSearchBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color(0xffF2F2F2),
-                  hintText: 'Leita…',
-                  hintStyle: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 16,
-                  ),
-                  prefixIcon: const Icon(
-                    Icons.search,
-                    color: Color(0xffFF6D00),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(34),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            TextButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.tune, size: 20),
-              label: const Text(
-                'Síur',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.grey.shade600,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CategoryChip extends StatelessWidget {
-  const CategoryChip({
-    super.key,
-    required this.icon,
-    required this.label,
-    this.isSelected = false,
-  });
-
-  final IconData icon;
-  final String label;
-  final bool isSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(34),
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.transparent,
-          border: Border.all(color: Colors.white, width: 2),
-          borderRadius: BorderRadius.circular(34),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 18,
-              color: isSelected ? const Color(0xffFF6D00) : Colors.white,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: isSelected ? const Color(0xffFF6D00) : Colors.white,
-              ),
-            ),
-            const SizedBox(width: 2),
-            Icon(
-              Icons.keyboard_arrow_down,
-              size: 18,
-              color: isSelected ? const Color(0xffFF6D00) : Colors.white,
-            ),
-          ],
-        ),
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) => const JobCard(),
+        childCount: 10,
       ),
     );
   }
@@ -187,49 +98,90 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const JobDescriptionPage()),
       ),
       child: Card(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        child: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    spacing: 8,
+                    spacing: 16,
                     children: [
-                      Icon(Icons.work, color: Colors.blue),
-                      Text(
-                        'Fyrirtæki',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      Placeholder(
+                        fallbackHeight: 60,
+                        fallbackWidth: 60,
+                        color: Colors.grey.shade300,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'SPA Supervisor',
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            'Hilton Reykjavík Spa',
+                            style: theme.textTheme.bodyMedium!.copyWith(
+                              color: const Color(0xFFFF8000),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Row(
-                    spacing: 8,
-                    children: [
-                      Icon(Icons.favorite, color: Colors.orange),
-                      Text('TimeAgo', style: TextStyle(fontSize: 14)),
-                    ],
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 20,
+                    child: Row(
+                      spacing: 4,
+                      children: [
+                        const IconTextRow(
+                          icon: Icons.work,
+                          text: 'Fullt starf',
+                        ),
+                        VerticalDivider(
+                          color: Colors.grey.shade300,
+                          indent: 3,
+                          endIndent: 3,
+                        ),
+                        const IconTextRow(
+                          icon: Icons.location_on,
+                          text: 'Reykjavík',
+                        ),
+                        VerticalDivider(
+                          color: Colors.grey.shade300,
+                          indent: 3,
+                          endIndent: 3,
+                        ),
+                        const IconTextRow(
+                          icon: Icons.calendar_today,
+                          text: '27. jún.',
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 12),
-              Text('Starfsheiti', style: TextStyle(fontSize: 16)),
-            ],
-          ),
+            ),
+            const Positioned(
+              top: 12,
+              right: 12,
+              child: Text(
+                '20 mín',
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+              ),
+            ),
+          ],
         ),
       ),
     );

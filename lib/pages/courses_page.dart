@@ -1,5 +1,5 @@
 import 'package:codehatch/pages/course_description_page.dart';
-import 'package:codehatch/pages/home_page.dart';
+import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class CoursesPage extends StatefulWidget {
@@ -16,13 +16,16 @@ class _CoursesPageState extends State<CoursesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Námskeið (122)'),
-        backgroundColor: const Color(0xffFF6D00),
+        leading: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Icon(Icons.person, color: Colors.white, size: 26),
+        ),
         actions: [
           IconButton(
             onPressed: () {
               setState(() => _showSearch = !_showSearch);
             },
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.search, color: Colors.white),
           ),
         ],
       ),
@@ -58,14 +61,13 @@ class CoursesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const CourseDescriptionPage()),
       ),
       child: Card(
-        color: Colors.white,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -74,36 +76,54 @@ class CoursesCard extends StatelessWidget {
                 spacing: 16,
                 children: [
                   Placeholder(
-                    fallbackHeight: 100,
-                    fallbackWidth: 100,
+                    fallbackHeight: 80,
+                    fallbackWidth: 80,
                     color: Colors.grey.shade300,
                   ),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Námskeiðsheiti',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        style: theme.textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       Text(
                         'Opni háskólinn í HR',
-                        style: TextStyle(fontSize: 16),
+                        style: theme.textTheme.bodyMedium,
                       ),
                     ],
                   ),
                 ],
               ),
               const SizedBox(height: 12),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconTextRow(icon: Icons.calendar_today, text: '01.01.2023'),
-                  IconTextRow(icon: Icons.money, text: '26.000 kr'),
-                  IconTextRow(icon: Icons.location_on, text: 'Staðarnám'),
-                ],
+              SizedBox(
+                height: 20,
+                child: Row(
+                  spacing: 4,
+                  children: [
+                    const IconTextRow(
+                      icon: Icons.calendar_today,
+                      text: '01.01.2023',
+                    ),
+                    VerticalDivider(
+                      color: Colors.grey.shade500,
+                      indent: 3,
+                      endIndent: 3,
+                    ),
+                    const IconTextRow(icon: Icons.money, text: '26.000 kr'),
+                    VerticalDivider(
+                      color: Colors.grey.shade500,
+                      indent: 3,
+                      endIndent: 3,
+                    ),
+                    const IconTextRow(
+                      icon: Icons.location_on,
+                      text: 'Staðarnám',
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -121,11 +141,15 @@ class IconTextRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Row(
       children: [
         Icon(icon, size: 16, color: Colors.grey),
         const SizedBox(width: 4),
-        Text(text, style: const TextStyle(color: Colors.grey)),
+        Text(
+          text,
+          style: theme.textTheme.bodyMedium!.copyWith(color: Colors.grey),
+        ),
       ],
     );
   }

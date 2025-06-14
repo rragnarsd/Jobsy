@@ -12,27 +12,19 @@ class Root extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
+        showUnselectedLabels: true,
+        selectedItemColor: const Color(0xffFF6D00),
+        unselectedItemColor: Colors.grey.shade300,
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Heim'),
           BottomNavigationBarItem(
-            backgroundColor: Colors.black,
-            icon: Icon(Icons.home),
-            label: 'Heim',
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.black,
             icon: Icon(Icons.business),
             label: 'Vinnustaðir',
           ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.black,
-            icon: Icon(Icons.school),
-            label: 'Námskeið',
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Colors.black,
-            icon: Icon(Icons.message),
-            label: 'Innhólf',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Námskeið'),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Innhólf'),
         ],
         onTap: _onTap,
       ),

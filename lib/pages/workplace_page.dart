@@ -16,11 +16,7 @@ class _WorkplacePageState extends State<WorkplacePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Vinnustaðurinn',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: const Color(0xffFF6D00),
+        title: const Text('Vinnustaðurinn'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
@@ -42,36 +38,6 @@ class _WorkplacePageState extends State<WorkplacePage> {
   }
 }
 
-class MenuTile extends StatelessWidget {
-  const MenuTile({
-    super.key,
-    required this.title,
-    required this.icon,
-    this.onTap,
-  });
-
-  final String title;
-  final IconData icon;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(
-        title,
-
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-      ),
-      onTap:
-          onTap ??
-          () {
-            Navigator.of(context).pop();
-          },
-    );
-  }
-}
-
 class WorkplaceDivider extends StatelessWidget {
   const WorkplaceDivider({super.key});
 
@@ -89,27 +55,32 @@ class WorkplaceHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
+    ThemeData theme = Theme.of(context);
+    return SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: EdgeInsets.all(16),
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             spacing: 16,
             children: [
               Row(
                 children: [
-                  Placeholder(fallbackHeight: 80, fallbackWidth: 100),
-                  SizedBox(width: 16),
-                  Text('Landspítali', style: TextStyle(fontSize: 24)),
+                  const Placeholder(fallbackHeight: 80, fallbackWidth: 100),
+                  const SizedBox(width: 16),
+                  Text('Landspítali', style: theme.textTheme.headlineSmall),
                 ],
               ),
               Text(
                 'Vinnum með þeim bestu',
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900),
+                style: theme.textTheme.headlineMedium!.copyWith(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
-              Placeholder(fallbackHeight: 200, fallbackWidth: double.infinity),
+              const Placeholder(
+                fallbackHeight: 200,
+                fallbackWidth: double.infinity,
+              ),
             ],
           ),
         ),
@@ -123,21 +94,23 @@ class WorkplaceInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
+    ThemeData theme = Theme.of(context);
+
+    return SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: EdgeInsets.all(16),
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 8,
             children: [
               Text(
                 'Um vinnustaðinn',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                style: theme.textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-              Text('Lýsing á vinnustaðnum', style: TextStyle(fontSize: 16)),
+              Text('Lýsing á vinnustaðnum', style: theme.textTheme.bodyLarge),
             ],
           ),
         ),
@@ -151,26 +124,31 @@ class WorkplaceAwards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
+    ThemeData theme = Theme.of(context);
+    return SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                leading: CircleAvatar(),
-                title: Text('Framúrskarandi fyrirtæki 2023'),
+                leading: const CircleAvatar(),
+                title: Text(
+                  'Framúrskarandi fyrirtæki 2023',
+                  style: theme.textTheme.bodyLarge,
+                ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
                 child: Divider(),
               ),
               ListTile(
-                leading: CircleAvatar(),
-                title: Text('Jafnvægisvog FKA 2023'),
+                leading: const CircleAvatar(),
+                title: Text(
+                  'Jafnvægisvog FKA 2023',
+                  style: theme.textTheme.bodyLarge,
+                ),
               ),
             ],
           ),
@@ -185,14 +163,13 @@ class WorkplaceWebsite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
+    ThemeData theme = Theme.of(context);
+    return SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: EdgeInsets.all(16),
         child: ListTile(
-          leading: Icon(Icons.home),
-          trailing: Icon(Icons.keyboard_arrow_right),
-          title: Text('Vefsíða'),
+          leading: const Icon(Icons.home),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          title: Text('Vefsíða', style: theme.textTheme.bodyLarge),
         ),
       ),
     );
@@ -204,19 +181,23 @@ class WorkplaceMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             children: [
               const SizedBox(height: 24),
               const Icon(Icons.location_on, size: 64, color: Colors.orange),
-              const Padding(
-                padding: EdgeInsets.all(12),
-                child: Text('Heimilisfang', style: TextStyle(fontSize: 20)),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  'Heimilisfang',
+                  style: theme.textTheme.titleLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -224,9 +205,11 @@ class WorkplaceMap extends StatelessWidget {
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   'Opna kort',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -243,10 +226,9 @@ class WorkplaceJobs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: const EdgeInsets.all(16),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -254,16 +236,20 @@ class WorkplaceJobs extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Nýjustu störfin',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                    style: theme.textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {},
-                    child: const Text(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xffFF6D00),
+                    ),
+                    child: Text(
                       'Öll störf',
-                      style: TextStyle(
-                        fontSize: 14,
+                      style: theme.textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -277,12 +263,14 @@ class WorkplaceJobs extends StatelessWidget {
               const SizedBox(height: 8),
               const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Starf á lager',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 2),
-              const Text('Fastus', style: TextStyle(fontSize: 16)),
+              Text('Fastus', style: theme.textTheme.bodyLarge),
             ],
           ),
         ),
@@ -296,21 +284,22 @@ class WorkplaceSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
+    ThemeData theme = Theme.of(context);
+    return SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: EdgeInsets.all(16),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0),
           child: Column(
             children: [
               Text(
                 '51-200',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                style: theme.textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               Text(
                 'Starfsmenn',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
+                style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey),
               ),
             ],
           ),
@@ -325,10 +314,9 @@ class WorkplacePerks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO - Add more padding top and bottom
     return const SliverToBoxAdapter(
       child: Card(
-        color: Colors.white,
-        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Column(
           children: [
             WorkplaceTile(
@@ -369,18 +357,20 @@ class WorkplaceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return ListTile(
       //TODO - Add icons
       leading: const CircleAvatar(),
       title: Text(
         title,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w700),
       ),
-      subtitle: Text(subtitle, style: const TextStyle(fontSize: 16)),
+      subtitle: Text(subtitle, style: theme.textTheme.bodyLarge),
     );
   }
 }
 
+//TODO
 class CustomTabBar extends StatelessWidget {
   const CustomTabBar({
     super.key,
@@ -395,6 +385,7 @@ class CustomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Row(
       children: [
         GestureDetector(
@@ -406,10 +397,10 @@ class CustomTabBar extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             alignment: Alignment.center,
-            child: const Text(
+            child: Text(
               'Prófill',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+              style: theme.textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w600,
                 color: Colors.black,
               ),
             ),
@@ -428,7 +419,6 @@ class CustomTabBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Badge
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -447,10 +437,10 @@ class CustomTabBar extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Text(
+                Text(
                   'Öll störf',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                  style: theme.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
                 ),

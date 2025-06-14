@@ -8,13 +8,16 @@ class InboxPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Innhólf (20)'),
-        backgroundColor: const Color(0xffFF6D00),
+        leading: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Icon(Icons.person, color: Colors.white, size: 26),
+        ),
         actions: [
           IconButton(
             onPressed: () {
-              //TODO - Add bottomsheet for sorting options (Virk, í úrvinnslu, lokið)
+              //TODO - Add bottomsheet for sorting options
             },
-            icon: const Icon(Icons.sort),
+            icon: const Icon(Icons.sort, color: Colors.white),
           ),
         ],
       ),
@@ -49,19 +52,23 @@ class InboxCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Card(
-      color: Colors.white,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 16, bottom: 8, left: 16, right: 16),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 16,
+              bottom: 8,
+              left: 16,
+              right: 16,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Í ÚRVINNSLU'),
+                Text('Í ÚRVINNSLU', style: theme.textTheme.bodyMedium),
                 //Expiry Date
-                Text('2 dagar'),
+                Text('2 dagar', style: theme.textTheme.bodyMedium),
               ],
             ),
           ),
@@ -76,17 +83,16 @@ class InboxCard extends StatelessWidget {
                   fallbackWidth: 80,
                   color: Colors.grey.shade300,
                 ),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Starfsheiti',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      style: theme.textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Text('Vinnustaður', style: TextStyle(fontSize: 16)),
+                    Text('Vinnustaður', style: theme.textTheme.bodyMedium),
                   ],
                 ),
               ],

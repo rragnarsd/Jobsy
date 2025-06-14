@@ -1,4 +1,4 @@
-import 'package:codehatch/pages/home_page.dart';
+import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 
 class Workplaces extends StatefulWidget {
@@ -13,16 +13,20 @@ class _WorkplacesState extends State<Workplaces> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vinnustaðir'),
-        backgroundColor: const Color(0xffFF6D00),
+        leading: const Padding(
+          padding: EdgeInsets.all(16),
+          child: Icon(Icons.person, color: Colors.white, size: 26),
+        ),
         actions: [
           IconButton(
             onPressed: () {
               setState(() => _showSearch = !_showSearch);
             },
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.search, color: Colors.white),
           ),
         ],
       ),
@@ -31,61 +35,67 @@ class _WorkplacesState extends State<Workplaces> {
           if (_showSearch) const AppSearchBar(),
           if (_showSearch) const SliverToBoxAdapter(child: SizedBox(height: 4)),
           SliverPadding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             sliver: SliverGrid.builder(
               itemCount: 10,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
                 crossAxisCount: 2,
-                childAspectRatio: 0.6,
+                childAspectRatio: 0.64,
               ),
               itemBuilder: (context, index) => Card(
-                color: Colors.white,
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 8,
                   children: [
                     Placeholder(
                       fallbackHeight: 100,
                       fallbackWidth: 100,
                       color: Colors.grey.shade300,
                     ),
-                    const SizedBox(height: 8),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         spacing: 6,
                         children: [
-                          const Text(
+                          Text(
                             'Landspítali',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'Landspítali er lifandi og fjölbreyttur vinnustaður..',
+                            style: theme.textTheme.bodyMedium,
                           ),
-                          const Row(
+                          Row(
+                            spacing: 8,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.person),
-                              SizedBox(width: 8),
-                              Text('4000+'),
+                              const Icon(Icons.person, color: Colors.white),
+                              Text(
+                                '4000+',
+                                style: theme.textTheme.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ],
                           ),
                           const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 8,
                             children: [
-                              CircleAvatar(
+                              const CircleAvatar(
                                 radius: 16,
-                                backgroundColor: Colors.grey.shade300,
+                                backgroundColor: Color(0xffFF6D00),
                               ),
-                              const SizedBox(width: 8),
-                              const Text('Laus störf'),
+                              Text(
+                                'Laus störf',
+                                style: theme.textTheme.bodyLarge!.copyWith(
+                                  color: const Color(0xffFF6D00),
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -96,6 +106,7 @@ class _WorkplacesState extends State<Workplaces> {
               ),
             ),
           ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
       ),
     );
