@@ -18,7 +18,6 @@ final router = GoRouter(
         return Root(navigationShell);
       },
       branches: [
-        // Branch 0: Vaktin
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
@@ -27,7 +26,6 @@ final router = GoRouter(
             ),
           ],
         ),
-        // Branch 2: Vinnustaðir
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
@@ -36,7 +34,6 @@ final router = GoRouter(
             ),
           ],
         ),
-        // Branch 3: Námskeið
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
@@ -45,7 +42,6 @@ final router = GoRouter(
             ),
           ],
         ),
-        // Branch 4: Innhólf
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(

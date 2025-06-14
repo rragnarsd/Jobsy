@@ -47,6 +47,7 @@ class _WorkplacesState extends State<Workplaces> {
                 child: Column(
                   spacing: 8,
                   children: [
+                    //TODO - Check width
                     Placeholder(
                       fallbackHeight: 100,
                       fallbackWidth: 100,
@@ -56,7 +57,6 @@ class _WorkplacesState extends State<Workplaces> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-
                         spacing: 6,
                         children: [
                           Text(
