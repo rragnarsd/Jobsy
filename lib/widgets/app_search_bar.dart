@@ -16,7 +16,6 @@ class AppSearchBar extends StatelessWidget {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: const Color(0xFF1C1C1C),
-                  //TODO - Label not visiable on focus
                   hintText: 'Leita…',
                   hintStyle: TextStyle(
                     color: Colors.grey.shade600,

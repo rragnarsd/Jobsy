@@ -570,7 +570,7 @@ class JobHeader extends StatelessWidget {
                         Text(
                           'Vinnustaðurinn',
                           style: theme.textTheme.bodyLarge!.copyWith(
-                            color: const Color(0xffFF6D00),
+                            color: const Color(0xFFFF7200),
                           ),
                         ),
                         const Icon(Icons.keyboard_arrow_right, size: 24),

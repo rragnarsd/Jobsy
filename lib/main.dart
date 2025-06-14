@@ -18,10 +18,15 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF1C1C1C),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF7200)),
         cardTheme: const CardThemeData(
-          color: Color.fromARGB(255, 20, 20, 20),
+          color: Color(0xFF141414),
           margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
         textTheme: const TextTheme(
+          headlineMedium: TextStyle(
+            fontSize: 34,
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+          ),
           headlineSmall: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w400,

@@ -167,7 +167,7 @@ class WorkplaceWebsite extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Card(
         child: ListTile(
-          leading: const Icon(Icons.home),
+          leading: const Icon(Icons.home, color: Color(0xFFFF7200)),
           trailing: const Icon(Icons.keyboard_arrow_right),
           title: Text('Vefsíða', style: theme.textTheme.bodyLarge),
         ),
@@ -189,7 +189,7 @@ class WorkplaceMap extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 24),
-              const Icon(Icons.location_on, size: 64, color: Colors.orange),
+              const Icon(Icons.location_on, size: 64, color: Color(0xFFFF7200)),
               Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
@@ -314,29 +314,31 @@ class WorkplacePerks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO - Add more padding top and bottom
     return const SliverToBoxAdapter(
       child: Card(
-        child: Column(
-          children: [
-            WorkplaceTile(
-              title: 'Hreyfing',
-              subtitle:
-                  'Hreyfing er fyrirtæki sem sérhæfir sig í hreyfingu og heilsu.',
-            ),
-            Divider(),
-            WorkplaceTile(
-              title: 'Matur',
-              subtitle:
-                  'Niðurgreiddur heitur matur í hádeginu mánudaga til fimmtudaga.',
-            ),
-            Divider(),
-            WorkplaceTile(
-              title: 'Vinnutími',
-              subtitle:
-                  'Í mannauðsstefnu fyrirtækisins er lögð áhersla á sveigjanleika í vinnutíma.',
-            ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0),
+          child: Column(
+            children: [
+              WorkplaceTile(
+                title: 'Hreyfing',
+                subtitle:
+                    'Hreyfing er fyrirtæki sem sérhæfir sig í hreyfingu og heilsu.',
+              ),
+              Divider(),
+              WorkplaceTile(
+                title: 'Matur',
+                subtitle:
+                    'Niðurgreiddur heitur matur í hádeginu mánudaga til fimmtudaga.',
+              ),
+              Divider(),
+              WorkplaceTile(
+                title: 'Vinnutími',
+                subtitle:
+                    'Í mannauðsstefnu fyrirtækisins er lögð áhersla á sveigjanleika í vinnutíma.',
+              ),
+            ],
+          ),
         ),
       ),
     );

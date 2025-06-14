@@ -56,6 +56,7 @@ class _WorkplacesState extends State<Workplaces> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+
                         spacing: 6,
                         children: [
                           Text(
@@ -67,6 +68,7 @@ class _WorkplacesState extends State<Workplaces> {
                           Text(
                             'Landspítali er lifandi og fjölbreyttur vinnustaður..',
                             style: theme.textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
                           ),
                           Row(
                             spacing: 8,
@@ -86,6 +88,7 @@ class _WorkplacesState extends State<Workplaces> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             spacing: 8,
                             children: [
+                              //TODO - Add number of jobs
                               const CircleAvatar(
                                 radius: 16,
                                 backgroundColor: Color(0xffFF6D00),
