@@ -1,7 +1,7 @@
 import 'package:codehatch/models/workplace_model.dart';
 
 //TODO
-enum JobType { fullTime, partTime, contract, internship, freelance, temporary }
+enum JobType { fullTime, partTime, internship, freelance, temporary }
 
 class JobAdModel {
   final String id;

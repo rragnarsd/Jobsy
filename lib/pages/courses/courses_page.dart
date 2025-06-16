@@ -1,4 +1,4 @@
-import 'package:codehatch/pages/course_description_page.dart';
+import 'package:codehatch/pages/courses/course_description_page.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 

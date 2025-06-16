@@ -1,4 +1,4 @@
-import 'package:codehatch/pages/workplace_page.dart';
+import 'package:codehatch/pages/workplaces/workplace_page.dart';
 import 'package:flutter/material.dart';
 
 class JobDescriptionPage extends StatelessWidget {

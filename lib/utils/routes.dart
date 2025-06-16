@@ -1,7 +1,7 @@
-import 'package:codehatch/pages/courses_page.dart';
-import 'package:codehatch/pages/home_page.dart';
-import 'package:codehatch/pages/inbox_page.dart';
-import 'package:codehatch/pages/workplaces.dart';
+import 'package:codehatch/pages/courses/courses_page.dart';
+import 'package:codehatch/pages/home/home_page.dart';
+import 'package:codehatch/pages/inbox/inbox_page.dart';
+import 'package:codehatch/pages/workplaces/workplaces.dart';
 import 'package:codehatch/root.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

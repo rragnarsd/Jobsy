@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,8 @@ class MyApp extends StatelessWidget {
       title: 'Jobsy',
       debugShowCheckedModeBanner: false,
       routerConfig: router,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFF1C1C1C),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF7200)),

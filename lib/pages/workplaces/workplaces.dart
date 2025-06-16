@@ -23,17 +23,17 @@ class _WorkplacesState extends State<Workplaces> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              setState(() => _showSearch = !_showSearch);
-            },
+            onPressed: () => setState(() => _showSearch = !_showSearch),
             icon: const Icon(Icons.search, color: Colors.white),
           ),
         ],
       ),
       body: CustomScrollView(
         slivers: [
-          if (_showSearch) const AppSearchBar(),
-          if (_showSearch) const SliverToBoxAdapter(child: SizedBox(height: 4)),
+          if (_showSearch) ...[
+            const AppSearchBar(),
+            const SliverToBoxAdapter(child: SizedBox(height: 4)),
+          ],
           SliverPadding(
             padding: const EdgeInsets.symmetric(vertical: 4),
             sliver: SliverGrid.builder(
@@ -92,6 +92,7 @@ class _WorkplacesState extends State<Workplaces> {
                               const CircleAvatar(
                                 radius: 16,
                                 backgroundColor: Color(0xffFF6D00),
+                                child: Text('2'),
                               ),
                               Text(
                                 'Laus störf',
