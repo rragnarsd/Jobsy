@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AppSearchBar extends StatelessWidget {
@@ -5,6 +6,7 @@ class AppSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: Container(
         color: Colors.black,
@@ -16,7 +18,7 @@ class AppSearchBar extends StatelessWidget {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: const Color(0xFF1C1C1C),
-                  hintText: 'Leita…',
+                  hintText: local.search,
                   hintStyle: TextStyle(
                     color: Colors.grey.shade600,
                     fontSize: 16,
@@ -37,9 +39,12 @@ class AppSearchBar extends StatelessWidget {
             TextButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.tune, size: 20),
-              label: const Text(
-                'Síur',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              label: Text(
+                local.sort_search,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.grey.shade600,

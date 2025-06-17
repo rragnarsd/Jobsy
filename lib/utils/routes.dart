@@ -1,5 +1,9 @@
+import 'package:codehatch/models/job_model.dart';
+import 'package:codehatch/pages/courses/course_details.dart';
 import 'package:codehatch/pages/courses/courses_page.dart';
 import 'package:codehatch/pages/home/home_page.dart';
+import 'package:codehatch/pages/home/job_description_page.dart';
+import 'package:codehatch/pages/home/workplace_page.dart';
 import 'package:codehatch/pages/inbox/inbox_page.dart';
 import 'package:codehatch/pages/workplaces/workplaces.dart';
 import 'package:codehatch/root.dart';
@@ -7,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _sectionNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -32,6 +35,11 @@ final router = GoRouter(
               path: '/workplaces',
               builder: (context, state) => const Workplaces(),
             ),
+            GoRoute(
+              path: '/job-description',
+              builder: (context, state) =>
+                  JobDescriptionPage(job: state.extra as JobModel),
+            ),
           ],
         ),
         StatefulShellBranch(
@@ -51,6 +59,15 @@ final router = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: '/workplace-details',
+      builder: (context, state) =>
+          WorkplacePage(workplaceId: state.extra as String),
+    ),
+    GoRoute(
+      path: '/courses-details',
+      builder: (context, state) => const CourseDetailsPage(),
     ),
   ],
 );

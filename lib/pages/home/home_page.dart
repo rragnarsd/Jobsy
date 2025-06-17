@@ -1,8 +1,12 @@
+import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/models/job_model.dart' as job_model;
+import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/courses/courses_page.dart';
-import 'package:codehatch/pages/home/job_description_page.dart';
 import 'package:codehatch/pages/profile/profile_page.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart' as intl;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,11 +17,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _showSearch = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Laus störf (827)'),
+        title: Text(
+          '${AppLocalizations.of(context)!.vacancies} (${dummyWorkplaces.length})',
+        ),
         leadingWidth: 100,
         leading: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -39,9 +46,7 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              setState(() => _showSearch = !_showSearch);
-            },
+            onPressed: () => setState(() => _showSearch = !_showSearch),
             icon: const Icon(Icons.search, color: Colors.white),
           ),
         ],
@@ -70,7 +75,10 @@ class AppDivider extends StatelessWidget {
         child: Row(
           children: [
             const Expanded(child: Divider(endIndent: 16)),
-            Text('Nýtt í dag (6)', style: theme.textTheme.bodyMedium),
+            Text(
+              '${AppLocalizations.of(context)!.new_today} (${dummyWorkplaces.length})',
+              style: theme.textTheme.bodyMedium,
+            ),
             const Expanded(child: Divider(indent: 16)),
           ],
         ),
@@ -86,24 +94,45 @@ class AppJobList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (context, index) => const JobCard(),
-        childCount: 10,
+        (context, index) => JobCard(workplace: dummyWorkplaces[index]),
+        childCount: dummyWorkplaces.length,
       ),
     );
   }
 }
 
 class JobCard extends StatelessWidget {
-  const JobCard({super.key});
+  final WorkplaceModel workplace;
+
+  const JobCard({super.key, required this.workplace});
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+
+    job_model.JobModel? primaryJob;
+    if (workplace.jobIds.isNotEmpty) {
+      try {
+        primaryJob = job_model.jobs.firstWhere(
+          (job) => job.id == workplace.jobIds.first,
+          orElse: () => job_model.jobs.firstWhere(
+            (job) => job.workplaceId == workplace.id,
+            orElse: () => job_model.jobs.first,
+          ),
+        );
+      } catch (e) {
+        if (job_model.jobs.isNotEmpty) {
+          primaryJob = job_model.jobs.first;
+        }
+      }
+    }
+
+    if (primaryJob == null) {
+      return const Card();
+    }
+
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const JobDescriptionPage()),
-      ),
+      onTap: () => context.push('/job-description', extra: primaryJob),
       child: Card(
         child: Stack(
           children: [
@@ -115,22 +144,22 @@ class JobCard extends StatelessWidget {
                   Row(
                     spacing: 16,
                     children: [
-                      Placeholder(
-                        fallbackHeight: 60,
-                        fallbackWidth: 60,
-                        color: Colors.grey.shade300,
+                      Image.asset(
+                        workplace.logoUrl ?? '',
+                        width: 60,
+                        height: 60,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'SPA Supervisor',
+                            workplace.primaryJobTitle,
                             style: theme.textTheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
-                            'Hilton Reykjavík Spa',
+                            workplace.name,
                             style: theme.textTheme.bodyMedium!.copyWith(
                               color: const Color(0xFFFF8000),
                             ),
@@ -140,32 +169,39 @@ class JobCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
+
                   SizedBox(
                     height: 20,
                     child: Row(
                       spacing: 4,
                       children: [
-                        const IconTextRow(
+                        IconTextRow(
                           icon: Icons.work,
-                          text: 'Fullt starf',
+                          text: primaryJob.jobType.toDisplayString(),
                         ),
                         VerticalDivider(
                           color: Colors.grey.shade300,
                           indent: 3,
                           endIndent: 3,
                         ),
-                        const IconTextRow(
+                        IconTextRow(
                           icon: Icons.location_on,
-                          text: 'Reykjavík',
+                          text: primaryJob.isRemote
+                              ? 'Remote'
+                              : primaryJob.location?.split(',').first.trim() ??
+                                    'Reykjavík',
                         ),
                         VerticalDivider(
                           color: Colors.grey.shade300,
                           indent: 3,
                           endIndent: 3,
                         ),
-                        const IconTextRow(
+                        IconTextRow(
                           icon: Icons.calendar_today,
-                          text: '27. jún.',
+                          text: intl.DateFormat(
+                            'd. MMM',
+                            'is_IS',
+                          ).format(primaryJob.deadline),
                         ),
                       ],
                     ),
@@ -173,12 +209,12 @@ class JobCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 12,
               right: 12,
               child: Text(
-                '20 mín',
-                style: TextStyle(color: Colors.grey, fontSize: 12),
+                primaryJob.timeAgo,
+                style: const TextStyle(color: Colors.grey, fontSize: 12),
               ),
             ),
           ],

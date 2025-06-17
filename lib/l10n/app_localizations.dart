@@ -98,11 +98,377 @@ abstract class AppLocalizations {
     Locale('is'),
   ];
 
-  /// The conventional newborn programmer greeting
+  /// No description provided for @vacancies.
   ///
   /// In en, this message translates to:
-  /// **'Hello World!'**
-  String get helloWorld;
+  /// **'All jobs'**
+  String get vacancies;
+
+  /// No description provided for @new_today.
+  ///
+  /// In en, this message translates to:
+  /// **'New today'**
+  String get new_today;
+
+  /// No description provided for @full_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Full time'**
+  String get full_time;
+
+  /// No description provided for @part_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Part time'**
+  String get part_time;
+
+  /// No description provided for @internship.
+  ///
+  /// In en, this message translates to:
+  /// **'Internship'**
+  String get internship;
+
+  /// No description provided for @freelance.
+  ///
+  /// In en, this message translates to:
+  /// **'Freelance'**
+  String get freelance;
+
+  /// No description provided for @temporary.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary'**
+  String get temporary;
+
+  /// No description provided for @download_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Download profile'**
+  String get download_profile;
+
+  /// No description provided for @attachments.
+  ///
+  /// In en, this message translates to:
+  /// **'Attachments'**
+  String get attachments;
+
+  /// No description provided for @about_you.
+  ///
+  /// In en, this message translates to:
+  /// **'About You'**
+  String get about_you;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @verification.
+  ///
+  /// In en, this message translates to:
+  /// **'Electronic verification'**
+  String get verification;
+
+  /// No description provided for @job_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Experience'**
+  String get job_experience;
+
+  /// No description provided for @add_job.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new experience'**
+  String get add_job;
+
+  /// No description provided for @education.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get education;
+
+  /// No description provided for @add_education.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new education'**
+  String get add_education;
+
+  /// No description provided for @skills.
+  ///
+  /// In en, this message translates to:
+  /// **'Skills'**
+  String get skills;
+
+  /// No description provided for @add_skills.
+  ///
+  /// In en, this message translates to:
+  /// **'Add skills'**
+  String get add_skills;
+
+  /// No description provided for @languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get languages;
+
+  /// No description provided for @icelandic.
+  ///
+  /// In en, this message translates to:
+  /// **'Icelandic'**
+  String get icelandic;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @add_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a language'**
+  String get add_language;
+
+  /// No description provided for @references.
+  ///
+  /// In en, this message translates to:
+  /// **'References'**
+  String get references;
+
+  /// No description provided for @add_reference.
+  ///
+  /// In en, this message translates to:
+  /// **'Add recommendation'**
+  String get add_reference;
+
+  /// No description provided for @links.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get links;
+
+  /// No description provided for @add_link.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new link'**
+  String get add_link;
+
+  /// No description provided for @job_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get job_description;
+
+  /// No description provided for @about_workplace.
+  ///
+  /// In en, this message translates to:
+  /// **'About the company'**
+  String get about_workplace;
+
+  /// No description provided for @responsibilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Responsibilities'**
+  String get responsibilities;
+
+  /// No description provided for @education_requirements.
+  ///
+  /// In en, this message translates to:
+  /// **'Education and general requirements'**
+  String get education_requirements;
+
+  /// No description provided for @job_rate.
+  ///
+  /// In en, this message translates to:
+  /// **'Occupation rate'**
+  String get job_rate;
+
+  /// No description provided for @ad_published.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad published'**
+  String get ad_published;
+
+  /// No description provided for @application_deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Application deadline'**
+  String get application_deadline;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @language_skills.
+  ///
+  /// In en, this message translates to:
+  /// **'Language skills'**
+  String get language_skills;
+
+  /// No description provided for @job_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Job location'**
+  String get job_location;
+
+  /// No description provided for @job_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Type'**
+  String get job_type;
+
+  /// No description provided for @job_tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Tags'**
+  String get job_tags;
+
+  /// No description provided for @more_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'More jobs'**
+  String get more_jobs;
+
+  /// No description provided for @about_company.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get about_company;
+
+  /// No description provided for @employees.
+  ///
+  /// In en, this message translates to:
+  /// **'Employees'**
+  String get employees;
+
+  /// No description provided for @work_environment.
+  ///
+  /// In en, this message translates to:
+  /// **'Work environment'**
+  String get work_environment;
+
+  /// No description provided for @latest_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest jobs'**
+  String get latest_jobs;
+
+  /// No description provided for @in_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'In Progress'**
+  String get in_progress;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @ended.
+  ///
+  /// In en, this message translates to:
+  /// **'Ended'**
+  String get ended;
+
+  /// No description provided for @course_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get course_type;
+
+  /// No description provided for @price.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get price;
+
+  /// No description provided for @about_course.
+  ///
+  /// In en, this message translates to:
+  /// **'About the course'**
+  String get about_course;
+
+  /// No description provided for @course_category.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get course_category;
+
+  /// No description provided for @more_from.
+  ///
+  /// In en, this message translates to:
+  /// **'More from'**
+  String get more_from;
+
+  /// No description provided for @open_map.
+  ///
+  /// In en, this message translates to:
+  /// **'Open map'**
+  String get open_map;
+
+  /// No description provided for @website.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get website;
+
+  /// No description provided for @newest_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest jobs'**
+  String get newest_jobs;
+
+  /// No description provided for @all_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'All jobs'**
+  String get all_jobs;
+
+  /// No description provided for @workplaces.
+  ///
+  /// In en, this message translates to:
+  /// **'The Workplaces'**
+  String get workplaces;
+
+  /// No description provided for @the_workplace.
+  ///
+  /// In en, this message translates to:
+  /// **'The workplace'**
+  String get the_workplace;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// No description provided for @requirement.
+  ///
+  /// In en, this message translates to:
+  /// **'Requirement'**
+  String get requirement;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @sort_search.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort'**
+  String get sort_search;
 }
 
 class _AppLocalizationsDelegate

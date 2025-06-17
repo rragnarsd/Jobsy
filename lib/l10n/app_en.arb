@@ -1,6 +1,6 @@
 {
   "vacancies": "All jobs",
-  "new_today": "New today"
+  "new_today": "New today",
   "full_time": "Full time",
   "part_time": "Part time",
   "internship": "Internship",
@@ -29,7 +29,7 @@
   "add_link": "Add new link",
 
   "job_description": "Description",
-  "about_workplace": "Vinnustaðurinn",
+  "about_workplace": "About the company",
   "responsibilities": "Responsibilities",
   "education_requirements": "Education and general requirements",
   "job_rate": "Occupation rate",
@@ -46,4 +46,26 @@
   "employees": "Employees",
   "work_environment": "Work environment",
   "latest_jobs": "Latest jobs",
+
+  "in_progress": "In Progress",
+  "active": "Active",
+  "ended": "Ended",
+  "course_type": "Type",
+  "price": "Price",
+  "about_course": "About the course",
+  "course_category": "Categories",
+  "more_from": "More from",
+
+  "open_map": "Open map",
+  "website": "Website",
+  "newest_jobs": "Newest jobs",
+  "all_jobs": "All jobs",
+  "workplaces": "The Workplaces",
+  "the_workplace": "The workplace",
+  "save": "Save",
+  "share": "Share",
+  "requirement": "Requirement",
+
+  "search": "Search",
+  "sort_search": "Sort"
 }

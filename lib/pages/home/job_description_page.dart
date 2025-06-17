@@ -1,44 +1,51 @@
-import 'package:codehatch/pages/workplaces/workplace_page.dart';
+import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/models/job_model.dart';
+import 'package:codehatch/models/workplace_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart' as intl;
 
 class JobDescriptionPage extends StatelessWidget {
-  const JobDescriptionPage({super.key});
+  const JobDescriptionPage({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Starfslýsing'),
+        title: Text(local.job_description),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: const CustomScrollView(
+      body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Card(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  JobHeader(),
-                  JobTitle(),
-                  JobDescription(),
-                  SizedBox(height: 8),
-                  Divider(),
-                  JobResponsibility(),
-                  Divider(),
-                  JobQualification(),
+                  JobHeader(job: job),
+                  JobTitle(job: job),
+                  JobDescription(job: job),
+                  const SizedBox(height: 8),
+                  const Divider(),
+                  JobResponsibility(job: job),
+                  const Divider(),
+                  JobQualification(job: job),
                 ],
               ),
             ),
           ),
-          JobDeadline(),
-          JobLanguageSkills(),
-          JobLocation(),
-          JobType(),
-          JobProfession(),
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
+          JobDeadline(job: job),
+          JobLanguageSkills(job: job),
+          JobLocation(job: job),
+          JobType(job: job),
+          JobProfession(job: job),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
       ),
     );
@@ -46,11 +53,14 @@ class JobDescriptionPage extends StatelessWidget {
 }
 
 class JobProfession extends StatelessWidget {
-  const JobProfession({super.key});
+  const JobProfession({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -59,109 +69,35 @@ class JobProfession extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Starfsgreinar',
+                local.job_tags,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      child: Text(
-                        'Skrifstofustörf',
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      child: Text(
-                        'Þjónustustörf',
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Divider(),
-              ),
-              Text(
-                'Starfsmerkingar',
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
+              Wrap(
                 spacing: 8,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
+                runSpacing: 8,
+                children: job.professions
+                    .map(
+                      (profession) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          child: Text(
+                            profession,
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                        ),
                       ),
-                      child: Text('Ritari', style: theme.textTheme.bodyMedium),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      child: Text(
-                        'Símsvörun',
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      child: Text(
-                        'Afgreiðsla',
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
-                ],
+                    )
+                    .toList(),
               ),
             ],
           ),
@@ -172,11 +108,14 @@ class JobProfession extends StatelessWidget {
 }
 
 class JobType extends StatelessWidget {
-  const JobType({super.key});
+  const JobType({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -186,7 +125,7 @@ class JobType extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Starfstegund',
+                local.job_type,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -201,7 +140,10 @@ class JobType extends StatelessWidget {
                     horizontal: 8,
                     vertical: 4,
                   ),
-                  child: Text('Fullt starf', style: theme.textTheme.bodyMedium),
+                  child: Text(
+                    job.jobType.toDisplayString(),
+                    style: theme.textTheme.bodyMedium,
+                  ),
                 ),
               ),
             ],
@@ -213,7 +155,9 @@ class JobType extends StatelessWidget {
 }
 
 class JobLocation extends StatelessWidget {
-  const JobLocation({super.key});
+  const JobLocation({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
@@ -225,9 +169,8 @@ class JobLocation extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //TODO - Add map
               Text(
-                'Staðsetning',
+                AppLocalizations.of(context)!.job_location,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -241,7 +184,7 @@ class JobLocation extends StatelessWidget {
                 spacing: 8,
                 children: [
                   Text(
-                    'Auðbrekka 17, 200 Kópavogur',
+                    job.location ?? 'Remote',
                     style: theme.textTheme.bodyLarge,
                   ),
                   const Icon(
@@ -260,11 +203,14 @@ class JobLocation extends StatelessWidget {
 }
 
 class JobLanguageSkills extends StatelessWidget {
-  const JobLanguageSkills({super.key});
+  const JobLanguageSkills({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -273,73 +219,47 @@ class JobLanguageSkills extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Tungumálahæfni',
+                local.language_skills,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    spacing: 8,
+              ...job.languageSkills.map(
+                (skill) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Placeholder(fallbackHeight: 20, fallbackWidth: 40),
-                      Text('Íslenska', style: theme.textTheme.bodyLarge),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
+                      Row(
+                        spacing: 8,
+                        children: [
+                          const Placeholder(
+                            fallbackHeight: 20,
+                            fallbackWidth: 40,
                           ),
-                          child: Text(
-                            'Nauðsyn',
-                            style: theme.textTheme.bodyLarge,
+                          Text(skill, style: theme.textTheme.bodyLarge),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              child: Text(
+                                local.requirement,
+                                style: theme.textTheme.bodyLarge,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                  Text('Framúrskarandi', style: theme.textTheme.bodyLarge),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16),
-                child: Divider(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    spacing: 8,
-                    children: [
-                      const Placeholder(fallbackHeight: 20, fallbackWidth: 40),
-                      Text('Enska', style: theme.textTheme.bodyLarge),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          child: Text(
-                            'Nauðsyn',
-                            style: theme.textTheme.bodyLarge,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text('Mjög góð', style: theme.textTheme.bodyLarge),
-                ],
+                ),
               ),
             ],
           ),
@@ -350,11 +270,14 @@ class JobLanguageSkills extends StatelessWidget {
 }
 
 class JobDeadline extends StatelessWidget {
-  const JobDeadline({super.key});
+  const JobDeadline({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -365,12 +288,18 @@ class JobDeadline extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Auglýsing birt',
+                    local.ad_published,
                     style: theme.textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Text('12. júní 2025', style: theme.textTheme.bodyLarge),
+                  Text(
+                    intl.DateFormat(
+                      'd. MMM yyyy',
+                      'is_IS',
+                    ).format(job.publishedDate),
+                    style: theme.textTheme.bodyLarge,
+                  ),
                 ],
               ),
               const Padding(
@@ -381,12 +310,18 @@ class JobDeadline extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Umsóknarfrestur',
+                    local.application_deadline,
                     style: theme.textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Text('Enginn', style: theme.textTheme.bodyLarge),
+                  Text(
+                    intl.DateFormat(
+                      'd. MMM yyyy',
+                      'is_IS',
+                    ).format(job.deadline),
+                    style: theme.textTheme.bodyLarge,
+                  ),
                 ],
               ),
               const Padding(
@@ -404,7 +339,7 @@ class JobDeadline extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(Icons.person, size: 24, color: Colors.white),
-                    Text('Sækja um', style: theme.textTheme.titleLarge),
+                    Text(local.apply, style: theme.textTheme.titleLarge),
                   ],
                 ),
               ),
@@ -418,7 +353,7 @@ class JobDeadline extends StatelessWidget {
                       children: [
                         const Icon(Icons.favorite, color: Color(0xffFF6D00)),
                         const SizedBox(width: 8),
-                        Text('Vista', style: theme.textTheme.bodyLarge),
+                        Text(local.save, style: theme.textTheme.bodyLarge),
                       ],
                     ),
                   ),
@@ -428,7 +363,7 @@ class JobDeadline extends StatelessWidget {
                       children: [
                         const Icon(Icons.share, color: Color(0xffFF6D00)),
                         const SizedBox(width: 8),
-                        Text('Deila', style: theme.textTheme.bodyLarge),
+                        Text(local.share, style: theme.textTheme.bodyLarge),
                       ],
                     ),
                   ),
@@ -443,7 +378,9 @@ class JobDeadline extends StatelessWidget {
 }
 
 class JobQualification extends StatelessWidget {
-  const JobQualification({super.key});
+  const JobQualification({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
@@ -454,18 +391,16 @@ class JobQualification extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Menntunar- og hæfniskröfur',
+            AppLocalizations.of(context)!.education_requirements,
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            '• Framúrskarandi samskiptahæfni',
-            style: theme.textTheme.bodyLarge,
+          ...job.qualifications.map(
+            (qualification) =>
+                Text('• $qualification', style: theme.textTheme.bodyLarge),
           ),
-          Text('• Skipulagshæfni', style: theme.textTheme.bodyLarge),
-          Text('• Góð almenn tölvukunnátta', style: theme.textTheme.bodyLarge),
         ],
       ),
     );
@@ -473,34 +408,29 @@ class JobQualification extends StatelessWidget {
 }
 
 class JobResponsibility extends StatelessWidget {
-  const JobResponsibility({super.key});
+  const JobResponsibility({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Helstu verkefni og ábyrgð',
+            local.responsibilities,
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            '• Vinna við viðhald og viðgerðir á bifreiðum',
-            style: theme.textTheme.bodyLarge,
-          ),
-          Text(
-            '• Greina bilanir og framkvæma viðgerðir',
-            style: theme.textTheme.bodyLarge,
-          ),
-          Text(
-            '• Halda utan um verkfæri og búnað',
-            style: theme.textTheme.bodyLarge,
+          ...job.responsibilities.map(
+            (responsibility) =>
+                Text('• $responsibility', style: theme.textTheme.bodyLarge),
           ),
         ],
       ),
@@ -509,66 +439,73 @@ class JobResponsibility extends StatelessWidget {
 }
 
 class JobDescription extends StatelessWidget {
-  const JobDescription({super.key});
+  const JobDescription({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Text('Starfslýsing', style: Theme.of(context).textTheme.bodyLarge),
-    );
-  }
-}
-
-class JobTitle extends StatelessWidget {
-  const JobTitle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
       child: Text(
-        'Bifvélavirki / Car Mechanic',
-        style: Theme.of(context).textTheme.titleLarge,
+        job.jobDescription,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }
 }
 
+class JobTitle extends StatelessWidget {
+  const JobTitle({super.key, required this.job});
+
+  final JobModel job;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Text(job.jobTitle, style: Theme.of(context).textTheme.titleLarge),
+    );
+  }
+}
+
 class JobHeader extends StatelessWidget {
-  const JobHeader({super.key});
+  const JobHeader({super.key, required this.job});
+
+  final JobModel job;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final workplace = dummyWorkplaces.firstWhere(
+      (w) => w.id == job.workplaceId,
+      orElse: () => dummyWorkplaces.first,
+    );
     return Row(
       children: [
         Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              //TODO - Add Workplace logo
-              const Placeholder(fallbackHeight: 100, fallbackWidth: 100),
+              Image.asset(workplace.logoUrl ?? '', width: 100, height: 100),
               const SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Landspítali', style: theme.textTheme.titleLarge),
+                  Text(workplace.name, style: theme.textTheme.titleLarge),
                   TextButton(
                     style: ButtonStyle(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding: WidgetStateProperty.all(EdgeInsets.zero),
                     ),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const WorkplacePage(),
-                      ),
+                    onPressed: () => context.push(
+                      '/workplace-details',
+                      extra: job.workplaceId,
                     ),
                     child: Row(
                       children: [
                         Text(
-                          'Vinnustaðurinn',
+                          AppLocalizations.of(context)!.about_company,
                           style: theme.textTheme.bodyLarge!.copyWith(
                             color: const Color(0xFFFF7200),
                           ),

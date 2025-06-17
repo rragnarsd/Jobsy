@@ -15,7 +15,12 @@ class ReferenceModel {
 }
 
 final List<ReferenceModel> references = [
-  ReferenceModel(id: '1', name: 'Name', jobTitle: 'Job title', email: 'Email'),
+  ReferenceModel(
+    id: '1',
+    name: 'Paul Newman',
+    jobTitle: 'CEO',
+    email: 'paul_ceo@hotmail.com',
+  ),
   ReferenceModel(
     id: '2',
     name: 'John Doe',

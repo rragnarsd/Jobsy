@@ -7,6 +7,7 @@ class CourseModel {
   final String type;
   final int duration;
   final String courseInfo;
+  final String logoUrl;
   final List<String> categories;
 
   CourseModel({
@@ -19,5 +20,6 @@ class CourseModel {
     required this.duration,
     required this.courseInfo,
     required this.categories,
+    required this.logoUrl,
   });
 }

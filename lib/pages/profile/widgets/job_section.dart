@@ -32,7 +32,7 @@ class JobSection extends StatelessWidget {
                       children: [
                         Text(job.jobTitle, style: theme.textTheme.titleLarge),
                         Text(
-                          job.workplace,
+                          job.jobTitle,
                           style: theme.textTheme.bodyLarge!.copyWith(
                             color: Colors.grey,
                           ),
@@ -43,13 +43,13 @@ class JobSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          job.startDate,
+                          job.publishedDate.toString().split(' ')[0],
                           style: theme.textTheme.bodyLarge!.copyWith(
                             color: Colors.grey,
                           ),
                         ),
                         Text(
-                          job.endDate,
+                          job.deadline.toString().split(' ')[0],
                           style: theme.textTheme.bodyLarge!.copyWith(
                             color: Colors.grey,
                           ),

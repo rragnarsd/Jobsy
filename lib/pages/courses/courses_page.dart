@@ -1,6 +1,6 @@
-import 'package:codehatch/pages/courses/course_description_page.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CoursesPage extends StatefulWidget {
   const CoursesPage({super.key});
@@ -22,9 +22,7 @@ class _CoursesPageState extends State<CoursesPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              setState(() => _showSearch = !_showSearch);
-            },
+            onPressed: () => setState(() => _showSearch = !_showSearch),
             icon: const Icon(Icons.search, color: Colors.white),
           ),
         ],
@@ -63,10 +61,7 @@ class CoursesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CourseDescriptionPage()),
-      ),
+      onTap: () => context.push('/courses-details'),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -143,9 +138,9 @@ class IconTextRow extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return Row(
+      spacing: 4,
       children: [
         Icon(icon, size: 16, color: Colors.grey),
-        const SizedBox(width: 4),
         Text(
           text,
           style: theme.textTheme.bodyMedium!.copyWith(color: Colors.grey),

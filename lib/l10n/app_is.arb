@@ -1,7 +1,7 @@
 
 {
   "vacancies": "Laus störf",
-  "new_today": "Nýtt í dag"
+  "new_today": "Nýtt í dag",
   "full_time": "Fullt starf",
   "part_time": "Hlutastarf",
   "internship": "Starfsnám",
@@ -30,7 +30,7 @@
   "add_link": "Bæta við tengli",
 
   "job_description": "Starfslýsing",
-  "about_workplace": "Vinnustaðurinn",
+  "about_workplace": "Um",
   "responsibilities": "Helstu verkefni og ábyrgð",
   "education_requirements": "Menntunar og hæfniskröfur",
   "job_rate": "Starfshlutfall",
@@ -43,8 +43,31 @@
   "job_tags": "Starfsmerkingar",
   "more_jobs": "Fleiri störf",
 
-  "about_company": "Um",
+  "about_company": "Um vinnustaðinn",
   "employees": "Starfsmenn",
   "work_environment": "Starfsumhverfi",
   "latest_jobs": "Nýjustu störfin",
+
+  "in_progress": "Í úrvinnslu",
+  "active": "Auglýsing virk",
+  "ended": "Lokið",
+  "course_type": "Tegund",
+  "price": "Verð",
+  "about_course": "Um námskeiðið",
+  "course_category": "Flokkar",
+  "more_from": "Meira frá",
+
+  "open_map": "Opna kort",
+  "website": "Vefsíða",
+  "newest_jobs": "Nýjustu störfin",
+  "all_jobs": "Öll störf",
+  "workplaces": "Vinnustaðir",
+  "the_workplace": "Vinnustaðurinn",
+  "save": "Vista",
+  "share": "Deila",
+  "requirement": "Nauðsyn",
+
+  "search": "Leita",
+  "sort_search": "Síur"
+
 }
