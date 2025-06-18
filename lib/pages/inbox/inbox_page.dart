@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class InboxPage extends StatelessWidget {
@@ -7,39 +8,29 @@ class InboxPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Innhólf (20)'),
+        title: Text('${AppLocalizations.of(context)!.inbox} (20)'),
         leading: const Padding(
           padding: EdgeInsets.all(16.0),
           child: Icon(Icons.person, color: Colors.white, size: 26),
         ),
         actions: [
+          //TODO - Add bottomsheet for sorting options
           IconButton(
-            onPressed: () {
-              //TODO - Add bottomsheet for sorting options
-            },
+            onPressed: () {},
             icon: const Icon(Icons.sort, color: Colors.white),
           ),
         ],
       ),
-      body: const CustomScrollView(
+      body: CustomScrollView(
         slivers: [
-          InboxList(),
-          SliverToBoxAdapter(child: SizedBox(height: 16)),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => InboxCard(index: index),
+              childCount: 10,
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
-      ),
-    );
-  }
-}
-
-class InboxList extends StatelessWidget {
-  const InboxList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) => InboxCard(index: index),
-        childCount: 10,
       ),
     );
   }
@@ -53,6 +44,7 @@ class InboxCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Card(
       child: Column(
         children: [
@@ -66,7 +58,10 @@ class InboxCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Í ÚRVINNSLU', style: theme.textTheme.bodyMedium),
+                Text(
+                  local.in_progress.toUpperCase(),
+                  style: theme.textTheme.bodyMedium,
+                ),
                 //Expiry Date
                 Text('2 dagar', style: theme.textTheme.bodyMedium),
               ],

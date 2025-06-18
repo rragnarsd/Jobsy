@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,10 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ProfileHeader(text: 'Um þig', onEditTap: () {}),
+        ProfileHeader(
+          text: AppLocalizations.of(context)!.about_you,
+          onEditTap: () {},
+        ),
         const Card(
           child: Padding(
             padding: EdgeInsets.all(16),

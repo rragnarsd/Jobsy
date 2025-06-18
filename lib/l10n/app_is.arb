@@ -68,6 +68,16 @@
   "requirement": "Nauðsyn",
 
   "search": "Leita",
-  "sort_search": "Síur"
+  "sort_search": "Síur",
 
+  "profile": "Prófíll",
+  "categories": "Flokkar",
+  "remote_course": "Fjarkennsla",
+  "onsite_course": "Staðarnám",
+  "price": "Verð",
+  "open_course": "Opna námskeið",
+  "courses": "Námskeið",
+  "inbox": "Innhólf",
+  "in_progress": "Í úrvinnslu",
+  "home": "Heim"
 }

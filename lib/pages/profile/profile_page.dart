@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/about_section.dart';
 import 'package:codehatch/pages/profile/widgets/education_section.dart';
 import 'package:codehatch/pages/profile/widgets/job_section.dart';
@@ -17,7 +18,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Prófill (100%)'),
+        title: Text('${AppLocalizations.of(context)!.profile} (100%)'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),

@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
@@ -9,18 +10,19 @@ class JobSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-
+    final local = AppLocalizations.of(context)!;
     return Column(
       children: [
-        const ProfileHeader(text: 'Job Experience'),
+        ProfileHeader(text: local.job_experience, onEditTap: () {}),
         Card(
           child: ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: jobs.length,
+            itemCount: 2,
             separatorBuilder: (context, index) =>
                 const Divider(height: 0.5, color: Colors.grey),
             itemBuilder: (context, index) {
+              //TODO - Add another model for this
               final job = jobs[index];
               return Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -62,7 +64,7 @@ class JobSection extends StatelessWidget {
             },
           ),
         ),
-        const ProfileAddBtn(title: 'Add new job'),
+        ProfileAddBtn(title: local.add_job),
       ],
     );
   }

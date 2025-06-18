@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,13 @@ class SkillSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Column(
       children: [
         ProfileHeader(
-          text: 'Skills',
+          text: local.skills,
           onEditTap: () {},
+          //TODO
           trailingText: 'My skills (38)',
         ),
         Padding(
@@ -39,7 +42,7 @@ class SkillSection extends StatelessWidget {
                 .toList(),
           ),
         ),
-        const ProfileAddBtn(title: 'Add skills'),
+        ProfileAddBtn(title: local.add_skills),
       ],
     );
   }

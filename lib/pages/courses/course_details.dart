@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CourseDetailsPage extends StatelessWidget {
@@ -5,24 +6,25 @@ class CourseDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      bottomNavigationBar: CourseBottomBar(),
+    final local = AppLocalizations.of(context)!;
+    return Scaffold(
+      bottomNavigationBar: const CourseBottomBar(),
       body: CustomScrollView(
         slivers: [
-          CourseSliverBar(),
+          const CourseSliverBar(),
           SliverToBoxAdapter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16),
-                CourseHandle(),
-                CourseHeader(),
-                CourseWorkplaceTile(),
-                CourseType(),
-                CourseDivider(text: 'Um námskeiðið'),
-                CourseInfo(),
-                CourseCategory(),
-                CourseDivider(text: 'Meira frá X'),
+                const SizedBox(height: 16),
+                const CourseHandle(),
+                const CourseHeader(),
+                const CourseWorkplaceTile(),
+                const CourseType(),
+                CourseDivider(text: local.about_course),
+                const CourseInfo(),
+                const CourseCategory(),
+                CourseDivider(text: '${local.more_from} X'),
               ],
             ),
           ),
@@ -77,6 +79,7 @@ class CourseCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -87,7 +90,7 @@ class CourseCategory extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Flokkar',
+                local.categories,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -102,7 +105,10 @@ class CourseCategory extends StatelessWidget {
                     horizontal: 8,
                     vertical: 4,
                   ),
-                  child: Text('Fullt starf', style: theme.textTheme.bodyMedium),
+                  child: Text(
+                    local.full_time,
+                    style: theme.textTheme.bodyMedium,
+                  ),
                 ),
               ),
             ],
@@ -136,6 +142,7 @@ class CourseType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -149,7 +156,7 @@ class CourseType extends StatelessWidget {
                   children: [
                     const Icon(Icons.school, size: 16, color: Colors.grey),
                     Text(
-                      'Tegund',
+                      local.course_type,
                       style: theme.textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -171,7 +178,7 @@ class CourseType extends StatelessWidget {
                   children: [
                     const Icon(Icons.school, size: 16, color: Colors.grey),
                     Text(
-                      'Verð',
+                      local.price,
                       style: theme.textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
@@ -281,7 +288,10 @@ class CourseBottomBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(Icons.school, size: 24, color: Colors.white),
-            Text('Opna námskeið', style: theme.textTheme.titleLarge),
+            Text(
+              AppLocalizations.of(context)!.open_course,
+              style: theme.textTheme.titleLarge,
+            ),
           ],
         ),
       ),

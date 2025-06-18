@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/link_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
@@ -9,10 +10,10 @@ class LinkSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-
+    final local = AppLocalizations.of(context)!;
     return Column(
       children: [
-        const ProfileHeader(text: 'Links'),
+        ProfileHeader(text: local.links, onEditTap: () {}),
         Card(
           child: ListView.separated(
             shrinkWrap: true,
@@ -55,7 +56,7 @@ class LinkSection extends StatelessWidget {
             },
           ),
         ),
-        const ProfileAddBtn(title: 'Add new link'),
+        ProfileAddBtn(title: local.add_link),
       ],
     );
   }

@@ -138,7 +138,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get latest_jobs => 'Latest jobs';
 
   @override
-  String get in_progress => 'In Progress';
+  String get in_progress => 'In progress';
 
   @override
   String get active => 'Active';
@@ -174,7 +174,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get all_jobs => 'All jobs';
 
   @override
-  String get workplaces => 'The Workplaces';
+  String get workplaces => 'Workplaces';
 
   @override
   String get the_workplace => 'The workplace';
@@ -193,4 +193,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sort_search => 'Sort';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get remote_course => 'Remote';
+
+  @override
+  String get onsite_course => 'Onsite';
+
+  @override
+  String get open_course => 'Open course';
+
+  @override
+  String get courses => 'Courses';
+
+  @override
+  String get inbox => 'Inbox';
+
+  @override
+  String get home => 'Home';
 }

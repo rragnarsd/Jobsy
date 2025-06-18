@@ -193,4 +193,28 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get sort_search => 'Síur';
+
+  @override
+  String get profile => 'Prófíll';
+
+  @override
+  String get categories => 'Flokkar';
+
+  @override
+  String get remote_course => 'Fjarkennsla';
+
+  @override
+  String get onsite_course => 'Staðarnám';
+
+  @override
+  String get open_course => 'Opna námskeið';
+
+  @override
+  String get courses => 'Námskeið';
+
+  @override
+  String get inbox => 'Innhólf';
+
+  @override
+  String get home => 'Heim';
 }

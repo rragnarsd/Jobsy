@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ProfileActionButtons extends StatelessWidget {
@@ -6,6 +7,7 @@ class ProfileActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -15,7 +17,7 @@ class ProfileActionButtons extends StatelessWidget {
               onPressed: () {},
               icon: const Icon(Icons.download, color: Color(0xFFFF7200)),
               label: Text(
-                'Download profile',
+                local.download_profile,
                 style: theme.textTheme.bodyMedium,
               ),
               style: ElevatedButton.styleFrom(
@@ -31,7 +33,10 @@ class ProfileActionButtons extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.attach_file, color: Color(0xFFFF7200)),
-              label: Text('4 Viðhengi', style: theme.textTheme.bodyMedium),
+              label: Text(
+                '${local.attachments} (4)',
+                style: theme.textTheme.bodyMedium,
+              ),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(6),

@@ -60,12 +60,25 @@
   "website": "Website",
   "newest_jobs": "Newest jobs",
   "all_jobs": "All jobs",
-  "workplaces": "The Workplaces",
+  "workplaces": "Workplaces",
   "the_workplace": "The workplace",
   "save": "Save",
   "share": "Share",
   "requirement": "Requirement",
 
   "search": "Search",
-  "sort_search": "Sort"
+  "sort_search": "Sort",
+
+  "profile": "Profile",
+  "categories": "Categories",
+  "remote_course": "Remote",
+  "onsite_course": "Onsite",
+  "price": "Price",
+  "open_course": "Open course",
+  "courses": "Courses",
+  "inbox": "Inbox",
+  "in_progress": "In progress",
+  "home": "Home"
+
+
 }

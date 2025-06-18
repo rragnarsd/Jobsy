@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/education_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
@@ -9,10 +10,10 @@ class EducationSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-
+    final local = AppLocalizations.of(context)!;
     return Column(
       children: [
-        const ProfileHeader(text: 'Education'),
+        ProfileHeader(text: local.education, onEditTap: () {}),
         Card(
           child: ListView.separated(
             shrinkWrap: true,
@@ -68,7 +69,7 @@ class EducationSection extends StatelessWidget {
             },
           ),
         ),
-        const ProfileAddBtn(title: 'Add new education'),
+        ProfileAddBtn(title: local.add_education),
       ],
     );
   }

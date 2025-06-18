@@ -359,7 +359,7 @@ abstract class AppLocalizations {
   /// No description provided for @in_progress.
   ///
   /// In en, this message translates to:
-  /// **'In Progress'**
+  /// **'In progress'**
   String get in_progress;
 
   /// No description provided for @active.
@@ -431,7 +431,7 @@ abstract class AppLocalizations {
   /// No description provided for @workplaces.
   ///
   /// In en, this message translates to:
-  /// **'The Workplaces'**
+  /// **'Workplaces'**
   String get workplaces;
 
   /// No description provided for @the_workplace.
@@ -469,6 +469,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sort'**
   String get sort_search;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @remote_course.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote'**
+  String get remote_course;
+
+  /// No description provided for @onsite_course.
+  ///
+  /// In en, this message translates to:
+  /// **'Onsite'**
+  String get onsite_course;
+
+  /// No description provided for @open_course.
+  ///
+  /// In en, this message translates to:
+  /// **'Open course'**
+  String get open_course;
+
+  /// No description provided for @courses.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get courses;
+
+  /// No description provided for @inbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Inbox'**
+  String get inbox;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
 }
 
 class _AppLocalizationsDelegate

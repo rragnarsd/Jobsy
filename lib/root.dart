@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +9,7 @@ class Root extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
@@ -17,14 +19,23 @@ class Root extends StatelessWidget {
         unselectedItemColor: Colors.grey.shade300,
         backgroundColor: Colors.black,
         type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Heim'),
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Vinnustaðir',
+            icon: const Icon(Icons.home),
+            label: local.home,
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.school), label: 'Námskeið'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Innhólf'),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.business),
+            label: local.workplaces,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.school),
+            label: local.courses,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.message),
+            label: local.inbox,
+          ),
         ],
         onTap: _onTap,
       ),

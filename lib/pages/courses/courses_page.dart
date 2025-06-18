@@ -70,11 +70,7 @@ class CoursesCard extends StatelessWidget {
               Row(
                 spacing: 16,
                 children: [
-                  Placeholder(
-                    fallbackHeight: 80,
-                    fallbackWidth: 80,
-                    color: Colors.grey.shade300,
-                  ),
+                  Image.asset('assets/logo2.png', width: 80, height: 80),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

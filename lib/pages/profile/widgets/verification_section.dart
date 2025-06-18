@@ -1,3 +1,4 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +8,11 @@ class VerificationSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-
+    final local = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ProfileHeader(text: 'Electronic verification'),
+        ProfileHeader(text: local.verification, onEditTap: () {}),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(16),
