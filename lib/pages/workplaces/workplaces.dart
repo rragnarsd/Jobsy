@@ -21,9 +21,12 @@ class _WorkplacesState extends State<Workplaces> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.workplaces),
-        leading: const Padding(
-          padding: EdgeInsets.all(16),
-          child: Icon(Icons.person, color: Colors.white, size: 26),
+        leading: Padding(
+          padding: const EdgeInsets.all(16),
+          child: GestureDetector(
+            onTap: () => context.push('/profile'),
+            child: const Icon(Icons.person, color: Colors.white, size: 26),
+          ),
         ),
         actions: [
           IconButton(
@@ -42,14 +45,16 @@ class _WorkplacesState extends State<Workplaces> {
             padding: const EdgeInsets.symmetric(vertical: 4),
             sliver: Selector<WorkplaceProvider, List<WorkplaceModel>>(
               selector: (_, provider) => provider.workplaces,
-              builder: (context, workplaces, child) => SliverGrid.builder(
-                itemCount: workplaces.length,
+              builder: (context, workplaces, child) => SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.62,
+                  childAspectRatio: 0.68,
                 ),
-                itemBuilder: (context, index) =>
-                    SliverItem(workplaceId: workplaces[index].id),
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) =>
+                      WorkplaceItem(workplace: workplaces[index]),
+                  childCount: workplaces.length,
+                ),
               ),
             ),
           ),
@@ -60,94 +65,79 @@ class _WorkplacesState extends State<Workplaces> {
   }
 }
 
-class SliverItem extends StatelessWidget {
-  const SliverItem({super.key, required this.workplaceId});
+class WorkplaceItem extends StatelessWidget {
+  const WorkplaceItem({super.key, required this.workplace});
 
-  final String workplaceId;
+  final WorkplaceModel workplace;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
 
-    return Selector<WorkplaceProvider, WorkplaceModel?>(
-      selector: (_, provider) => provider.getWorkplaceById(workplaceId),
-      builder: (context, workplace, child) {
-        if (workplace == null) return const SizedBox.shrink();
-
-        return GestureDetector(
-          onTap: () {
-            context.read<WorkplaceProvider>().setWorkplace(workplace);
-            context.push('/workplace-details', extra: workplace.id);
-          },
-          child: Card(
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            child: Column(
-              spacing: 8,
-              children: [
-                //TODO - Add placeholder image
-                Image.asset(workplace.logoUrl ?? '', width: 100, height: 100),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
+    return GestureDetector(
+      onTap: () => context.push('/workplace-details', extra: workplace),
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: Column(
+          spacing: 8,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // TODO: Add placeholder image logic if needed
+            Image.asset(workplace.logoUrl ?? '', width: 80, height: 80),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 6,
+                children: [
+                  Text(
+                    workplace.name,
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    workplace.description,
+                    style: theme.textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 2),
+                  Row(
+                    spacing: 8,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 6,
                     children: [
+                      const Icon(Icons.person, color: Colors.white, size: 16),
+                      Text(workplace.size, style: theme.textTheme.bodyMedium),
+                    ],
+                  ),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    spacing: 8,
+                    children: [
+                      CircleAvatar(
+                        radius: 12,
+                        backgroundColor: const Color(0xffFF6D00),
+                        child: Text(workplace.jobIds.length.toString()),
+                      ),
                       Text(
-                        workplace.name,
+                        local.vacancies,
                         style: theme.textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
+                          color: const Color(0xffFF6D00),
                         ),
-                      ),
-                      Text(
-                        workplace.description,
-                        style: theme.textTheme.bodyMedium,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 2),
-                      Row(
-                        spacing: 8,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          Text(
-                            workplace.size,
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                      const Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 8,
-                        children: [
-                          CircleAvatar(
-                            radius: 16,
-                            backgroundColor: const Color(0xffFF6D00),
-                            child: Text(workplace.jobIds.length.toString()),
-                          ),
-                          Text(
-                            local.vacancies,
-                            style: theme.textTheme.bodyLarge!.copyWith(
-                              color: const Color(0xffFF6D00),
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 }

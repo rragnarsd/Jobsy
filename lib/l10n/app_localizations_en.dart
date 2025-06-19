@@ -63,6 +63,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get add_skills => 'Add skills';
 
   @override
+  String get my_skills => 'My skills';
+
+  @override
   String get languages => 'Languages';
 
   @override
@@ -217,4 +220,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get home => 'Home';
+
+  @override
+  String get startDate => 'Starts';
+
+  @override
+  String get duration => 'Timespan';
 }

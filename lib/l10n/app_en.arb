@@ -19,6 +19,7 @@
   "add_education": "Add new education",
   "skills": "Skills",
   "add_skills": "Add skills",
+  "my_skills": "My skills",
   "languages": "Languages",
   "icelandic": "Icelandic",
   "english": "English",
@@ -78,7 +79,7 @@
   "courses": "Courses",
   "inbox": "Inbox",
   "in_progress": "In progress",
-  "home": "Home"
-
-
+  "home": "Home",
+  "startDate": "Starts",
+  "duration": "Timespan"
 }

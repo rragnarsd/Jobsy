@@ -2,7 +2,6 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart' as job_model;
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/courses/courses_page.dart';
-import 'package:codehatch/pages/profile/profile_page.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,10 +33,7 @@ class _HomePageState extends State<HomePage> {
             spacing: 8,
             children: [
               GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage()),
-                ),
+                onTap: () => context.push('/profile'),
                 child: const Icon(Icons.person, color: Colors.white, size: 26),
               ),
               const Icon(Icons.favorite, color: Colors.white, size: 24),
@@ -102,33 +98,18 @@ class AppJobList extends StatelessWidget {
 }
 
 class JobCard extends StatelessWidget {
-  final WorkplaceModel workplace;
-
   const JobCard({super.key, required this.workplace});
+
+  final WorkplaceModel workplace;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    job_model.JobModel? primaryJob;
-    if (workplace.jobIds.isNotEmpty) {
-      try {
-        primaryJob = job_model.jobs.firstWhere(
-          (job) => job.id == workplace.jobIds.first,
-          orElse: () => job_model.jobs.firstWhere(
-            (job) => job.workplaceId == workplace.id,
-            orElse: () => job_model.jobs.first,
-          ),
-        );
-      } catch (e) {
-        if (job_model.jobs.isNotEmpty) {
-          primaryJob = job_model.jobs.first;
-        }
-      }
-    }
+    final primaryJob = job_model.jobs.primaryForWorkplace(workplace);
 
     if (primaryJob == null) {
-      return const Card();
+      return const SizedBox.shrink();
     }
 
     return GestureDetector(
@@ -169,7 +150,6 @@ class JobCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-
                   SizedBox(
                     height: 20,
                     child: Row(
@@ -185,6 +165,7 @@ class JobCard extends StatelessWidget {
                           endIndent: 3,
                         ),
                         IconTextRow(
+                          //TODO - Modify this
                           icon: Icons.location_on,
                           text: primaryJob.isRemote
                               ? 'Remote'
@@ -221,5 +202,23 @@ class JobCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension JobUtils on List<job_model.JobModel> {
+  job_model.JobModel? primaryForWorkplace(WorkplaceModel workplace) {
+    if (workplace.jobIds.isNotEmpty) {
+      final jobById = where(
+        (job) => job.id == workplace.jobIds.first,
+      ).firstOrNull;
+      if (jobById != null) return jobById;
+    }
+
+    final jobByWorkplace = where(
+      (job) => job.workplaceId == workplace.id,
+    ).firstOrNull;
+    if (jobByWorkplace != null) return jobByWorkplace;
+
+    return isNotEmpty ? first : null;
   }
 }

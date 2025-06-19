@@ -19,31 +19,32 @@ class SkillSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
-    return Column(
-      children: [
-        ProfileHeader(
-          text: local.skills,
-          onEditTap: () {},
-          //TODO
-          trailingText: 'My skills (38)',
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: skills
-                .map(
-                  (skill) => SizedBox(
-                    width: (MediaQuery.of(context).size.width - 52) / 2,
-                    child: SkillCard(skill: skill),
-                  ),
-                )
-                .toList(),
+    return SliverToBoxAdapter(
+      child: Column(
+        children: [
+          ProfileHeader(
+            text: local.skills,
+            onEditTap: () {},
+            trailingText: '${local.my_skills} (${skills.length})',
           ),
-        ),
-        ProfileAddBtn(title: local.add_skills),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: skills
+                  .map(
+                    (skill) => SizedBox(
+                      width: (MediaQuery.of(context).size.width - 52) / 2,
+                      child: SkillCard(skill: skill),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          ProfileAddBtn(title: local.add_skills),
+        ],
+      ),
     );
   }
 }

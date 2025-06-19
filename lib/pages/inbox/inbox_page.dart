@@ -1,5 +1,6 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class InboxPage extends StatelessWidget {
   const InboxPage({super.key});
@@ -9,9 +10,12 @@ class InboxPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('${AppLocalizations.of(context)!.inbox} (20)'),
-        leading: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Icon(Icons.person, color: Colors.white, size: 26),
+        leading: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GestureDetector(
+            onTap: () => context.push('/profile'),
+            child: const Icon(Icons.person, color: Colors.white, size: 26),
+          ),
         ),
         actions: [
           //TODO - Add bottomsheet for sorting options

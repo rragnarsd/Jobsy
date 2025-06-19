@@ -11,47 +11,48 @@ class LanguageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
-    return Column(
-      children: [
-        ProfileHeader(text: local.languages, onEditTap: () {}),
-        Card(
-          child: ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: languages.length,
-            separatorBuilder: (context, index) =>
-                const Divider(height: 0.5, color: Colors.grey),
-            itemBuilder: (context, index) {
-              final language = languages[index];
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      spacing: 16,
-                      children: [
-                        const Placeholder(
-                          fallbackHeight: 20,
-                          fallbackWidth: 40,
-                        ),
-                        Text(
-                          language.name,
-                          style: theme.textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w600,
+    return SliverToBoxAdapter(
+      child: Column(
+        children: [
+          ProfileHeader(text: local.languages, onEditTap: () {}),
+          Card(
+            child: Column(
+              children: List.generate(languages.length * 2 - 1, (index) {
+                if (index.isOdd) {
+                  return const Divider(height: 0.5, color: Colors.grey);
+                }
+
+                final language = languages[index ~/ 2];
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Placeholder(
+                            fallbackHeight: 20,
+                            fallbackWidth: 40,
                           ),
-                        ),
-                      ],
-                    ),
-                    Text(language.level, style: theme.textTheme.bodyLarge),
-                  ],
-                ),
-              );
-            },
+                          const SizedBox(width: 16),
+                          Text(
+                            language.name,
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(language.level, style: theme.textTheme.bodyLarge),
+                    ],
+                  ),
+                );
+              }),
+            ),
           ),
-        ),
-        ProfileAddBtn(title: local.add_language),
-      ],
+          ProfileAddBtn(title: local.add_language),
+        ],
+      ),
     );
   }
 }

@@ -162,6 +162,7 @@ class JobLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    //TODO - Add Map
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -183,6 +184,7 @@ class JobLocation extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 spacing: 8,
                 children: [
+                  //TODO - Remove hardcoded remote
                   Text(
                     job.location ?? 'Remote',
                     style: theme.textTheme.bodyLarge,
@@ -251,7 +253,7 @@ class JobLanguageSkills extends StatelessWidget {
                               ),
                               child: Text(
                                 local.requirement,
-                                style: theme.textTheme.bodyLarge,
+                                style: theme.textTheme.bodyMedium,
                               ),
                             ),
                           ),
@@ -278,6 +280,8 @@ class JobDeadline extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
+
+    final formatter = intl.DateFormat('d. MMM yyyy');
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -294,10 +298,7 @@ class JobDeadline extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    intl.DateFormat(
-                      'd. MMM yyyy',
-                      'is_IS',
-                    ).format(job.publishedDate),
+                    formatter.format(job.publishedDate),
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
@@ -316,10 +317,7 @@ class JobDeadline extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    intl.DateFormat(
-                      'd. MMM yyyy',
-                      'is_IS',
-                    ).format(job.deadline),
+                    formatter.format(job.deadline),
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
@@ -348,6 +346,7 @@ class JobDeadline extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
+                    //TODO - Add save logic
                     onPressed: () {},
                     icon: Row(
                       children: [
@@ -358,6 +357,7 @@ class JobDeadline extends StatelessWidget {
                     ),
                   ),
                   IconButton(
+                    //TODO - Add share logic
                     onPressed: () {},
                     icon: Row(
                       children: [
@@ -481,6 +481,7 @@ class JobHeader extends StatelessWidget {
       (w) => w.id == job.workplaceId,
       orElse: () => dummyWorkplaces.first,
     );
+
     return Row(
       children: [
         Padding(
@@ -498,10 +499,8 @@ class JobHeader extends StatelessWidget {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding: WidgetStateProperty.all(EdgeInsets.zero),
                     ),
-                    onPressed: () => context.push(
-                      '/workplace-details',
-                      extra: job.workplaceId,
-                    ),
+                    onPressed: () =>
+                        context.push('/workplace-details', extra: workplace),
                     child: Row(
                       children: [
                         Text(

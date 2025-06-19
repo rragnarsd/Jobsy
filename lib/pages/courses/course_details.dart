@@ -1,30 +1,39 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/utils/enums.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CourseDetailsPage extends StatelessWidget {
-  const CourseDetailsPage({super.key});
+  const CourseDetailsPage({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+
     return Scaffold(
       bottomNavigationBar: const CourseBottomBar(),
       body: CustomScrollView(
         slivers: [
-          const CourseSliverBar(),
+          CourseSliverBar(course: course),
           SliverToBoxAdapter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
                 const CourseHandle(),
-                const CourseHeader(),
-                const CourseWorkplaceTile(),
-                const CourseType(),
+                CourseHeader(course: course),
+                CourseWorkplaceTile(course: course),
+                CourseType(course: course),
                 CourseDivider(text: local.about_course),
-                const CourseInfo(),
-                const CourseCategory(),
-                CourseDivider(text: '${local.more_from} X'),
+                CourseInfo(course: course),
+                CourseCategory(course: course),
+                CourseDivider(
+                  text: '${local.more_from} ${course.businessName}',
+                ),
               ],
             ),
           ),
@@ -57,6 +66,7 @@ class CourseDivider extends StatelessWidget {
   const CourseDivider({super.key, required this.text});
 
   final String text;
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -74,7 +84,9 @@ class CourseDivider extends StatelessWidget {
 }
 
 class CourseCategory extends StatelessWidget {
-  const CourseCategory({super.key});
+  const CourseCategory({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
@@ -95,21 +107,29 @@ class CourseCategory extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  child: Text(
-                    local.full_time,
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                ),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: course.categories
+                    .map(
+                      (category) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          child: Text(
+                            category,
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           ),
@@ -120,7 +140,9 @@ class CourseCategory extends StatelessWidget {
 }
 
 class CourseInfo extends StatelessWidget {
-  const CourseInfo({super.key});
+  const CourseInfo({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +150,7 @@ class CourseInfo extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Text(
-          'Námskeiðið er fyrir þá sem vilja læra að vinna með fjarkar. Það eru margar áhugaverðar upplýsingar sem þú getur fengið út úr námskeiðinu.',
+          course.courseInfo,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -137,56 +159,56 @@ class CourseInfo extends StatelessWidget {
 }
 
 class CourseType extends StatelessWidget {
-  const CourseType({super.key});
+  const CourseType({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
+    final formatter = DateFormat('d. MMM yyyy');
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  spacing: 12,
-                  children: [
-                    const Icon(Icons.school, size: 16, color: Colors.grey),
-                    Text(
-                      local.course_type,
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                Text('Fjarkennsla', style: theme.textTheme.bodyLarge),
-              ],
+            CourseInfoRow(
+              icon: Icons.school,
+              iconSize: 22,
+              label: local.course_type,
+              value: course.type == CourseTypes.remote
+                  ? CourseTypes.remote.displayName
+                  : CourseTypes.onSite.displayName,
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 8),
               child: Divider(),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  spacing: 12,
-                  children: [
-                    const Icon(Icons.school, size: 16, color: Colors.grey),
-                    Text(
-                      local.price,
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                Text('9.000 kr', style: theme.textTheme.bodyLarge),
-              ],
+            CourseInfoRow(
+              icon: Icons.attach_money,
+              iconSize: 26,
+              label: local.price,
+              value: '\$${course.price.toStringAsFixed(0)}',
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Divider(),
+            ),
+            CourseInfoRow(
+              icon: Icons.calendar_today,
+              iconSize: 20,
+              label: local.startDate,
+              value: formatter.format(course.startDate),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Divider(),
+            ),
+            CourseInfoRow(
+              icon: Icons.watch_later_outlined,
+              iconSize: 22,
+              label: local.duration,
+              value: '${course.timeSpan}',
             ),
           ],
         ),
@@ -195,30 +217,62 @@ class CourseType extends StatelessWidget {
   }
 }
 
+class CourseInfoRow extends StatelessWidget {
+  const CourseInfoRow({
+    super.key,
+    required this.icon,
+    required this.iconSize,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final double iconSize;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: iconSize, color: Colors.grey),
+            const SizedBox(width: 12),
+            Text(
+              label,
+              style: theme.textTheme.bodyLarge!.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
+        Text(value, style: theme.textTheme.bodyLarge),
+      ],
+    );
+  }
+}
+
 class CourseWorkplaceTile extends StatelessWidget {
-  const CourseWorkplaceTile({super.key});
+  const CourseWorkplaceTile({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Image.asset('assets/logo2.png', width: 60, height: 60),
-                const SizedBox(width: 16),
-                Text('Landspítali', style: theme.textTheme.titleLarge),
-              ],
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.keyboard_arrow_right),
-            ),
-          ],
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: ListTile(
+          title: Text(course.businessName, style: theme.textTheme.titleLarge),
+          leading: Image.asset(course.logoUrl, width: 60, height: 60),
+          trailing: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.keyboard_arrow_right),
+          ),
         ),
       ),
     );
@@ -226,19 +280,21 @@ class CourseWorkplaceTile extends StatelessWidget {
 }
 
 class CourseHeader extends StatelessWidget {
-  const CourseHeader({super.key});
+  const CourseHeader({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Sambönd sem kæfa',
-            style: theme.textTheme.headlineMedium!.copyWith(
+            course.title,
+            style: theme.textTheme.headlineSmall!.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -251,7 +307,9 @@ class CourseHeader extends StatelessWidget {
 }
 
 class CourseSliverBar extends StatelessWidget {
-  const CourseSliverBar({super.key});
+  const CourseSliverBar({super.key, required this.course});
+
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
@@ -263,7 +321,13 @@ class CourseSliverBar extends StatelessWidget {
         icon: const Icon(Icons.arrow_back),
       ),
       flexibleSpace: FlexibleSpaceBar(
-        background: Image.asset('assets/dummy.png', fit: BoxFit.cover),
+        background: CachedNetworkImage(
+          errorWidget: (_, __, ___) => const Icon(Icons.error),
+          placeholder: (_, __) =>
+              const Center(child: CircularProgressIndicator()),
+          imageUrl: course.imageUrl,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:codehatch/models/workplace_model.dart';
+import 'package:flutter/material.dart';
 
 class WorkplaceProvider extends ChangeNotifier {
   WorkplaceModel? _workplace;
@@ -20,6 +20,4 @@ class WorkplaceProvider extends ChangeNotifier {
       return null;
     }
   }
-
-  bool get hasWorkplace => _workplace != null;
 }

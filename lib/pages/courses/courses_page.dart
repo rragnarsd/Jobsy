@@ -1,3 +1,6 @@
+import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/utils/enums.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,14 +14,20 @@ class CoursesPage extends StatefulWidget {
 
 class _CoursesPageState extends State<CoursesPage> {
   bool _showSearch = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Námskeið (122)'),
-        leading: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Icon(Icons.person, color: Colors.white, size: 26),
+        title: Text(
+          '${AppLocalizations.of(context)!.courses} (${CourseModel.courses.length})',
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GestureDetector(
+            onTap: () => context.push('/profile'),
+            child: const Icon(Icons.person, color: Colors.white, size: 26),
+          ),
         ),
         actions: [
           IconButton(
@@ -30,7 +39,7 @@ class _CoursesPageState extends State<CoursesPage> {
       body: CustomScrollView(
         slivers: [
           if (_showSearch) const AppSearchBar(),
-          const CoursesList(),
+          CoursesList(courses: CourseModel.courses),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
       ),
@@ -39,29 +48,31 @@ class _CoursesPageState extends State<CoursesPage> {
 }
 
 class CoursesList extends StatelessWidget {
-  const CoursesList({super.key});
+  const CoursesList({super.key, required this.courses});
+
+  final List<CourseModel> courses;
 
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (context, index) => CoursesCard(index: index),
-        childCount: 10,
+        (context, index) => CoursesCard(course: courses[index]),
+        childCount: courses.length,
       ),
     );
   }
 }
 
 class CoursesCard extends StatelessWidget {
-  const CoursesCard({super.key, required this.index});
+  const CoursesCard({super.key, required this.course});
 
-  final int index;
+  final CourseModel course;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return GestureDetector(
-      onTap: () => context.push('/courses-details'),
+      onTap: () => context.push('/courses-details', extra: course),
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -70,18 +81,18 @@ class CoursesCard extends StatelessWidget {
               Row(
                 spacing: 16,
                 children: [
-                  Image.asset('assets/logo2.png', width: 80, height: 80),
+                  Image.asset(course.logoUrl, width: 80, height: 80),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Námskeiðsheiti',
+                        course.title,
                         style: theme.textTheme.bodyLarge!.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       Text(
-                        'Opni háskólinn í HR',
+                        course.businessName,
                         style: theme.textTheme.bodyMedium,
                       ),
                     ],
@@ -94,24 +105,30 @@ class CoursesCard extends StatelessWidget {
                 child: Row(
                   spacing: 4,
                   children: [
-                    const IconTextRow(
+                    IconTextRow(
                       icon: Icons.calendar_today,
-                      text: '01.01.2023',
+                      text:
+                          '${course.startDate.day.toString().padLeft(2, '0')}.${course.startDate.month.toString().padLeft(2, '0')}.${course.startDate.year}',
                     ),
                     VerticalDivider(
                       color: Colors.grey.shade500,
                       indent: 3,
                       endIndent: 3,
                     ),
-                    const IconTextRow(icon: Icons.money, text: '26.000 kr'),
+                    IconTextRow(
+                      icon: Icons.attach_money,
+                      text: course.price.toStringAsFixed(0),
+                    ),
                     VerticalDivider(
                       color: Colors.grey.shade500,
                       indent: 3,
                       endIndent: 3,
                     ),
-                    const IconTextRow(
+                    IconTextRow(
                       icon: Icons.location_on,
-                      text: 'Staðarnám',
+                      text: course.type == CourseTypes.remote
+                          ? CourseTypes.remote.displayName
+                          : CourseTypes.onSite.displayName,
                     ),
                   ],
                 ),

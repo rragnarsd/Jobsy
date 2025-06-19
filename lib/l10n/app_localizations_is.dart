@@ -63,6 +63,9 @@ class AppLocalizationsIs extends AppLocalizations {
   String get add_skills => 'Bæta við hæfni';
 
   @override
+  String get my_skills => 'Mín hæfni';
+
+  @override
   String get languages => 'Tungumál';
 
   @override
@@ -217,4 +220,10 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get home => 'Heim';
+
+  @override
+  String get startDate => 'Hefst';
+
+  @override
+  String get duration => 'Tímalengd';
 }

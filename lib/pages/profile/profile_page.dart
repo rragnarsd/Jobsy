@@ -37,29 +37,24 @@ class ProfilePage extends StatelessWidget {
 
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const ProfileSection(),
-                const ProfileActionButtons(),
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 0.5,
-                  endIndent: 16,
-                  indent: 16,
-                ),
-                const AboutSection(),
-                const VerificationSection(),
-                const JobSection(),
-                const EducationSection(),
-                SkillSection(),
-                const LanguageSection(),
-                const ReferenceSection(),
-                const LinkSection(),
-              ],
+          const ProfileSection(),
+          const ProfileActionButtons(),
+          const SliverToBoxAdapter(
+            child: Divider(
+              color: Colors.grey,
+              thickness: 0.5,
+              endIndent: 16,
+              indent: 16,
             ),
           ),
+          const AboutSection(),
+          const VerificationSection(),
+          const JobSection(),
+          const EducationSection(),
+          SkillSection(),
+          const LanguageSection(),
+          const ReferenceSection(),
+          const LinkSection(),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
       ),

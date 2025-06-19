@@ -50,7 +50,7 @@ final List<WorkplaceModel> dummyWorkplaces = [
     primaryJobTitle: 'AI Software Engineer',
     imageUrl:
         'https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg',
-    logoUrl: 'assets/logo.png',
+    logoUrl: 'assets/logos/tech-innovators.png',
     awards: ['Best AI Startup 2023', 'Top Workplace 2022'],
     perks: [
       PerkModel(
@@ -73,7 +73,7 @@ final List<WorkplaceModel> dummyWorkplaces = [
     description: 'Focused on sustainable energy and green technologies.',
     imageUrl:
         'https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg',
-    logoUrl: 'assets/logo.png',
+    logoUrl: 'assets/logos/green-future.png',
     motto: 'Powering a greener tomorrow.',
     location: 'Austin, TX',
     websiteUrl: 'https://greenfuture.com',
@@ -88,7 +88,7 @@ final List<WorkplaceModel> dummyWorkplaces = [
         'E-learning platform helping students achieve academic success.',
     imageUrl:
         'https://images.pexels.com/photos/5940837/pexels-photo-5940837.jpeg',
-    logoUrl: 'assets/logo.png',
+    logoUrl: 'assets/logos/edusmart.png',
     motto: 'Unlocking knowledge, empowering futures.',
     location: 'New York, NY',
     websiteUrl: 'https://edusmart.com',
@@ -112,7 +112,7 @@ final List<WorkplaceModel> dummyWorkplaces = [
     description: 'Innovating healthcare through advanced software systems.',
     imageUrl:
         'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg',
-    logoUrl: 'assets/logo.png',
+    logoUrl: 'assets/logos/health-tech.png',
     motto: 'Unlocking knowledge, empowering futures.',
     location: 'Seattle, WA',
     websiteUrl: 'https://healthtechpartners.com',
@@ -127,7 +127,7 @@ final List<WorkplaceModel> dummyWorkplaces = [
     description: 'A creative design agency with a focus on branding and UX.',
     imageUrl:
         'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg',
-    logoUrl: 'assets/logo.png',
+    logoUrl: 'assets/logos/design-lab.png',
     motto: 'Care meets code.',
     location: 'Los Angeles, CA',
     websiteUrl: 'https://designlabstudio.com',

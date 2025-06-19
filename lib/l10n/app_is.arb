@@ -20,6 +20,7 @@
   "add_education": "Bæta við menntun",
   "skills": "Hæfni",
   "add_skills": "Bæta við hæfni",
+  "my_skills": "Mín hæfni",
   "languages": "Tungumál",
   "icelandic": "Íslenska",
   "english": "Enska",
@@ -79,5 +80,7 @@
   "courses": "Námskeið",
   "inbox": "Innhólf",
   "in_progress": "Í úrvinnslu",
-  "home": "Heim"
+  "home": "Heim",
+  "startDate": "Hefst",
+  "duration": "Tímalengd"
 }

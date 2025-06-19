@@ -206,6 +206,12 @@ abstract class AppLocalizations {
   /// **'Add skills'**
   String get add_skills;
 
+  /// No description provided for @my_skills.
+  ///
+  /// In en, this message translates to:
+  /// **'My skills'**
+  String get my_skills;
+
   /// No description provided for @languages.
   ///
   /// In en, this message translates to:
@@ -517,6 +523,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get home;
+
+  /// No description provided for @startDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts'**
+  String get startDate;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Timespan'**
+  String get duration;
 }
 
 class _AppLocalizationsDelegate
