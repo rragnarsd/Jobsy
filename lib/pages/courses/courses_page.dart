@@ -4,6 +4,7 @@ import 'package:codehatch/utils/enums.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class CoursesPage extends StatefulWidget {
   const CoursesPage({super.key});
@@ -33,6 +34,11 @@ class _CoursesPageState extends State<CoursesPage> {
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),
             icon: const Icon(Icons.search, color: Colors.white),
+          ),
+          IconButton(
+            //TODO - Add bottomsheet for filters
+            onPressed: () {},
+            icon: const Icon(Icons.filter_list, color: Colors.white),
           ),
         ],
       ),
@@ -71,6 +77,7 @@ class CoursesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final DateFormat formatter = DateFormat('d.MMM.yyyy');
     return GestureDetector(
       onTap: () => context.push('/courses-details', extra: course),
       child: Card(
@@ -107,8 +114,7 @@ class CoursesCard extends StatelessWidget {
                   children: [
                     IconTextRow(
                       icon: Icons.calendar_today,
-                      text:
-                          '${course.startDate.day.toString().padLeft(2, '0')}.${course.startDate.month.toString().padLeft(2, '0')}.${course.startDate.year}',
+                      text: formatter.format(course.startDate),
                     ),
                     VerticalDivider(
                       color: Colors.grey.shade500,

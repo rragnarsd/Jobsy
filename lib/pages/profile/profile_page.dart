@@ -10,6 +10,7 @@ import 'package:codehatch/pages/profile/widgets/reference_section.dart';
 import 'package:codehatch/pages/profile/widgets/skill_section.dart';
 import 'package:codehatch/pages/profile/widgets/verification_section.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -30,7 +31,7 @@ class ProfilePage extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {},
+            onPressed: () => context.push('/settings'),
           ),
         ],
       ),

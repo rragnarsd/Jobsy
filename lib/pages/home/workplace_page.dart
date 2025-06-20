@@ -240,10 +240,11 @@ class WorkplaceJobs extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 12),
               const Divider(),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Text(
                 'Starf á lager',
                 style: theme.textTheme.bodyLarge!.copyWith(

@@ -8,6 +8,7 @@ import 'package:codehatch/pages/home/job_description_page.dart';
 import 'package:codehatch/pages/home/workplace_page.dart';
 import 'package:codehatch/pages/inbox/inbox_page.dart';
 import 'package:codehatch/pages/profile/profile_page.dart';
+import 'package:codehatch/pages/profile/settings_page.dart';
 import 'package:codehatch/pages/workplaces/workplaces.dart';
 import 'package:codehatch/root.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,10 @@ final router = GoRouter(
       ],
     ),
     GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsPage(),
+    ),
     GoRoute(
       path: '/job-description',
       builder: (context, state) {

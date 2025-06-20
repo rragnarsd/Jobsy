@@ -41,20 +41,16 @@ class _WorkplacesState extends State<Workplaces> {
             const AppSearchBar(),
             const SliverToBoxAdapter(child: SizedBox(height: 4)),
           ],
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            sliver: Selector<WorkplaceProvider, List<WorkplaceModel>>(
-              selector: (_, provider) => provider.workplaces,
-              builder: (context, workplaces, child) => SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.68,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) =>
-                      WorkplaceItem(workplace: workplaces[index]),
-                  childCount: workplaces.length,
-                ),
+          Selector<WorkplaceProvider, List<WorkplaceModel>>(
+            selector: (_, provider) => provider.workplaces,
+            builder: (context, workplaces, child) => SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.76,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => WorkplaceItem(workplace: workplaces[index]),
+                childCount: workplaces.length,
               ),
             ),
           ),
@@ -78,9 +74,8 @@ class WorkplaceItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.push('/workplace-details', extra: workplace),
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
         child: Column(
-          spacing: 8,
           mainAxisSize: MainAxisSize.min,
           children: [
             // TODO: Add placeholder image logic if needed
@@ -109,8 +104,13 @@ class WorkplaceItem extends StatelessWidget {
                     spacing: 8,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.person, color: Colors.white, size: 16),
-                      Text(workplace.size, style: theme.textTheme.bodyMedium),
+                      Icon(Icons.person, color: Colors.grey.shade400, size: 16),
+                      Text(
+                        workplace.size,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
                     ],
                   ),
                   const Divider(),
@@ -119,14 +119,16 @@ class WorkplaceItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: 8,
                     children: [
-                      CircleAvatar(
-                        radius: 12,
-                        backgroundColor: const Color(0xffFF6D00),
-                        child: Text(workplace.jobIds.length.toString()),
+                      Center(
+                        child: CircleAvatar(
+                          radius: 12,
+                          backgroundColor: const Color(0xffFF6D00),
+                          child: Text(workplace.jobIds.length.toString()),
+                        ),
                       ),
                       Text(
                         local.vacancies,
-                        style: theme.textTheme.bodyLarge!.copyWith(
+                        style: theme.textTheme.bodyMedium!.copyWith(
                           color: const Color(0xffFF6D00),
                         ),
                       ),

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum JobType { fullTime, partTime, internship, freelance, temporary }
 
 enum CourseTypes { onSite, remote }
@@ -27,6 +29,17 @@ extension JobStatusExtension on JobStatus {
         return 'Active';
       case JobStatus.ended:
         return 'Ended';
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case JobStatus.inProgress:
+        return Colors.orange;
+      case JobStatus.active:
+        return Colors.green;
+      case JobStatus.ended:
+        return Colors.grey;
     }
   }
 }

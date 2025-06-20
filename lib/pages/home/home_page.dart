@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: () => context.push('/profile'),
                 child: const Icon(Icons.person, color: Colors.white, size: 26),
               ),
+              //TODO - Hide favorite icon if not logged in
               const Icon(Icons.favorite, color: Colors.white, size: 24),
             ],
           ),

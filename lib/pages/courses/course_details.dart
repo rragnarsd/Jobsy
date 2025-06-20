@@ -239,7 +239,7 @@ class CourseInfoRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, size: iconSize, color: Colors.grey),
+            Icon(icon, size: iconSize, color: const Color(0xFFFF7200)),
             const SizedBox(width: 12),
             Text(
               label,
@@ -314,11 +314,16 @@ class CourseSliverBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: 220,
-      actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.share))],
+      expandedHeight: 160,
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.share, color: Colors.white),
+        ),
+      ],
       leading: IconButton(
         onPressed: () => Navigator.of(context).pop(),
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back, color: Colors.white),
       ),
       flexibleSpace: FlexibleSpaceBar(
         background: CachedNetworkImage(
