@@ -1,9 +1,10 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/models/workplace_model.dart';
+import 'package:codehatch/utils/colors.dart';
+import 'package:codehatch/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart' as intl;
 
 class JobDescriptionPage extends StatelessWidget {
   const JobDescriptionPage({super.key, required this.job});
@@ -17,7 +18,7 @@ class JobDescriptionPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(local.job_description),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: JobsyColors.whiteColor),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -32,9 +33,17 @@ class JobDescriptionPage extends StatelessWidget {
                   JobTitle(job: job),
                   JobDescription(job: job),
                   const SizedBox(height: 8),
-                  const Divider(),
+                  Divider(
+                    endIndent: 16,
+                    indent: 16,
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                  ),
                   JobResponsibility(job: job),
-                  const Divider(),
+                  Divider(
+                    endIndent: 16,
+                    indent: 16,
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                  ),
                   JobQualification(job: job),
                 ],
               ),
@@ -83,7 +92,7 @@ class JobProfession extends StatelessWidget {
                       (profession) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey),
+                          border: Border.all(color: JobsyColors.greyColor),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -133,7 +142,7 @@ class JobType extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey),
+                  border: Border.all(color: JobsyColors.greyColor),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -176,9 +185,11 @@ class JobLocation extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Divider(
+                  color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,7 +203,7 @@ class JobLocation extends StatelessWidget {
                   const Icon(
                     Icons.keyboard_arrow_right,
                     size: 24,
-                    color: Colors.white,
+                    color: JobsyColors.whiteColor,
                   ),
                 ],
               ),
@@ -244,7 +255,7 @@ class JobLanguageSkills extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.grey),
+                              border: Border.all(color: JobsyColors.greyColor),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -281,7 +292,6 @@ class JobDeadline extends StatelessWidget {
     ThemeData theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
 
-    final formatter = intl.DateFormat('d. MMM yyyy');
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -298,14 +308,16 @@ class JobDeadline extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    formatter.format(job.publishedDate),
+                    job.publishedDate.toShortFormattedDate(),
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Divider(
+                  color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -317,28 +329,34 @@ class JobDeadline extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    formatter.format(job.deadline),
+                    job.deadline.toShortFormattedDate(),
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Divider(),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffFF6D00),
-                  padding: const EdgeInsets.all(16),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Divider(
+                  color: JobsyColors.greyColor.withValues(alpha: 0.3),
                 ),
-                child: Row(
-                  spacing: 8,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.person, size: 24, color: Colors.white),
-                    Text(local.apply, style: theme.textTheme.titleLarge),
-                  ],
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: JobsyColors.primaryColor,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                  ),
+                  label: Text(local.apply, style: theme.textTheme.titleLarge),
+                  icon: const Icon(
+                    Icons.person,
+                    size: 24,
+                    color: JobsyColors.whiteColor,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -350,7 +368,10 @@ class JobDeadline extends StatelessWidget {
                     onPressed: () {},
                     icon: Row(
                       children: [
-                        const Icon(Icons.favorite, color: Color(0xffFF6D00)),
+                        const Icon(
+                          Icons.favorite,
+                          color: JobsyColors.primaryColor,
+                        ),
                         const SizedBox(width: 8),
                         Text(local.save, style: theme.textTheme.bodyLarge),
                       ],
@@ -361,7 +382,10 @@ class JobDeadline extends StatelessWidget {
                     onPressed: () {},
                     icon: Row(
                       children: [
-                        const Icon(Icons.share, color: Color(0xffFF6D00)),
+                        const Icon(
+                          Icons.share,
+                          color: JobsyColors.primaryColor,
+                        ),
                         const SizedBox(width: 8),
                         Text(local.share, style: theme.textTheme.bodyLarge),
                       ],
@@ -506,7 +530,7 @@ class JobHeader extends StatelessWidget {
                         Text(
                           AppLocalizations.of(context)!.about_company,
                           style: theme.textTheme.bodyLarge!.copyWith(
-                            color: const Color(0xFFFF7200),
+                            color: JobsyColors.primaryColor,
                           ),
                         ),
                         const Icon(Icons.keyboard_arrow_right, size: 24),

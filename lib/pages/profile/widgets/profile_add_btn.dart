@@ -1,3 +1,4 @@
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileAddBtn extends StatelessWidget {
@@ -13,18 +14,18 @@ class ProfileAddBtn extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-          backgroundColor: const Color(0xFF141414),
+          backgroundColor: JobsyColors.cardColor,
         ),
         child: Row(
           spacing: 8,
           children: [
-            const Icon(Icons.add, size: 24, color: Color(0xFFFF7200)),
+            const Icon(Icons.add, size: 24, color: JobsyColors.primaryColor),
             Text(
               title,
               style: theme.textTheme.bodyLarge!.copyWith(
-                color: const Color(0xFFFF7200),
+                color: JobsyColors.primaryColor,
                 fontWeight: FontWeight.w600,
               ),
             ),

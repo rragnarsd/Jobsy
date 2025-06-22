@@ -1,5 +1,6 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/inbox_model.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,24 +8,29 @@ import 'package:go_router/go_router.dart';
 class InboxPage extends StatelessWidget {
   const InboxPage({super.key});
 
-  //TODO - Hide inbox if not logged in
+  //TODO - show inboxdata if authenticated, else show a message to login
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //TODO - Add inbox count
         title: Text('${AppLocalizations.of(context)!.inbox} (20)'),
         leading: Padding(
           padding: const EdgeInsets.all(16.0),
           child: GestureDetector(
             onTap: () => context.push('/profile'),
-            child: const Icon(Icons.person, color: Colors.white, size: 26),
+            child: const Icon(
+              Icons.person,
+              color: JobsyColors.whiteColor,
+              size: 26,
+            ),
           ),
         ),
         actions: [
           //TODO - Add bottomsheet for sorting options
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.filter_list, color: Colors.white),
+            icon: const Icon(Icons.filter_list, color: JobsyColors.whiteColor),
           ),
         ],
       ),
@@ -68,14 +74,20 @@ class InboxCard extends StatelessWidget {
                   inboxItem.jobStatus.displayName.toUpperCase(),
                   style: theme.textTheme.bodyMedium!.copyWith(
                     color: inboxItem.jobStatus.color,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 //Expiry Date
-                Text(inboxItem.deadline, style: theme.textTheme.bodyMedium),
+                Text(
+                  inboxItem.deadline,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: JobsyColors.greyColor,
+                  ),
+                ),
               ],
             ),
           ),
-          const Divider(),
+          Divider(color: JobsyColors.greyColor.withValues(alpha: 0.3)),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -99,7 +111,7 @@ class InboxCard extends StatelessWidget {
                     Text(
                       inboxItem.workplace,
                       style: theme.textTheme.bodyMedium!.copyWith(
-                        color: const Color(0xFFFF7200),
+                        color: JobsyColors.primaryColor,
                       ),
                     ),
                   ],

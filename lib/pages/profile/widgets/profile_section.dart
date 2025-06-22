@@ -1,3 +1,4 @@
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSection extends StatelessWidget {
@@ -12,7 +13,7 @@ class ProfileSection extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              const CircleAvatar(radius: 32, backgroundColor: Colors.grey),
+              const CircleAvatar(radius: 32, backgroundColor: JobsyColors.greyColor),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -35,7 +36,7 @@ class ProfileSection extends StatelessWidget {
                             Icon(
                               item[0] as IconData,
                               size: 20,
-                              color: Colors.grey,
+                              color: JobsyColors.greyColor
                             ),
                             const SizedBox(width: 8),
                             Text(
@@ -52,7 +53,7 @@ class ProfileSection extends StatelessWidget {
               const Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: Color(0xFFFF7200),
+                color: JobsyColors.primaryColor,
               ),
             ],
           ),

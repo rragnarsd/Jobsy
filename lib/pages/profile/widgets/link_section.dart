@@ -2,6 +2,7 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/link_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class LinkSection extends StatelessWidget {
@@ -19,7 +20,7 @@ class LinkSection extends StatelessWidget {
             child: Column(
               children: List.generate(links.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(height: 0.5, color: Colors.grey);
+                  return const Divider(height: 0.5, color: JobsyColors.greyColor);
                 }
 
                 final link = links[index ~/ 2];
@@ -29,7 +30,7 @@ class LinkSection extends StatelessWidget {
                     spacing: 16,
                     children: [
                       const CircleAvatar(
-                        backgroundColor: Colors.grey,
+                        backgroundColor: JobsyColors.greyColor,
                         radius: 16,
                         child: Icon(Icons.link),
                       ),
@@ -45,7 +46,7 @@ class LinkSection extends StatelessWidget {
                           Text(
                             link.media,
                             style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.grey,
+                              color: JobsyColors.greyColor,
                             ),
                           ),
                         ],

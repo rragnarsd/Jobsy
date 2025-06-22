@@ -1,5 +1,6 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class VerificationSection extends StatelessWidget {
@@ -42,7 +43,7 @@ class VerificationSection extends StatelessWidget {
                   Text(
                     'Your full name and social security number will be available...',
                     style: theme.textTheme.bodyMedium!.copyWith(
-                      color: Colors.grey,
+                      color: JobsyColors.greyColor
                     ),
                   ),
                 ],

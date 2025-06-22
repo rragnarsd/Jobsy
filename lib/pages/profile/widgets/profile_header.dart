@@ -1,3 +1,4 @@
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -35,12 +36,12 @@ class ProfileHeader extends StatelessWidget {
                       Text(
                         trailingText ?? 'Edit',
                         style: theme.textTheme.bodyMedium!.copyWith(
-                          color: const Color(0xFFFF7200),
+                          color: JobsyColors.primaryColor,
                         ),
                       ),
                       const Icon(
                         Icons.keyboard_arrow_right,
-                        color: Color(0xFFFF7200),
+                        color: JobsyColors.primaryColor
                       ),
                     ],
                   ),

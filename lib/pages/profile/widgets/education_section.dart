@@ -2,6 +2,7 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class EducationSection extends StatelessWidget {
@@ -19,7 +20,7 @@ class EducationSection extends StatelessWidget {
             child: Column(
               children: List.generate(educations.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(height: 0.5, color: Colors.grey);
+                  return const Divider(height: 0.5, color:JobsyColors.greyColor);
                 }
 
                 final education = educations[index ~/ 2];
@@ -39,13 +40,13 @@ class EducationSection extends StatelessWidget {
                           Text(
                             education.school,
                             style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.grey,
+                              color: JobsyColors.greyColor,
                             ),
                           ),
                           Text(
                             education.type,
                             style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.grey,
+                              color: JobsyColors.greyColor
                             ),
                           ),
                         ],
@@ -57,13 +58,13 @@ class EducationSection extends StatelessWidget {
                           Text(
                             education.yearStart,
                             style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.grey,
+                              color: JobsyColors.greyColor,
                             ),
                           ),
                           Text(
                             education.yearEnd,
                             style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.grey,
+                              color: JobsyColors.greyColor,
                             ),
                           ),
                         ],

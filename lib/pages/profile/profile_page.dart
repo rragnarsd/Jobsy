@@ -9,6 +9,7 @@ import 'package:codehatch/pages/profile/widgets/profile_section.dart';
 import 'package:codehatch/pages/profile/widgets/reference_section.dart';
 import 'package:codehatch/pages/profile/widgets/skill_section.dart';
 import 'package:codehatch/pages/profile/widgets/verification_section.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,16 +22,16 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('${AppLocalizations.of(context)!.profile} (100%)'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: JobsyColors.whiteColor),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.favorite, color: Colors.white),
+            icon: const Icon(Icons.favorite, color: JobsyColors.whiteColor),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.settings, color: Colors.white),
+            icon: const Icon(Icons.settings, color:JobsyColors.whiteColor),
             onPressed: () => context.push('/settings'),
           ),
         ],
@@ -42,7 +43,7 @@ class ProfilePage extends StatelessWidget {
           const ProfileActionButtons(),
           const SliverToBoxAdapter(
             child: Divider(
-              color: Colors.grey,
+              color: JobsyColors.greyColor,
               thickness: 0.5,
               endIndent: 16,
               indent: 16,

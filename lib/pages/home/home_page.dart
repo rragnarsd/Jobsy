@@ -2,10 +2,11 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart' as job_model;
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/courses/courses_page.dart';
+import 'package:codehatch/utils/colors.dart';
+import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart' as intl;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,17 +35,16 @@ class _HomePageState extends State<HomePage> {
             children: [
               GestureDetector(
                 onTap: () => context.push('/profile'),
-                child: const Icon(Icons.person, color: Colors.white, size: 26),
+                child: const Icon(Icons.person, color: JobsyColors.whiteColor, size: 26),
               ),
-              //TODO - Hide favorite icon if not logged in
-              const Icon(Icons.favorite, color: Colors.white, size: 24),
+              const Icon(Icons.favorite, color: JobsyColors.whiteColor, size: 24),
             ],
           ),
         ),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),
-            icon: const Icon(Icons.search, color: Colors.white),
+            icon: const Icon(Icons.search, color: JobsyColors.whiteColor),
           ),
         ],
       ),
@@ -71,12 +71,12 @@ class AppDivider extends StatelessWidget {
       sliver: SliverToBoxAdapter(
         child: Row(
           children: [
-            const Expanded(child: Divider(endIndent: 16)),
+             Expanded(child: Divider(endIndent: 16,color: JobsyColors.greyColor.withValues(alpha: 0.3))),
             Text(
               '${AppLocalizations.of(context)!.new_today} (${dummyWorkplaces.length})',
               style: theme.textTheme.bodyMedium,
             ),
-            const Expanded(child: Divider(indent: 16)),
+             Expanded(child: Divider(indent: 16, color: JobsyColors.greyColor.withValues(alpha: 0.3),)),
           ],
         ),
       ),
@@ -143,7 +143,7 @@ class JobCard extends StatelessWidget {
                           Text(
                             workplace.name,
                             style: theme.textTheme.bodyMedium!.copyWith(
-                              color: const Color(0xFFFF8000),
+                              color: JobsyColors.primaryColor,
                             ),
                           ),
                         ],
@@ -161,7 +161,7 @@ class JobCard extends StatelessWidget {
                           text: primaryJob.jobType.toDisplayString(),
                         ),
                         VerticalDivider(
-                          color: Colors.grey.shade300,
+                       color: JobsyColors.greyColor.withValues(alpha: 0.3),
                           indent: 3,
                           endIndent: 3,
                         ),
@@ -174,16 +174,13 @@ class JobCard extends StatelessWidget {
                                     'Reykjavík',
                         ),
                         VerticalDivider(
-                          color: Colors.grey.shade300,
+                          color: JobsyColors.greyColor.withValues(alpha: 0.3),
                           indent: 3,
                           endIndent: 3,
                         ),
                         IconTextRow(
                           icon: Icons.calendar_today,
-                          text: intl.DateFormat(
-                            'd. MMM',
-                            'is_IS',
-                          ).format(primaryJob.deadline),
+                          text: primaryJob.deadline.toShortFormattedDate(),
                         ),
                       ],
                     ),
@@ -196,7 +193,7 @@ class JobCard extends StatelessWidget {
               right: 12,
               child: Text(
                 primaryJob.timeAgo,
-                style: const TextStyle(color: Colors.grey, fontSize: 12),
+                style: const TextStyle(color: JobsyColors.greyColor, fontSize: 12),
               ),
             ),
           ],

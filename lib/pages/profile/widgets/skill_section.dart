@@ -1,6 +1,7 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class SkillSection extends StatelessWidget {
@@ -73,12 +74,16 @@ class SkillCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               child: const Row(
                 children: [
-                  Icon(Icons.flash_on, size: 16, color: Color(0xFFFF7200)),
+                  Icon(
+                    Icons.flash_on,
+                    size: 16,
+                    color: JobsyColors.primaryColor,
+                  ),
                   SizedBox(width: 4),
                   Text(
                     '5',
                     style: TextStyle(
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -89,7 +94,10 @@ class SkillCard extends StatelessWidget {
             Expanded(
               child: Text(
                 skill,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: const TextStyle(
+                  color: JobsyColors.whiteColor,
+                  fontSize: 16,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
             ),

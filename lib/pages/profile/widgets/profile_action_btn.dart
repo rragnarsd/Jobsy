@@ -1,4 +1,5 @@
 import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileActionButtons extends StatelessWidget {
@@ -16,7 +17,7 @@ class ProfileActionButtons extends StatelessWidget {
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.download, color: Color(0xFFFF7200)),
+                icon: const Icon(Icons.download, color: JobsyColors.primaryColor),
                 label: Text(
                   local.download_profile,
                   style: theme.textTheme.bodyMedium,
@@ -25,7 +26,7 @@ class ProfileActionButtons extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  backgroundColor: const Color(0xFF141414),
+                  backgroundColor: JobsyColors.cardColor
                 ),
               ),
             ),
@@ -33,7 +34,7 @@ class ProfileActionButtons extends StatelessWidget {
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.attach_file, color: Color(0xFFFF7200)),
+                icon: const Icon(Icons.attach_file, color: JobsyColors.primaryColor),
                 label: Text(
                   '${local.attachments} (4)',
                   style: theme.textTheme.bodyMedium,
@@ -42,7 +43,7 @@ class ProfileActionButtons extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  backgroundColor: const Color(0xFF141414),
+                  backgroundColor: JobsyColors.cardColor
                 ),
               ),
             ),

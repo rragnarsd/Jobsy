@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/workplace_model.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class WorkplacePage extends StatelessWidget {
@@ -14,7 +15,7 @@ class WorkplacePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(workplace.name),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: JobsyColors.whiteColor),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -127,7 +128,9 @@ class WorkplaceSize extends StatelessWidget {
               ),
               Text(
                 local.employees,
-                style: theme.textTheme.bodyLarge!.copyWith(color: Colors.grey),
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  color: JobsyColors.greyColor,
+                ),
               ),
             ],
           ),
@@ -156,7 +159,11 @@ class WorkplaceAwards extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             children: List.generate(awards!.length * 2 - 1, (index) {
-              if (index.isOdd) return const Divider();
+              if (index.isOdd) {
+                return Divider(
+                  color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                );
+              }
               final award = awards![index ~/ 2];
               return ListTile(
                 leading: const CircleAvatar(),
@@ -187,7 +194,11 @@ class WorkplacePerks extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Column(
             children: List.generate(perks!.length * 2 - 1, (index) {
-              if (index.isOdd) return const Divider();
+              if (index.isOdd) {
+                return Divider(
+                  color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                );
+              }
               final perk = perks![index ~/ 2];
               return WorkplaceTile(
                 title: perk.title,
@@ -229,7 +240,7 @@ class WorkplaceJobs extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xffFF6D00),
+                      backgroundColor: JobsyColors.primaryColor,
                     ),
                     child: Text(
                       local.all_jobs,
@@ -241,7 +252,7 @@ class WorkplaceJobs extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
-              const Divider(),
+              Divider(color: JobsyColors.greyColor.withValues(alpha: 0.3)),
               const SizedBox(height: 12),
               const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
               const SizedBox(height: 12),

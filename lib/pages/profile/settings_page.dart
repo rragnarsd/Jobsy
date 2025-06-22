@@ -1,3 +1,4 @@
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,7 +11,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Settings'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: JobsyColors.whiteColor),
           onPressed: () => context.pop(),
         ),
       ),
@@ -24,21 +25,24 @@ class SettingsPage extends StatelessWidget {
                   const SettingsTile(
                     title: 'Change Language',
                     subtitle: 'English',
-                    leading: Icon(Icons.language, color: Color(0xFFFF7200)),
+                    leading: Icon(
+                      Icons.language,
+                      color: JobsyColors.primaryColor,
+                    ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                   ),
-                  const Divider(color: Colors.grey, thickness: 0.5),
+                  const Divider(color: JobsyColors.greyColor, thickness: 0.5),
                   SettingsTile(
                     title: 'Machine Translation',
                     subtitle:
                         'Automatically translate all job information to english',
                     leading: const Icon(
                       Icons.translate,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                     trailing: Switch(
                       padding: EdgeInsets.zero,
@@ -59,7 +63,7 @@ class SettingsPage extends StatelessWidget {
                     title: 'Dark Theme / Light Theme',
                     leading: const Icon(
                       Icons.settings,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                     trailing: Switch(
                       padding: EdgeInsets.zero,
@@ -79,22 +83,28 @@ class SettingsPage extends StatelessWidget {
                   SettingsTile(
                     title: 'New Job Matches',
                     subtitle: 'Push, SMS',
-                    leading: Icon(Icons.watch_later, color: Color(0xFFFF7200)),
+                    leading: Icon(
+                      Icons.watch_later,
+                      color: JobsyColors.primaryColor,
+                    ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                   ),
                   Divider(color: Colors.grey, thickness: 0.5),
                   SettingsTile(
                     title: 'Application Updates',
                     subtitle: 'Push, emails, SMS',
-                    leading: Icon(Icons.message, color: Color(0xFFFF7200)),
+                    leading: Icon(
+                      Icons.message,
+                      color: JobsyColors.primaryColor,
+                    ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                   ),
                 ],
@@ -110,22 +120,25 @@ class SettingsPage extends StatelessWidget {
                     title: 'Help Centre',
                     leading: Icon(
                       Icons.question_mark,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                   ),
                   Divider(color: Colors.grey, thickness: 0.5),
                   SettingsTile(
                     title: 'Send Us An Email',
-                    leading: Icon(Icons.message, color: Color(0xFFFF7200)),
+                    leading: Icon(
+                      Icons.message,
+                      color: JobsyColors.primaryColor,
+                    ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                   ),
                 ],
@@ -139,21 +152,27 @@ class SettingsPage extends StatelessWidget {
                 tiles: [
                   SettingsTile(
                     title: 'Manage Account',
-                    leading: Icon(Icons.person, color: Color(0xFFFF7200)),
+                    leading: Icon(
+                      Icons.person,
+                      color: JobsyColors.primaryColor,
+                    ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                   ),
                   Divider(color: Colors.grey, thickness: 0.5),
                   SettingsTile(
                     title: 'Log out',
-                    leading: Icon(Icons.logout, color: Color(0xFFFF7200)),
+                    leading: Icon(
+                      Icons.logout,
+                      color: JobsyColors.primaryColor,
+                    ),
                     trailing: Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
-                      color: Color(0xFFFF7200),
+                      color: JobsyColors.primaryColor,
                     ),
                   ),
                 ],
@@ -226,7 +245,9 @@ class SettingsTile extends StatelessWidget {
       subtitle: subtitle != null
           ? Text(
               subtitle!,
-              style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: JobsyColors.greyColor,
+              ),
             )
           : null,
       leading: leading,

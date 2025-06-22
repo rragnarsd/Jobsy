@@ -1,4 +1,5 @@
 import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppSearchBar extends StatelessWidget {
@@ -7,9 +8,10 @@ class AppSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+    ThemeData theme = Theme.of(context);
     return SliverToBoxAdapter(
       child: Container(
-        color: Colors.black,
+        color: JobsyColors.blackColor,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
@@ -17,15 +19,15 @@ class AppSearchBar extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: const Color(0xFF1C1C1C),
+                  fillColor: JobsyColors.scaffoldColor,
                   hintText: local.search,
                   hintStyle: TextStyle(
-                    color: Colors.grey.shade600,
+                    color: JobsyColors.greyColor.withValues(alpha: 0.6),
                     fontSize: 16,
                   ),
                   prefixIcon: const Icon(
                     Icons.search,
-                    color: Color(0xffFF6D00),
+                    color: JobsyColors.primaryColor,
                   ),
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
                   border: OutlineInputBorder(
@@ -41,13 +43,12 @@ class AppSearchBar extends StatelessWidget {
               icon: const Icon(Icons.tune, size: 20),
               label: Text(
                 local.sort_search,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: JobsyColors.greyColor,
                 ),
               ),
               style: TextButton.styleFrom(
-                foregroundColor: Colors.grey.shade600,
+                foregroundColor: JobsyColors.greyColor,
               ),
             ),
           ],

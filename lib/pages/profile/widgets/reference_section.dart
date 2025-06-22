@@ -2,6 +2,7 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
+import 'package:codehatch/utils/colors.dart' show JobsyColors;
 import 'package:flutter/material.dart';
 
 class ReferenceSection extends StatelessWidget {
@@ -19,7 +20,7 @@ class ReferenceSection extends StatelessWidget {
             child: Column(
               children: List.generate(references.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(height: 0.5, color: Colors.grey);
+                  return const Divider(height: 0.5, color: JobsyColors.greyColor);
                 }
 
                 final reference = references[index ~/ 2];
@@ -28,7 +29,7 @@ class ReferenceSection extends StatelessWidget {
                   child: Row(
                     children: [
                       const CircleAvatar(
-                        backgroundColor: Colors.grey,
+                        backgroundColor: JobsyColors.greyColor,
                         radius: 16,
                         child: Icon(Icons.person, size: 16),
                       ),
@@ -45,13 +46,13 @@ class ReferenceSection extends StatelessWidget {
                           Text(
                             reference.jobTitle,
                             style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.grey,
+                              color: JobsyColors.greyColor,
                             ),
                           ),
                           Text(
                             reference.email,
                             style: theme.textTheme.bodyMedium!.copyWith(
-                              color: const Color(0xFFFF7200),
+                              color: JobsyColors.primaryColor,
                               fontWeight: FontWeight.w500,
                             ),
                           ),

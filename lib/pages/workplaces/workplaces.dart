@@ -1,6 +1,7 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -25,13 +26,17 @@ class _WorkplacesState extends State<Workplaces> {
           padding: const EdgeInsets.all(16),
           child: GestureDetector(
             onTap: () => context.push('/profile'),
-            child: const Icon(Icons.person, color: Colors.white, size: 26),
+            child: const Icon(
+              Icons.person,
+              color: JobsyColors.whiteColor,
+              size: 26,
+            ),
           ),
         ),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),
-            icon: const Icon(Icons.search, color: Colors.white),
+            icon: const Icon(Icons.search, color: JobsyColors.whiteColor),
           ),
         ],
       ),
@@ -104,11 +109,11 @@ class WorkplaceItem extends StatelessWidget {
                     spacing: 8,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.person, color: Colors.grey.shade400, size: 16),
+                      const Icon(Icons.person, color: Colors.grey, size: 16),
                       Text(
                         workplace.size,
                         style: theme.textTheme.bodyMedium!.copyWith(
-                          color: Colors.grey.shade400,
+                          color: JobsyColors.greyColor,
                         ),
                       ),
                     ],
@@ -122,14 +127,19 @@ class WorkplaceItem extends StatelessWidget {
                       Center(
                         child: CircleAvatar(
                           radius: 12,
-                          backgroundColor: const Color(0xffFF6D00),
-                          child: Text(workplace.jobIds.length.toString()),
+                          backgroundColor: JobsyColors.primaryColor,
+                          child: Text(
+                            workplace.jobIds.length.toString(),
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ),
                       Text(
                         local.vacancies,
                         style: theme.textTheme.bodyMedium!.copyWith(
-                          color: const Color(0xffFF6D00),
+                          color: JobsyColors.primaryColor,
                         ),
                       ),
                     ],

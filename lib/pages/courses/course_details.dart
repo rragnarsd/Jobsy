@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/enums.dart';
+import 'package:codehatch/utils/extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class CourseDetailsPage extends StatelessWidget {
   const CourseDetailsPage({super.key, required this.course});
@@ -54,7 +55,7 @@ class CourseHandle extends StatelessWidget {
         height: 4,
         margin: const EdgeInsets.only(bottom: 24),
         decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+          color: JobsyColors.greyColor.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(2),
         ),
       ),
@@ -69,14 +70,24 @@ class CourseDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
-          const Expanded(child: Divider(endIndent: 16)),
+          Expanded(
+            child: Divider(
+              endIndent: 16,
+              color: JobsyColors.greyColor.withValues(alpha: 0.3),
+            ),
+          ),
           Text(text, style: theme.textTheme.bodyMedium),
-          const Expanded(child: Divider(indent: 16)),
+          Expanded(
+            child: Divider(
+              indent: 16,
+              color: JobsyColors.greyColor.withValues(alpha: 0.3),
+            ),
+          ),
         ],
       ),
     );
@@ -90,7 +101,7 @@ class CourseCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
@@ -115,7 +126,7 @@ class CourseCategory extends StatelessWidget {
                       (category) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey),
+                          border: Border.all(color: JobsyColors.greyColor),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -166,7 +177,7 @@ class CourseType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
-    final formatter = DateFormat('d. MMM yyyy');
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -180,9 +191,11 @@ class CourseType extends StatelessWidget {
                   ? CourseTypes.remote.displayName
                   : CourseTypes.onSite.displayName,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Divider(
+                color: JobsyColors.greyColor.withValues(alpha: 0.3),
+              ),
             ),
             CourseInfoRow(
               icon: Icons.attach_money,
@@ -190,19 +203,23 @@ class CourseType extends StatelessWidget {
               label: local.price,
               value: '\$${course.price.toStringAsFixed(0)}',
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Divider(
+                color: JobsyColors.greyColor.withValues(alpha: 0.3),
+              ),
             ),
             CourseInfoRow(
               icon: Icons.calendar_today,
               iconSize: 20,
               label: local.startDate,
-              value: formatter.format(course.startDate),
+              value: course.startDate.toShortFormattedDate(),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Divider(
+                color: JobsyColors.greyColor.withValues(alpha: 0.3),
+              ),
             ),
             CourseInfoRow(
               icon: Icons.watch_later_outlined,
@@ -233,13 +250,13 @@ class CourseInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            Icon(icon, size: iconSize, color: const Color(0xFFFF7200)),
+            Icon(icon, size: iconSize, color: JobsyColors.primaryColor),
             const SizedBox(width: 12),
             Text(
               label,
@@ -262,7 +279,7 @@ class CourseWorkplaceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
@@ -299,7 +316,7 @@ class CourseHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Divider(),
+          Divider(color: JobsyColors.greyColor.withValues(alpha: 0.3)),
         ],
       ),
     );
@@ -318,12 +335,12 @@ class CourseSliverBar extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.share, color: Colors.white),
+          icon: const Icon(Icons.share, color: JobsyColors.whiteColor),
         ),
       ],
       leading: IconButton(
         onPressed: () => Navigator.of(context).pop(),
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
+        icon: const Icon(Icons.arrow_back, color: JobsyColors.whiteColor),
       ),
       flexibleSpace: FlexibleSpaceBar(
         background: CachedNetworkImage(
@@ -343,26 +360,20 @@ class CourseBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 32, left: 16, right: 16),
-      child: ElevatedButton(
+      child: ElevatedButton.icon(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xffFF6D00),
-          padding: const EdgeInsets.all(16),
+          backgroundColor: JobsyColors.primaryColor,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         ),
-        child: Row(
-          spacing: 8,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.school, size: 24, color: Colors.white),
-            Text(
-              AppLocalizations.of(context)!.open_course,
-              style: theme.textTheme.titleLarge,
-            ),
-          ],
+        label: Text(
+          AppLocalizations.of(context)!.open_course,
+          style: theme.textTheme.titleLarge,
         ),
+        icon: const Icon(Icons.school, size: 24, color: JobsyColors.whiteColor),
       ),
     );
   }

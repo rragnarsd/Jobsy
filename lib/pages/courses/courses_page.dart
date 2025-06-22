@@ -1,10 +1,11 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/enums.dart';
+import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 class CoursesPage extends StatefulWidget {
   const CoursesPage({super.key});
@@ -27,18 +28,22 @@ class _CoursesPageState extends State<CoursesPage> {
           padding: const EdgeInsets.all(16.0),
           child: GestureDetector(
             onTap: () => context.push('/profile'),
-            child: const Icon(Icons.person, color: Colors.white, size: 26),
+            child: const Icon(
+              Icons.person,
+              color: JobsyColors.whiteColor,
+              size: 26,
+            ),
           ),
         ),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),
-            icon: const Icon(Icons.search, color: Colors.white),
+            icon: const Icon(Icons.search, color: JobsyColors.whiteColor),
           ),
           IconButton(
             //TODO - Add bottomsheet for filters
             onPressed: () {},
-            icon: const Icon(Icons.filter_list, color: Colors.white),
+            icon: const Icon(Icons.filter_list, color: JobsyColors.whiteColor),
           ),
         ],
       ),
@@ -77,7 +82,7 @@ class CoursesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final DateFormat formatter = DateFormat('d.MMM.yyyy');
+
     return GestureDetector(
       onTap: () => context.push('/courses-details', extra: course),
       child: Card(
@@ -100,7 +105,9 @@ class CoursesCard extends StatelessWidget {
                       ),
                       Text(
                         course.businessName,
-                        style: theme.textTheme.bodyMedium,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: JobsyColors.primaryColor,
+                        ),
                       ),
                     ],
                   ),
@@ -114,10 +121,10 @@ class CoursesCard extends StatelessWidget {
                   children: [
                     IconTextRow(
                       icon: Icons.calendar_today,
-                      text: formatter.format(course.startDate),
+                      text: course.startDate.toShortFormattedDate(),
                     ),
                     VerticalDivider(
-                      color: Colors.grey.shade500,
+                      color: JobsyColors.greyColor.withValues(alpha: 0.5),
                       indent: 3,
                       endIndent: 3,
                     ),
@@ -126,7 +133,7 @@ class CoursesCard extends StatelessWidget {
                       text: course.price.toStringAsFixed(0),
                     ),
                     VerticalDivider(
-                      color: Colors.grey.shade500,
+                      color: JobsyColors.greyColor.withValues(alpha: 0.5),
                       indent: 3,
                       endIndent: 3,
                     ),
@@ -159,10 +166,12 @@ class IconTextRow extends StatelessWidget {
     return Row(
       spacing: 4,
       children: [
-        Icon(icon, size: 16, color: Colors.grey),
+        Icon(icon, size: 16, color: JobsyColors.greyColor),
         Text(
           text,
-          style: theme.textTheme.bodyMedium!.copyWith(color: Colors.grey),
+          style: theme.textTheme.bodyMedium!.copyWith(
+            color: JobsyColors.greyColor,
+          ),
         ),
       ],
     );
