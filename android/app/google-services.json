@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "338969401008",
+    "project_id": "jobsyy-71b19",
+    "storage_bucket": "jobsyy-71b19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338969401008:android:4894e01700bf5f37420d75",
+        "android_client_info": {
+          "package_name": "com.example.codehatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8HT2VtU0BfDsLBvZIqnCur8MulVKzuxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

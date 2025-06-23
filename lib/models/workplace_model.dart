@@ -7,7 +7,7 @@ class WorkplaceModel {
   final String size;
   final String? imageUrl;
   final String? logoUrl;
-  final String? motto;
+  final String motto;
   final List<String>? awards;
   final List<PerkModel>? perks;
   final List<String> jobIds;
@@ -20,9 +20,9 @@ class WorkplaceModel {
     required this.websiteUrl,
     required this.size,
     required this.jobIds,
+    required this.motto,
     this.imageUrl,
     this.logoUrl,
-    this.motto,
     this.awards,
     this.perks,
   });
@@ -33,7 +33,7 @@ class WorkplaceModel {
       name: json['name'],
       description: json['description'],
       location: json['location'],
-      websiteUrl: json['websiteUrl'],
+      websiteUrl: json['websiteUrl'] ?? '',
       size: json['size'],
       imageUrl: json['imageUrl'],
       logoUrl: json['logoUrl'],
@@ -42,7 +42,9 @@ class WorkplaceModel {
       perks: json['perks'] != null
           ? (json['perks'] as List).map((p) => PerkModel.fromJson(p)).toList()
           : null,
-      jobIds: List<String>.from(json['jobIds']),
+      jobIds: json['jobIds'] != null
+          ? List<String>.from(json['jobIds'])
+          : <String>[],
     );
   }
 

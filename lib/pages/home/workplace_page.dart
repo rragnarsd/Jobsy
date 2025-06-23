@@ -68,17 +68,16 @@ class WorkplaceHeader extends StatelessWidget {
                   Text(workplace.name, style: theme.textTheme.headlineSmall),
                 ],
               ),
-              if (workplace.motto?.isNotEmpty ?? false)
-                Padding(
-                  padding: const EdgeInsets.only(top: 12),
-                  child: Text(
-                    workplace.motto!,
-                    style: theme.textTheme.headlineMedium!.copyWith(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  workplace.motto,
+                  style: theme.textTheme.headlineMedium!.copyWith(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
+              ),
               const SizedBox(height: 16),
               /*  workplace.imageUrl != null
                   ? CachedNetworkImage(

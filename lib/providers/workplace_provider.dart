@@ -15,11 +15,6 @@ class WorkplaceProvider extends ChangeNotifier {
   List<WorkplaceModel> get workplaces => List.unmodifiable(_workplaces);
   List<JobModel> get jobs => List.unmodifiable(_jobs);
 
-  void setWorkplace(WorkplaceModel workplace) {
-    _workplace = workplace;
-    notifyListeners();
-  }
-
   Future<void> fetchData() async {
     _workplaces = await _workplaceService.getWorkplaces();
     _jobs = await _workplaceService.getJobs();
@@ -27,22 +22,16 @@ class WorkplaceProvider extends ChangeNotifier {
   }
 
   WorkplaceModel? getWorkplaceById(String id) {
-    try {
-      return _workplaces.firstWhere((workplace) => workplace.id == id);
-    } catch (e) {
-      return null;
-    }
+    return _workplaces.firstWhereOrNull((w) => w.id == id);
   }
 
   JobModel? getPrimaryJobForWorkplace(WorkplaceModel workplace) {
     if (workplace.jobIds.isNotEmpty) {
-      final job = _jobs.firstWhereOrNull(
-        (job) => job.id == workplace.jobIds.first,
-      );
-      if (job != null) {
-        return job;
-      }
+      final primaryJobId = workplace.jobIds.first;
+      final job = getJobById(primaryJobId);
+      if (job != null) return job;
     }
+
     return _jobs.firstWhereOrNull((job) => job.workplaceId == workplace.id) ??
         _jobs.firstOrNull;
   }
