@@ -1,6 +1,4 @@
 import 'package:codehatch/models/course_model.dart';
-import 'package:codehatch/models/job_model.dart';
-import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/courses/course_details.dart';
 import 'package:codehatch/pages/courses/courses_page.dart';
 import 'package:codehatch/pages/home/home_page.dart';
@@ -66,17 +64,17 @@ final router = GoRouter(
       builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(
-      path: '/job-description',
+      path: '/job-description/:jobId',
       builder: (context, state) {
-        final job = state.extra as JobModel;
-        return JobDescriptionPage(job: job);
+        final jobId = state.pathParameters['jobId']!;
+        return JobDescriptionPage(jobId: jobId);
       },
     ),
     GoRoute(
-      path: '/workplace-details',
+      path: '/workplace-details/:workplaceId',
       builder: (context, state) {
-        final workplace = state.extra as WorkplaceModel;
-        return WorkplacePage(workplace: workplace);
+        final workplaceId = state.pathParameters['workplaceId']!;
+        return WorkplacePage(workplaceId: workplaceId);
       },
     ),
     GoRoute(

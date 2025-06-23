@@ -1,12 +1,14 @@
 import 'package:codehatch/l10n/app_localizations.dart';
-import 'package:codehatch/models/job_model.dart' as job_model;
+import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/courses/courses_page.dart';
+import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,11 +21,18 @@ class _HomePageState extends State<HomePage> {
   bool _showSearch = false;
 
   @override
+  void initState() {
+    super.initState();
+    context.read<WorkplaceProvider>().fetchData();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final workplaceProvider = context.watch<WorkplaceProvider>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${AppLocalizations.of(context)!.vacancies} (${dummyWorkplaces.length})',
+          '${AppLocalizations.of(context)!.vacancies} (${workplaceProvider.workplaces.length})',
         ),
         leadingWidth: 100,
         leading: Padding(
@@ -35,9 +44,17 @@ class _HomePageState extends State<HomePage> {
             children: [
               GestureDetector(
                 onTap: () => context.push('/profile'),
-                child: const Icon(Icons.person, color: JobsyColors.whiteColor, size: 26),
+                child: const Icon(
+                  Icons.person,
+                  color: JobsyColors.whiteColor,
+                  size: 26,
+                ),
               ),
-              const Icon(Icons.favorite, color: JobsyColors.whiteColor, size: 24),
+              const Icon(
+                Icons.favorite,
+                color: JobsyColors.whiteColor,
+                size: 24,
+              ),
             ],
           ),
         ),
@@ -66,17 +83,28 @@ class AppDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final workplaceProvider = context.watch<WorkplaceProvider>();
     return SliverPadding(
       padding: const EdgeInsets.all(16.0),
       sliver: SliverToBoxAdapter(
         child: Row(
           children: [
-             Expanded(child: Divider(endIndent: 16,color: JobsyColors.greyColor.withValues(alpha: 0.3))),
+            Expanded(
+              child: Divider(
+                endIndent: 16,
+                color: JobsyColors.greyColor.withValues(alpha: 0.3),
+              ),
+            ),
             Text(
-              '${AppLocalizations.of(context)!.new_today} (${dummyWorkplaces.length})',
+              '${AppLocalizations.of(context)!.new_today} (${workplaceProvider.jobs.length})',
               style: theme.textTheme.bodyMedium,
             ),
-             Expanded(child: Divider(indent: 16, color: JobsyColors.greyColor.withValues(alpha: 0.3),)),
+            Expanded(
+              child: Divider(
+                indent: 16,
+                color: JobsyColors.greyColor.withValues(alpha: 0.3),
+              ),
+            ),
           ],
         ),
       ),
@@ -89,32 +117,32 @@ class AppJobList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final workplaceProvider = context.watch<WorkplaceProvider>();
+
     return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) => JobCard(workplace: dummyWorkplaces[index]),
-        childCount: dummyWorkplaces.length,
-      ),
+      delegate: SliverChildBuilderDelegate((context, index) {
+        final workplace = workplaceProvider.workplaces[index];
+        final job = workplaceProvider.getPrimaryJobForWorkplace(workplace);
+        return JobCard(workplace: workplace, job: job);
+      }, childCount: workplaceProvider.workplaces.length),
     );
   }
 }
 
 class JobCard extends StatelessWidget {
-  const JobCard({super.key, required this.workplace});
-
   final WorkplaceModel workplace;
+  final JobModel? job;
+
+  const JobCard({super.key, required this.workplace, required this.job});
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
 
-    final primaryJob = job_model.jobs.primaryForWorkplace(workplace);
-
-    if (primaryJob == null) {
-      return const SizedBox.shrink();
-    }
+    if (job == null) return const SizedBox.shrink();
 
     return GestureDetector(
-      onTap: () => context.push('/job-description', extra: primaryJob),
+      onTap: () => context.push('/job-description/${job!.id}'),
       child: Card(
         child: Stack(
           children: [
@@ -124,18 +152,24 @@ class JobCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    spacing: 16,
                     children: [
-                      Image.asset(
-                        workplace.logoUrl ?? '',
-                        width: 60,
-                        height: 60,
-                      ),
+                      /* workplace.logoUrl != null
+                          ? Image.network(
+                              workplace.logoUrl!,
+                              width: 60,
+                              height: 60,
+                            )
+                          : const Placeholder(
+                              fallbackHeight: 60,
+                              fallbackWidth: 60,
+                            ),*/
+                      const Placeholder(fallbackHeight: 60, fallbackWidth: 60),
+                      const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            workplace.primaryJobTitle,
+                            job!.title,
                             style: theme.textTheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -151,72 +185,38 @@ class JobCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  SizedBox(
-                    height: 20,
-                    child: Row(
-                      spacing: 4,
-                      children: [
-                        IconTextRow(
-                          icon: Icons.work,
-                          text: primaryJob.jobType.toDisplayString(),
-                        ),
-                        VerticalDivider(
-                       color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                          indent: 3,
-                          endIndent: 3,
-                        ),
-                        IconTextRow(
-                          //TODO - Modify this
-                          icon: Icons.location_on,
-                          text: primaryJob.isRemote
-                              ? 'Remote'
-                              : primaryJob.location?.split(',').first.trim() ??
-                                    'Reykjavík',
-                        ),
-                        VerticalDivider(
-                          color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                          indent: 3,
-                          endIndent: 3,
-                        ),
-                        IconTextRow(
-                          icon: Icons.calendar_today,
-                          text: primaryJob.deadline.toShortFormattedDate(),
-                        ),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      IconTextRow(icon: Icons.work, text: job!.jobType),
+                      const VerticalDivider(),
+                      IconTextRow(
+                        icon: Icons.location_on,
+                        text: job!.isRemote
+                            ? 'Remote'
+                            : workplace.location.split(',').first.trim(),
+                      ),
+                      const VerticalDivider(),
+                      IconTextRow(
+                        icon: Icons.calendar_today,
+                        text: job!.deadline?.toShortFormattedDate() ?? 'N/A',
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            Positioned(
+            const Positioned(
               top: 12,
               right: 12,
               child: Text(
-                primaryJob.timeAgo,
-                style: const TextStyle(color: JobsyColors.greyColor, fontSize: 12),
+                //TODO
+                'job!.timeAgo',
+                style: TextStyle(color: JobsyColors.greyColor, fontSize: 12),
               ),
             ),
           ],
         ),
       ),
     );
-  }
-}
-
-extension JobUtils on List<job_model.JobModel> {
-  job_model.JobModel? primaryForWorkplace(WorkplaceModel workplace) {
-    if (workplace.jobIds.isNotEmpty) {
-      final jobById = where(
-        (job) => job.id == workplace.jobIds.first,
-      ).firstOrNull;
-      if (jobById != null) return jobById;
-    }
-
-    final jobByWorkplace = where(
-      (job) => job.workplaceId == workplace.id,
-    ).firstOrNull;
-    if (jobByWorkplace != null) return jobByWorkplace;
-
-    return isNotEmpty ? first : null;
   }
 }

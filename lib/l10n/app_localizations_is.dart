@@ -226,4 +226,7 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get duration => 'Tímalengd';
+
+  @override
+  String get job_not_found => 'Starf fannst ekki';
 }

@@ -535,6 +535,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Timespan'**
   String get duration;
+
+  /// No description provided for @job_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Job not found'**
+  String get job_not_found;
 }
 
 class _AppLocalizationsDelegate

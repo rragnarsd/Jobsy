@@ -46,6 +46,7 @@ class _WorkplacesState extends State<Workplaces> {
             const AppSearchBar(),
             const SliverToBoxAdapter(child: SizedBox(height: 4)),
           ],
+          const SliverToBoxAdapter(child: SizedBox(height: 8)),
           Selector<WorkplaceProvider, List<WorkplaceModel>>(
             selector: (_, provider) => provider.workplaces,
             builder: (context, workplaces, child) => SliverGrid(
@@ -77,14 +78,15 @@ class WorkplaceItem extends StatelessWidget {
     final local = AppLocalizations.of(context)!;
 
     return GestureDetector(
-      onTap: () => context.push('/workplace-details', extra: workplace),
+      onTap: () => context.push('/workplace-details/${workplace.id}'),
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // TODO: Add placeholder image logic if needed
-            Image.asset(workplace.logoUrl ?? '', width: 80, height: 80),
+            /* Image.asset(workplace.logoUrl ?? '', width: 80, height: 80),*/
+            const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

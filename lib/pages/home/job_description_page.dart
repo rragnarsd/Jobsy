@@ -1,19 +1,29 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
-import 'package:codehatch/models/workplace_model.dart';
+import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class JobDescriptionPage extends StatelessWidget {
-  const JobDescriptionPage({super.key, required this.job});
+  const JobDescriptionPage({super.key, required this.jobId});
 
-  final JobModel job;
+  final String jobId;
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+    final job = context.watch<WorkplaceProvider>().getJobById(jobId);
+
+    if (job == null) {
+      return Scaffold(
+        appBar: AppBar(title: Text(local.job_description)),
+        body: Center(child: Text(local.job_not_found)),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(local.job_description),
@@ -149,10 +159,7 @@ class JobType extends StatelessWidget {
                     horizontal: 8,
                     vertical: 4,
                   ),
-                  child: Text(
-                    job.jobType.toDisplayString(),
-                    style: theme.textTheme.bodyMedium,
-                  ),
+                  child: Text(job.jobType, style: theme.textTheme.bodyMedium),
                 ),
               ),
             ],
@@ -171,6 +178,9 @@ class JobLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final workplace = context.watch<WorkplaceProvider>().getWorkplaceById(
+      job.workplaceId,
+    );
     //TODO - Add Map
     return SliverToBoxAdapter(
       child: Card(
@@ -195,16 +205,17 @@ class JobLocation extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 spacing: 8,
                 children: [
-                  //TODO - Remove hardcoded remote
                   Text(
-                    job.location ?? 'Remote',
+                    job.isRemote ? 'Remote' : workplace?.location ?? 'N/A',
                     style: theme.textTheme.bodyLarge,
                   ),
-                  const Icon(
-                    Icons.keyboard_arrow_right,
-                    size: 24,
-                    color: JobsyColors.whiteColor,
-                  ),
+                  job.isRemote
+                      ? const SizedBox.shrink()
+                      : const Icon(
+                          Icons.keyboard_arrow_right,
+                          size: 24,
+                          color: JobsyColors.whiteColor,
+                        ),
                 ],
               ),
             ],
@@ -238,10 +249,13 @@ class JobLanguageSkills extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              ...job.languageSkills.map(
-                (skill) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Row(
+              if (job.languageSkills.isNotEmpty)
+                ...List.generate(job.languageSkills.length * 2 - 1, (index) {
+                  if (index.isOdd) {
+                    return const SizedBox(height: 16);
+                  }
+                  final skill = job.languageSkills[index ~/ 2];
+                  return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
@@ -271,9 +285,8 @@ class JobLanguageSkills extends StatelessWidget {
                         ],
                       ),
                     ],
-                  ),
-                ),
-              ),
+                  );
+                }),
             ],
           ),
         ),
@@ -308,7 +321,7 @@ class JobDeadline extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    job.publishedDate.toShortFormattedDate(),
+                    job.publishedDate?.toShortFormattedDate() ?? 'N/A',
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
@@ -329,7 +342,7 @@ class JobDeadline extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    job.deadline.toShortFormattedDate(),
+                    job.deadline?.toShortFormattedDate() ?? 'N/A',
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
@@ -472,7 +485,7 @@ class JobDescription extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Text(
-        job.jobDescription,
+        job.description,
         style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
@@ -488,7 +501,7 @@ class JobTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Text(job.jobTitle, style: Theme.of(context).textTheme.titleLarge),
+      child: Text(job.title, style: Theme.of(context).textTheme.titleLarge),
     );
   }
 }
@@ -501,9 +514,8 @@ class JobHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final workplace = dummyWorkplaces.firstWhere(
-      (w) => w.id == job.workplaceId,
-      orElse: () => dummyWorkplaces.first,
+    final workplace = context.watch<WorkplaceProvider>().getWorkplaceById(
+      job.workplaceId,
     );
 
     return Row(
@@ -512,19 +524,24 @@ class JobHeader extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              Image.asset(workplace.logoUrl ?? '', width: 100, height: 100),
+              const Placeholder(fallbackHeight: 100, fallbackWidth: 100),
+              //TODO
+              //   Image.asset(workplace.logoUrl ?? '', width: 100, height: 100),
               const SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(workplace.name, style: theme.textTheme.titleLarge),
+                  Text(
+                    workplace?.name ?? 'N/A',
+                    style: theme.textTheme.titleLarge,
+                  ),
                   TextButton(
                     style: ButtonStyle(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding: WidgetStateProperty.all(EdgeInsets.zero),
                     ),
                     onPressed: () =>
-                        context.push('/workplace-details', extra: workplace),
+                        context.push('/workplace-details/${workplace?.id}'),
                     child: Row(
                       children: [
                         Text(

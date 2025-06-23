@@ -1,16 +1,23 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/workplace_model.dart';
+import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WorkplacePage extends StatelessWidget {
-  const WorkplacePage({super.key, required this.workplace});
+  const WorkplacePage({super.key, required this.workplaceId});
 
-  final WorkplaceModel workplace;
+  final String workplaceId;
 
   @override
   Widget build(BuildContext context) {
+    final workplace = context.watch<WorkplaceProvider>().getWorkplaceById(
+      workplaceId,
+    );
+    if (workplace == null) {
+      return const Scaffold(body: Center(child: Text('Workplace not found')));
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(workplace.name),
@@ -50,7 +57,13 @@ class WorkplaceHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Image.asset(workplace.logoUrl ?? '', width: 80, height: 100),
+                  /*  workplace.logoUrl != null
+                      ? Image.asset(workplace.logoUrl!, width: 80, height: 100)
+                      : const Placeholder(
+                          fallbackHeight: 80,
+                          fallbackWidth: 100,
+                        ),*/
+                  const Placeholder(fallbackHeight: 80, fallbackWidth: 100),
                   const SizedBox(width: 16),
                   Text(workplace.name, style: theme.textTheme.headlineSmall),
                 ],
@@ -67,15 +80,18 @@ class WorkplaceHeader extends StatelessWidget {
                   ),
                 ),
               const SizedBox(height: 16),
-              CachedNetworkImage(
-                errorWidget: (_, __, ___) => const Icon(Icons.error),
-                placeholder: (_, __) =>
-                    const Center(child: CircularProgressIndicator()),
-                imageUrl: workplace.imageUrl ?? '',
-                width: double.infinity,
-                height: 200,
-                fit: BoxFit.cover,
-              ),
+              /*  workplace.imageUrl != null
+                  ? CachedNetworkImage(
+                      errorWidget: (_, __, ___) => const Icon(Icons.error),
+                      placeholder: (_, __) =>
+                          const Center(child: CircularProgressIndicator()),
+                      imageUrl: workplace.imageUrl ?? '',
+                      width: double.infinity,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    )
+                  : const Placeholder(fallbackHeight: 200, fallbackWidth: 200),*/
+              const Placeholder(fallbackHeight: 200, fallbackWidth: 200),
             ],
           ),
         ),

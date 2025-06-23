@@ -226,4 +226,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get duration => 'Timespan';
+
+  @override
+  String get job_not_found => 'Job not found';
 }
