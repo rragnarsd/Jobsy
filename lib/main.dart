@@ -1,5 +1,6 @@
 import 'package:codehatch/firebase_options.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/routes.dart';
 import 'package:codehatch/utils/theme.dart';
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => WorkplaceProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => WorkplaceProvider()),
+      ],
       child: MaterialApp.router(
         title: 'Jobsy',
         debugShowCheckedModeBanner: false,

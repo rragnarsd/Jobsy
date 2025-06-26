@@ -1,4 +1,8 @@
+import 'package:codehatch/utils/colors.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toastification/toastification.dart';
 
 extension DateFormatting on DateTime {
   String toShortFormattedDate() {
@@ -7,3 +11,128 @@ extension DateFormatting on DateTime {
   }
 }
 
+extension StringValidators on String {
+  bool get isValidEmail {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$');
+    return emailRegex.hasMatch(trim());
+  }
+
+  bool get isValidPassword => trim().length >= 6;
+
+  String? get emailError =>
+      isEmpty ? 'Email is required' : (!isValidEmail ? 'Invalid email' : null);
+
+  String? get passwordError => isEmpty
+      ? 'Password is required'
+      : (!isValidPassword ? 'Password must be at least 6 characters' : null);
+}
+
+extension AppSharedPrefs on SharedPreferences {
+  Future<void> saveString(String key, String value) async {
+    await setString(key, value);
+  }
+
+  String? getStringOrDefault(String key, [String fallback = '']) {
+    return getString(key) ?? fallback;
+  }
+}
+
+extension LocalizedDate on DateTime {
+  String format([String pattern = 'dd MMM yyyy']) {
+    return DateFormat(pattern).format(this);
+  }
+
+  String get timeAgo {
+    final duration = DateTime.now().difference(this);
+    if (duration.inDays > 1) return '${duration.inDays} days ago';
+    if (duration.inHours > 1) return '${duration.inHours} hours ago';
+    if (duration.inMinutes > 1) return '${duration.inMinutes} minutes ago';
+    return 'Just now';
+  }
+}
+
+/*DateTime postDate = DateTime.now().subtract(Duration(hours: 5));
+print(postDate.timeAgo); // "5 hours ago"*/
+
+enum ToastType { success, error, info, warning }
+
+extension ToastTypeProperties on ToastType {
+  Color get primaryColor {
+    switch (this) {
+      case ToastType.success:
+        return JobsyColors.primaryColor;
+      case ToastType.error:
+        return JobsyColors.errorColor;
+      case ToastType.info:
+        return Colors.blue;
+      case ToastType.warning:
+        return Colors.orange;
+    }
+  }
+
+  IconData get icon {
+    switch (this) {
+      case ToastType.success:
+        return Icons.check_circle;
+      case ToastType.error:
+        return Icons.error;
+      case ToastType.info:
+        return Icons.info;
+      case ToastType.warning:
+        return Icons.warning;
+    }
+  }
+
+  ToastificationType get toastificationType {
+    switch (this) {
+      case ToastType.success:
+        return ToastificationType.success;
+      case ToastType.error:
+        return ToastificationType.error;
+      case ToastType.info:
+        return ToastificationType.info;
+      case ToastType.warning:
+        return ToastificationType.warning;
+    }
+  }
+
+  Duration get defaultDuration {
+    switch (this) {
+      case ToastType.success:
+        return const Duration(seconds: 3);
+      case ToastType.error:
+        return const Duration(seconds: 5);
+      case ToastType.info:
+      case ToastType.warning:
+        return const Duration(seconds: 4);
+    }
+  }
+}
+
+extension ToastificationExtension on BuildContext {
+  void showToast({
+    required String title,
+    required ToastType type,
+    Color? backgroundColor,
+    Color? textColor,
+    Duration? duration,
+    Alignment alignment = Alignment.bottomCenter,
+  }) {
+    final toastColor = textColor ?? JobsyColors.blackColor;
+    toastification.show(
+      context: this,
+      style: ToastificationStyle.fillColored,
+      primaryColor: type.primaryColor,
+      backgroundColor: backgroundColor ?? JobsyColors.whiteColor,
+      foregroundColor: toastColor,
+      title: Text(
+        title,
+        style: Theme.of(this).textTheme.bodyMedium?.copyWith(color: toastColor),
+      ),
+      type: type.toastificationType,
+      icon: Icon(type.icon, color: toastColor),
+      alignment: alignment,
+      autoCloseDuration: duration ?? type.defaultDuration,
+    );
+  }
+}

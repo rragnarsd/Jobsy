@@ -1,4 +1,5 @@
 import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/pages/auth/auth_page.dart';
 import 'package:codehatch/pages/courses/course_details.dart';
 import 'package:codehatch/pages/courses/courses_page.dart';
 import 'package:codehatch/pages/home/home_page.dart';
@@ -17,8 +18,9 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/home',
+  initialLocation: '/auth',
   routes: <RouteBase>[
+    GoRoute(path: '/auth', builder: (context, state) => const AuthPage()),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return Root(navigationShell);
@@ -58,10 +60,18 @@ final router = GoRouter(
         ),
       ],
     ),
-    GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
+
     GoRoute(
-      path: '/settings',
-      builder: (context, state) => const SettingsPage(),
+      path: '/profile',
+      builder: (context, state) {
+        return const ProfilePage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: '/settings',
+          builder: (context, state) => const SettingsPage(),
+        ),
+      ],
     ),
     GoRoute(
       path: '/job-description/:jobId',

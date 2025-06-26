@@ -367,7 +367,10 @@ class CourseBottomBar extends StatelessWidget {
         onPressed: () {},
         style: ElevatedButton.styleFrom(
           backgroundColor: JobsyColors.primaryColor,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.all(16),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+          ),
         ),
         label: Text(
           AppLocalizations.of(context)!.open_course,

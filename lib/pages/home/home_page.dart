@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<WorkplaceProvider>().fetchData();
+    context.read<WorkplaceProvider>().initializeStreams();
   }
 
   @override

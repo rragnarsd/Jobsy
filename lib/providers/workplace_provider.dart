@@ -15,10 +15,20 @@ class WorkplaceProvider extends ChangeNotifier {
   List<WorkplaceModel> get workplaces => List.unmodifiable(_workplaces);
   List<JobModel> get jobs => List.unmodifiable(_jobs);
 
-  Future<void> fetchData() async {
-    _workplaces = await _workplaceService.getWorkplaces();
-    _jobs = await _workplaceService.getJobs();
-    notifyListeners();
+  Stream<List<WorkplaceModel>> get workplacesStream =>
+      _workplaceService.getWorkplacesStream();
+  Stream<List<JobModel>> get jobsStream => _workplaceService.getJobsStream();
+
+  void initializeStreams() {
+    _workplaceService.getWorkplacesStream().listen((workplaces) {
+      _workplaces = workplaces;
+      notifyListeners();
+    });
+
+    _workplaceService.getJobsStream().listen((jobs) {
+      _jobs = jobs;
+      notifyListeners();
+    });
   }
 
   WorkplaceModel? getWorkplaceById(String id) {
