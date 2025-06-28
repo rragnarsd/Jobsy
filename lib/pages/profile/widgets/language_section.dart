@@ -20,7 +20,10 @@ class LanguageSection extends StatelessWidget {
             child: Column(
               children: List.generate(languages.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(height: 0.5, color: JobsyColors.greyColor);
+                  return const Divider(
+                    height: 0.5,
+                    color: JobsyColors.greyColor,
+                  );
                 }
 
                 final language = languages[index ~/ 2];

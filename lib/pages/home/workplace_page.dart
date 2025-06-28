@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/workplace_model.dart';
+import 'package:codehatch/pages/home/home_page.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class WorkplacePage extends StatelessWidget {
@@ -12,12 +15,20 @@ class WorkplacePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
     final workplace = context.watch<WorkplaceProvider>().getWorkplaceById(
       workplaceId,
     );
     if (workplace == null) {
       return const Scaffold(body: Center(child: Text('Workplace not found')));
     }
+
+    final workplaceProvider = context.watch<WorkplaceProvider>();
+    final jobsForWorkplace = workplaceProvider.jobs
+        .where((job) => job.workplaceId == workplace.id)
+        .toList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(workplace.name),
@@ -33,7 +44,18 @@ class WorkplacePage extends StatelessWidget {
           WorkplaceSize(size: workplace.size),
           WorkplaceAwards(awards: workplace.awards),
           WorkplacePerks(perks: workplace.perks),
-          WorkplaceJobs(workplaceName: workplace.name),
+          jobsForWorkplace.isNotEmpty
+              ? SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      local.newest_jobs,
+                      style: theme.textTheme.titleLarge,
+                    ),
+                  ),
+                )
+              : const SliverToBoxAdapter(child: SizedBox.shrink()),
+          WorkplaceJobsList(workplace: workplace),
         ],
       ),
     );
@@ -57,13 +79,11 @@ class WorkplaceHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  /*  workplace.logoUrl != null
-                      ? Image.asset(workplace.logoUrl!, width: 80, height: 100)
-                      : const Placeholder(
-                          fallbackHeight: 80,
-                          fallbackWidth: 100,
-                        ),*/
-                  const Placeholder(fallbackHeight: 80, fallbackWidth: 100),
+                  CachedNetworkImage(
+                    imageUrl: workplace.logoUrl!,
+                    width: 80,
+                    height: 100,
+                  ),
                   const SizedBox(width: 16),
                   Text(workplace.name, style: theme.textTheme.headlineSmall),
                 ],
@@ -79,18 +99,15 @@ class WorkplaceHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              /*  workplace.imageUrl != null
-                  ? CachedNetworkImage(
-                      errorWidget: (_, __, ___) => const Icon(Icons.error),
-                      placeholder: (_, __) =>
-                          const Center(child: CircularProgressIndicator()),
-                      imageUrl: workplace.imageUrl ?? '',
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    )
-                  : const Placeholder(fallbackHeight: 200, fallbackWidth: 200),*/
-              const Placeholder(fallbackHeight: 200, fallbackWidth: 200),
+              CachedNetworkImage(
+                errorWidget: (_, __, ___) => const Icon(Icons.error),
+                placeholder: (_, __) =>
+                    const Center(child: CircularProgressIndicator()),
+                imageUrl: workplace.imageUrl!,
+                width: double.infinity,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             ],
           ),
         ),
@@ -181,7 +198,13 @@ class WorkplaceAwards extends StatelessWidget {
               }
               final award = awards![index ~/ 2];
               return ListTile(
-                leading: const CircleAvatar(),
+                leading: CircleAvatar(
+                  child: SvgPicture.network(
+                    'https://ik.imagekit.io/redidhr3k/Untitled/Untitled%20(1)/trophy.svg?updatedAt=1751024702646',
+                    width: 28,
+                    height: 28,
+                  ),
+                ),
                 title: Text(award, style: theme.textTheme.bodyLarge),
               );
             }),
@@ -218,6 +241,7 @@ class WorkplacePerks extends StatelessWidget {
               return WorkplaceTile(
                 title: perk.title,
                 subtitle: perk.description,
+                iconUrl: perk.iconUrl,
               );
             }),
           ),
@@ -227,61 +251,43 @@ class WorkplacePerks extends StatelessWidget {
   }
 }
 
-class WorkplaceJobs extends StatelessWidget {
-  const WorkplaceJobs({super.key, required this.workplaceName});
+class WorkplaceJobsList extends StatelessWidget {
+  const WorkplaceJobsList({super.key, required this.workplace});
 
-  final String workplaceName;
+  final WorkplaceModel workplace;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+    final workplaceProvider = context.watch<WorkplaceProvider>();
+    final jobs = workplaceProvider.jobs
+        .where((job) => job.workplaceId == workplace.id)
+        .toList();
 
-    return SliverToBoxAdapter(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    local.newest_jobs,
-                    style: theme.textTheme.titleLarge!.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+    if (jobs.isEmpty) {
+      return const SliverToBoxAdapter(child: SizedBox(height: 32));
+    }
+
+    return SliverPadding(
+      padding: const EdgeInsets.only(bottom: 32),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate((context, index) {
+          final job = jobs[index];
+
+          return Card(
+            child: Column(
+              children: [
+                JobCard(
+                  workplace: workplace,
+                  job: job,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 16,
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: JobsyColors.primaryColor,
-                    ),
-                    child: Text(
-                      local.all_jobs,
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Divider(color: JobsyColors.greyColor.withValues(alpha: 0.3)),
-              const SizedBox(height: 12),
-              const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
-              const SizedBox(height: 12),
-              Text(
-                'Starf á lager',
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w600,
                 ),
-              ),
-              const SizedBox(height: 2),
-              Text(workplaceName, style: theme.textTheme.bodyLarge),
-            ],
-          ),
-        ),
+              ],
+            ),
+          );
+        }, childCount: jobs.length),
       ),
     );
   }
@@ -292,18 +298,28 @@ class WorkplaceTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
-    this.icon,
+    required this.iconUrl,
   });
 
   final String title;
   final String subtitle;
-  final IconData? icon;
+  final String iconUrl;
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     return ListTile(
-      leading: const CircleAvatar(),
+      leading: CircleAvatar(
+        child: SvgPicture.network(
+          iconUrl,
+          width: 28,
+          height: 28,
+          placeholderBuilder: (BuildContext context) => Container(
+            padding: const EdgeInsets.all(30.0),
+            child: const CircularProgressIndicator(),
+          ),
+        ),
+      ),
       title: Text(
         title,
         style: theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w700),

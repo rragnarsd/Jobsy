@@ -1,5 +1,6 @@
 import 'package:codehatch/pages/auth/auth_exception.dart';
 import 'package:codehatch/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -8,11 +9,23 @@ class AuthProvider extends ChangeNotifier {
   bool _isRegister = true;
   String? _authErrorMessage;
   bool _obscurePassword = true;
+  User? _user;
+  bool _initialized = false;
+
+  AuthProvider() {
+    _authService.authStateChanges.listen((user) {
+      _user = user;
+      _initialized = true;
+      notifyListeners();
+    });
+  }
 
   bool get isLoading => _isLoading;
   bool get isRegister => _isRegister;
   String? get authErrorMessage => _authErrorMessage;
   bool get obscurePassword => _obscurePassword;
+  bool get isLoggedIn => _user != null;
+  bool get isInitialized => _initialized;
 
   void toggleAuthMode() {
     _isRegister = !_isRegister;

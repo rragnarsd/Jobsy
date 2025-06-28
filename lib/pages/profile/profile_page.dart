@@ -31,8 +31,8 @@ class ProfilePage extends StatelessWidget {
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.settings, color:JobsyColors.whiteColor),
-            onPressed: () => context.push('/settings'),
+            icon: const Icon(Icons.settings, color: JobsyColors.whiteColor),
+            onPressed: () => context.push('/profile/settings'),
           ),
         ],
       ),

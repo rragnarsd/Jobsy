@@ -12,16 +12,7 @@ class WorkplaceService {
         .snapshots()
         .map((snapshot) {
           return snapshot.docs
-              .map((doc) {
-                try {
-                  return WorkplaceModel.fromJson(doc.data());
-                } catch (e) {
-                  debugPrint(
-                    'Failed to parse workplace document: ${doc.id}, error: $e',
-                  );
-                  return null;
-                }
-              })
+              .map((doc) => WorkplaceModel.fromJson(doc.data()))
               .whereType<WorkplaceModel>()
               .toList();
         })
@@ -37,16 +28,7 @@ class WorkplaceService {
         .snapshots()
         .map((snapshot) {
           return snapshot.docs
-              .map((doc) {
-                try {
-                  return JobModel.fromJson(doc.data());
-                } catch (e) {
-                  debugPrint(
-                    'Failed to parse job document: ${doc.id}, error: $e',
-                  );
-                  return null;
-                }
-              })
+              .map((doc) => JobModel.fromJson(doc.data()))
               .whereType<JobModel>()
               .toList();
         })

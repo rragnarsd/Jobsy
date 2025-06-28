@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 class SkillSection extends StatelessWidget {
   SkillSection({super.key});
 
-  //TODO - Make this dynamic
   final List<String> skills = [
     'Independence',
     'Microsoft Word',

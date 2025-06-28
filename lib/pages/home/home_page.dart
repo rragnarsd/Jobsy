@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/models/workplace_model.dart';
-import 'package:codehatch/pages/courses/courses_page.dart';
+import 'package:codehatch/pages/home/widgets/dividers.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${AppLocalizations.of(context)!.vacancies} (${workplaceProvider.workplaces.length})',
+          '${AppLocalizations.of(context)!.vacancies} (${workplaceProvider.jobs.length})',
         ),
         leadingWidth: 100,
         leading: Padding(
@@ -68,45 +69,10 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: [
           if (_showSearch) const AppSearchBar(),
-          const AppDivider(),
+          const AppTodayDivider(),
           const AppJobList(),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
-      ),
-    );
-  }
-}
-
-class AppDivider extends StatelessWidget {
-  const AppDivider({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    final workplaceProvider = context.watch<WorkplaceProvider>();
-    return SliverPadding(
-      padding: const EdgeInsets.all(16.0),
-      sliver: SliverToBoxAdapter(
-        child: Row(
-          children: [
-            Expanded(
-              child: Divider(
-                endIndent: 16,
-                color: JobsyColors.greyColor.withValues(alpha: 0.3),
-              ),
-            ),
-            Text(
-              '${AppLocalizations.of(context)!.new_today} (${workplaceProvider.jobs.length})',
-              style: theme.textTheme.bodyMedium,
-            ),
-            Expanded(
-              child: Divider(
-                indent: 16,
-                color: JobsyColors.greyColor.withValues(alpha: 0.3),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -118,58 +84,61 @@ class AppJobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final workplaceProvider = context.watch<WorkplaceProvider>();
+    final jobSections = workplaceProvider.getJobsWithSections();
 
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        final workplace = workplaceProvider.workplaces[index];
-        final job = workplaceProvider.getPrimaryJobForWorkplace(workplace);
-        return JobCard(workplace: workplace, job: job);
-      }, childCount: workplaceProvider.workplaces.length),
+        final section = jobSections[index];
+
+        if (section.isDivider) {
+          return const AppOlderDivider();
+        } else {
+          return JobCard(workplace: section.workplace!, job: section.job!);
+        }
+      }, childCount: jobSections.length),
     );
   }
 }
 
 class JobCard extends StatelessWidget {
-  final WorkplaceModel workplace;
-  final JobModel? job;
+  const JobCard({
+    super.key,
+    required this.workplace,
+    required this.job,
+    this.padding,
+  });
 
-  const JobCard({super.key, required this.workplace, required this.job});
+  final WorkplaceModel workplace;
+  final JobModel job;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    if (job == null) return const SizedBox.shrink();
-
     return GestureDetector(
-      onTap: () => context.push('/job-description/${job!.id}'),
+      onTap: () => context.push('/job-description/${job.id}'),
       child: Card(
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: padding ?? const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      /* workplace.logoUrl != null
-                          ? Image.network(
-                              workplace.logoUrl!,
-                              width: 60,
-                              height: 60,
-                            )
-                          : const Placeholder(
-                              fallbackHeight: 60,
-                              fallbackWidth: 60,
-                            ),*/
-                      const Placeholder(fallbackHeight: 60, fallbackWidth: 60),
+                      CachedNetworkImage(
+                        imageUrl: workplace.logoUrl!,
+                        width: 60,
+                        height: 60,
+                      ),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            job!.title,
+                            job.title,
                             style: theme.textTheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -187,36 +156,62 @@ class JobCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      IconTextRow(icon: Icons.work, text: job!.jobType),
+                      IconTextRow(icon: Icons.work, text: job.jobType),
                       const VerticalDivider(),
                       IconTextRow(
                         icon: Icons.location_on,
-                        text: job!.isRemote
+                        text: job.isRemote
                             ? 'Remote'
                             : workplace.location.split(',').first.trim(),
                       ),
                       const VerticalDivider(),
                       IconTextRow(
                         icon: Icons.calendar_today,
-                        text: job!.deadline?.toShortFormattedDate() ?? 'N/A',
+                        text: job.deadline?.toShortFormattedDate() ?? 'N/A',
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 12,
               right: 12,
               child: Text(
-                //TODO
-                'job!.timeAgo',
-                style: TextStyle(color: JobsyColors.greyColor, fontSize: 12),
+                job.publishedDate?.timeAgo ?? 'Just now',
+                style: const TextStyle(
+                  color: JobsyColors.greyColor,
+                  fontSize: 12,
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class IconTextRow extends StatelessWidget {
+  const IconTextRow({super.key, required this.icon, required this.text});
+
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return Row(
+      spacing: 4,
+      children: [
+        Icon(icon, size: 16, color: JobsyColors.greyColor),
+        Text(
+          text,
+          style: theme.textTheme.bodyMedium!.copyWith(
+            color: JobsyColors.greyColor,
+          ),
+        ),
+      ],
     );
   }
 }

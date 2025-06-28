@@ -8,7 +8,6 @@ enum JobStatus { inProgress, active, ended }
 
 enum JobPerks { activity, workingHours, health, food, commute, entertainment }
 
-//TODO - Localize
 extension CourseTypesExtension on CourseTypes {
   String get displayName {
     switch (this) {

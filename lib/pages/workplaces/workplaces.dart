@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
@@ -76,6 +77,10 @@ class WorkplaceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
+    final workplaceProvider = context.watch<WorkplaceProvider>();
+    final jobCount = workplaceProvider.jobs
+        .where((job) => job.workplaceId == workplace.id)
+        .length;
 
     return GestureDetector(
       onTap: () => context.push('/workplace-details/${workplace.id}'),
@@ -84,9 +89,14 @@ class WorkplaceItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // TODO: Add placeholder image logic if needed
-            /* Image.asset(workplace.logoUrl ?? '', width: 80, height: 80),*/
-            const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
+            CachedNetworkImage(
+              imageUrl: workplace.logoUrl ?? '',
+              width: 80,
+              height: 80,
+              placeholder: (_, __) =>
+                  const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
+              errorWidget: (_, __, ___) => const Icon(Icons.error),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -131,7 +141,7 @@ class WorkplaceItem extends StatelessWidget {
                           radius: 12,
                           backgroundColor: JobsyColors.primaryColor,
                           child: Text(
-                            workplace.jobIds.length.toString(),
+                            jobCount.toString(),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),

@@ -15,6 +15,9 @@ class AppLocalizationsIs extends AppLocalizations {
   String get new_today => 'Nýtt í dag';
 
   @override
+  String get older_jobs => 'Eldra';
+
+  @override
   String get full_time => 'Fullt starf';
 
   @override

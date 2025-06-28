@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'New today'**
   String get new_today;
 
+  /// No description provided for @older_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Older'**
+  String get older_jobs;
+
   /// No description provided for @full_time.
   ///
   /// In en, this message translates to:
@@ -425,7 +431,7 @@ abstract class AppLocalizations {
   /// No description provided for @newest_jobs.
   ///
   /// In en, this message translates to:
-  /// **'Newest jobs'**
+  /// **'Latest jobs'**
   String get newest_jobs;
 
   /// No description provided for @all_jobs.

@@ -6,7 +6,7 @@ class JobModel {
   final String description;
   final List<String> responsibilities;
   final List<String> qualifications;
-  final List<String> languageSkills;
+  final List<LanguageSkill> languageSkills;
   final String jobType;
   final List<String> professions;
   final DateTime? publishedDate;
@@ -40,14 +40,20 @@ class JobModel {
       description: json['description'],
       responsibilities: List<String>.from(json['responsibilities']),
       qualifications: List<String>.from(json['qualifications']),
-      languageSkills: List<String>.from(json['languageSkills']),
+      languageSkills: List<LanguageSkill>.from(
+        json['languageSkills'].map((skill) => LanguageSkill.fromJson(skill)),
+      ),
       jobType: json['jobType'],
       professions: List<String>.from(json['professions']),
       publishedDate: json['publishedDate'] != null
-          ? (json['publishedDate'] as Timestamp).toDate()
+          ? (json['publishedDate'] is Timestamp
+                ? (json['publishedDate'] as Timestamp).toDate()
+                : DateTime.parse(json['publishedDate']))
           : null,
       deadline: json['deadline'] != null
-          ? (json['deadline'] as Timestamp).toDate()
+          ? (json['deadline'] is Timestamp
+                ? (json['deadline'] as Timestamp).toDate()
+                : DateTime.parse(json['deadline']))
           : null,
       workplaceId: json['workplaceId'],
       salary: (json['salary'] != null) ? json['salary'].toDouble() : null,
@@ -63,15 +69,30 @@ class JobModel {
       'description': description,
       'responsibilities': responsibilities,
       'qualifications': qualifications,
-      'languageSkills': languageSkills,
+      'languageSkills': languageSkills.map((skill) => skill.toJson()).toList(),
       'jobType': jobType,
       'professions': professions,
-      'publishedDate': publishedDate?.toIso8601String(),
-      'deadline': deadline?.toIso8601String(),
+      'publishedDate': publishedDate,
+      'deadline': deadline,
       'workplaceId': workplaceId,
       'salary': salary,
       'isRemote': isRemote,
       'location': location,
     };
+  }
+}
+
+class LanguageSkill {
+  final String title;
+  final String flagUrl;
+
+  LanguageSkill({required this.title, required this.flagUrl});
+
+  factory LanguageSkill.fromJson(Map<String, dynamic> json) {
+    return LanguageSkill(title: json['title'], flagUrl: json['flagUrl']);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'title': title, 'flagUrl': flagUrl};
   }
 }

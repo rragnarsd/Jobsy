@@ -8,12 +8,10 @@ import 'package:go_router/go_router.dart';
 class InboxPage extends StatelessWidget {
   const InboxPage({super.key});
 
-  //TODO - show inboxdata if authenticated, else show a message to login
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //TODO - Add inbox count
         title: Text('${AppLocalizations.of(context)!.inbox} (20)'),
         leading: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -27,7 +25,6 @@ class InboxPage extends StatelessWidget {
           ),
         ),
         actions: [
-          //TODO - Add bottomsheet for sorting options
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.filter_list, color: JobsyColors.whiteColor),

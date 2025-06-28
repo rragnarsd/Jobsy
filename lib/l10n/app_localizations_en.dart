@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get new_today => 'New today';
 
   @override
+  String get older_jobs => 'Older';
+
+  @override
   String get full_time => 'Full time';
 
   @override
@@ -171,7 +174,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get website => 'Website';
 
   @override
-  String get newest_jobs => 'Newest jobs';
+  String get newest_jobs => 'Latest jobs';
 
   @override
   String get all_jobs => 'All jobs';

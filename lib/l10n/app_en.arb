@@ -1,6 +1,7 @@
 {
   "vacancies": "All jobs",
   "new_today": "New today",
+  "older_jobs": "Older",
   "full_time": "Full time",
   "part_time": "Part time",
   "internship": "Internship",
@@ -59,7 +60,7 @@
 
   "open_map": "Open map",
   "website": "Website",
-  "newest_jobs": "Newest jobs",
+  "newest_jobs": "Latest jobs",
   "all_jobs": "All jobs",
   "workplaces": "Workplaces",
   "the_workplace": "The workplace",

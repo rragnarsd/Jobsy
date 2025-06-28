@@ -1,11 +1,13 @@
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/enums.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class CoursesPage extends StatefulWidget {
   const CoursesPage({super.key});
@@ -18,11 +20,18 @@ class _CoursesPageState extends State<CoursesPage> {
   bool _showSearch = false;
 
   @override
+  void initState() {
+    super.initState();
+    context.read<CourseProvider>().initializeStreams();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final courseProvider = context.watch<CourseProvider>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${AppLocalizations.of(context)!.courses} (${CourseModel.courses.length})',
+          '${AppLocalizations.of(context)!.courses} (${courseProvider.courses.length})',
         ),
         leading: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -41,7 +50,6 @@ class _CoursesPageState extends State<CoursesPage> {
             icon: const Icon(Icons.search, color: JobsyColors.whiteColor),
           ),
           IconButton(
-            //TODO - Add bottomsheet for filters
             onPressed: () {},
             icon: const Icon(Icons.filter_list, color: JobsyColors.whiteColor),
           ),
@@ -50,7 +58,7 @@ class _CoursesPageState extends State<CoursesPage> {
       body: CustomScrollView(
         slivers: [
           if (_showSearch) const AppSearchBar(),
-          CoursesList(courses: CourseModel.courses),
+          CoursesList(courses: courseProvider.courses),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
       ),

@@ -69,14 +69,23 @@ class WorkplaceModel {
 class PerkModel {
   final String title;
   final String description;
+  final String iconUrl;
 
-  PerkModel({required this.title, required this.description});
+  PerkModel({
+    required this.title,
+    required this.description,
+    required this.iconUrl,
+  });
 
   factory PerkModel.fromJson(Map<String, dynamic> json) {
-    return PerkModel(title: json['title'], description: json['description']);
+    return PerkModel(
+      title: json['title'],
+      description: json['description'],
+      iconUrl: json['iconUrl'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    return {'title': title, 'description': description};
+    return {'title': title, 'description': description, 'iconUrl': iconUrl};
   }
 }

@@ -37,22 +37,44 @@ extension AppSharedPrefs on SharedPreferences {
   }
 }
 
-extension LocalizedDate on DateTime {
-  String format([String pattern = 'dd MMM yyyy']) {
-    return DateFormat(pattern).format(this);
-  }
-
+extension TimeAgoExtension on DateTime {
   String get timeAgo {
-    final duration = DateTime.now().difference(this);
-    if (duration.inDays > 1) return '${duration.inDays} days ago';
-    if (duration.inHours > 1) return '${duration.inHours} hours ago';
-    if (duration.inMinutes > 1) return '${duration.inMinutes} minutes ago';
+    final now = DateTime.now();
+    final duration = now.difference(this);
+
+    if (duration.inDays >= 365) {
+      final years = (duration.inDays / 365).round();
+      return '$years year${years > 1 ? 's' : ''} ago';
+    }
+
+    if (duration.inDays >= 30) {
+      final months = (duration.inDays / 30).round();
+      return '$months month${months > 1 ? 's' : ''} ago';
+    }
+
+    if (duration.inDays >= 7) {
+      final weeks = (duration.inDays / 7).round();
+      return '$weeks week${weeks > 1 ? 's' : ''} ago';
+    }
+
+    if (duration.inDays >= 1) {
+      return '${duration.inDays} day${duration.inDays > 1 ? 's' : ''} ago';
+    }
+
+    if (duration.inHours >= 1) {
+      return '${duration.inHours} hour${duration.inHours > 1 ? 's' : ''} ago';
+    }
+
+    if (duration.inMinutes >= 10) {
+      final rounded = ((duration.inMinutes / 10).round()) * 10;
+      return '$rounded minute${rounded > 1 ? 's' : ''} ago';
+    }
+
+    if (duration.inMinutes >= 5) return 'A few minutes ago';
+
     return 'Just now';
   }
 }
-
-/*DateTime postDate = DateTime.now().subtract(Duration(hours: 5));
-print(postDate.timeAgo); // "5 hours ago"*/
 
 enum ToastType { success, error, info, warning }
 
