@@ -8,16 +8,25 @@ import 'package:codehatch/pages/profile/widgets/profile_action_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_section.dart';
 import 'package:codehatch/pages/profile/widgets/reference_section.dart';
 import 'package:codehatch/pages/profile/widgets/skill_section.dart';
-import 'package:codehatch/pages/profile/widgets/verification_section.dart';
+import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthUserProvider>();
+    final user = authProvider.currentUser;
+    final profile = authProvider.userProfile;
     return Scaffold(
       appBar: AppBar(
         title: Text('${AppLocalizations.of(context)!.profile} (100%)'),
@@ -39,7 +48,7 @@ class ProfilePage extends StatelessWidget {
 
       body: CustomScrollView(
         slivers: [
-          const ProfileSection(),
+          ProfileSection(user: user, profile: profile),
           const ProfileActionButtons(),
           const SliverToBoxAdapter(
             child: Divider(
@@ -50,7 +59,6 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
           const AboutSection(),
-          const VerificationSection(),
           const JobSection(),
           const EducationSection(),
           SkillSection(),

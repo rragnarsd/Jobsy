@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 GoRouter createRouter(BuildContext context) {
-  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  final authProvider = Provider.of<AuthUserProvider>(context, listen: false);
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
@@ -28,16 +28,21 @@ GoRouter createRouter(BuildContext context) {
       final isInitialized = authProvider.isInitialized;
       final isGoingToAuth = state.matchedLocation == '/auth';
 
+      // Wait until auth provider is initialized
       if (!isInitialized) return null;
 
+      // If user is not logged in and trying to access protected routes
       if (!isLoggedIn && !isGoingToAuth) return '/auth';
 
+      // If user is logged in and trying to access the auth page, send to home
       if (isLoggedIn && isGoingToAuth) return '/home';
 
+      // No redirect needed
       return null;
     },
     routes: [
       GoRoute(path: '/auth', builder: (context, state) => const AuthPage()),
+
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => Root(navigationShell),
         branches: [

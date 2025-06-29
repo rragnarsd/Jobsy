@@ -12,10 +12,14 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  final authProvider = AuthUserProvider();
+  await authProvider.initAuth();
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider.value(value: authProvider),
         ChangeNotifierProvider(create: (_) => WorkplaceProvider()),
         ChangeNotifierProvider(create: (_) => CourseProvider()),
       ],

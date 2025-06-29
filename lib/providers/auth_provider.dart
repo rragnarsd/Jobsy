@@ -3,89 +3,104 @@ import 'package:codehatch/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AuthProvider extends ChangeNotifier {
-  final AuthService _authService = AuthService();
-  bool _isLoading = false;
-  bool _isRegister = true;
-  String? _authErrorMessage;
-  bool _obscurePassword = true;
-  User? _user;
-  bool _initialized = false;
+enum AuthStatus {
+  uninitialized,
+  authenticating,
+  authenticated,
+  unauthenticated,
+  error,
+}
 
-  AuthProvider() {
-    _authService.authStateChanges.listen((user) {
+class AuthUserProvider extends ChangeNotifier {
+  final AuthService _authService = AuthService();
+  FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
+
+  bool _isInitialized = false;
+
+  AuthStatus _status = AuthStatus.uninitialized;
+  User? _user;
+  Map<String, dynamic>? _profile;
+  String? _authErrorMessage;
+
+  AuthUserProvider() {
+    _authService.authStateChanges.listen((user) async {
       _user = user;
-      _initialized = true;
+
+      if (_user == null) {
+        _status = AuthStatus.unauthenticated;
+        _profile = null;
+      } else {
+        _status = AuthStatus.authenticated;
+        _profile = await _authService.getUserProfile(_user!.uid);
+      }
+
       notifyListeners();
     });
   }
 
-  bool get isLoading => _isLoading;
-  bool get isRegister => _isRegister;
+  bool get isInitialized => _isInitialized;
+  AuthStatus get status => _status;
+  User? get currentUser => _user;
   String? get authErrorMessage => _authErrorMessage;
-  bool get obscurePassword => _obscurePassword;
+  Map<String, dynamic>? get userProfile => _profile;
   bool get isLoggedIn => _user != null;
-  bool get isInitialized => _initialized;
+  bool get isAuthenticating => _status == AuthStatus.authenticating;
+  bool get hasProfile => _profile != null;
 
-  void toggleAuthMode() {
-    _isRegister = !_isRegister;
-    _authErrorMessage = null;
+  Future<void> initAuth() async {
+    final user = _firebaseAuth.currentUser;
+    _user = user;
+    _isInitialized = true;
     notifyListeners();
   }
 
-  void togglePasswordVisibility() {
-    _obscurePassword = !_obscurePassword;
-    notifyListeners();
-  }
-
-  void setAuthMode(bool isRegister) {
-    _isRegister = isRegister;
+  Future<void> authenticate({
+    required bool register,
+    required String email,
+    required String password,
+    String? name,
+    String? phoneNumber,
+  }) async {
+    _status = AuthStatus.authenticating;
     _authErrorMessage = null;
     notifyListeners();
+
+    try {
+      if (register) {
+        await _authService.signUpWithEmailAndPassword(
+          email: email,
+          password: password,
+          name: name!,
+          phoneNumber: phoneNumber!,
+        );
+      } else {
+        await _authService.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+      }
+
+      _user = _authService.currentUser;
+      _profile = await _authService.getUserProfile(_user!.uid);
+      _status = AuthStatus.authenticated;
+    } catch (e) {
+      _setError(e);
+      _status = AuthStatus.error;
+    } finally {
+      notifyListeners();
+    }
   }
 
   Future<void> signOut() async {
-    _setLoading(true);
     try {
       await _authService.signOut();
+      _user = null;
+      _profile = null;
+      _status = AuthStatus.unauthenticated;
+      notifyListeners();
     } catch (e) {
       _setError(e);
-    } finally {
-      _setLoading(false);
     }
-  }
-
-  Future<void> signInWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    _setLoading(true);
-    try {
-      await _authService.signInWithEmailAndPassword(email, password);
-    } catch (e) {
-      _setError(e);
-    } finally {
-      _setLoading(false);
-    }
-  }
-
-  Future<void> signUpWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    _setLoading(true);
-    try {
-      await _authService.signUpWithEmailAndPassword(email, password);
-    } catch (e) {
-      _setError(e);
-    } finally {
-      _setLoading(false);
-    }
-  }
-
-  void _setLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
   }
 
   void _setError(Object error) {
@@ -99,6 +114,24 @@ class AuthProvider extends ChangeNotifier {
 
   void clearError() {
     _authErrorMessage = null;
+    notifyListeners();
+  }
+
+  Future<void> refreshProfile() async {
+    if (_user != null) {
+      try {
+        _profile = await _authService.getUserProfile(_user!.uid);
+        notifyListeners();
+      } catch (e) {
+        _setError(e);
+      }
+    }
+  }
+
+  Future<void> updateUserProfile(Map<String, dynamic> data) async {
+    if (_user == null) return;
+    await _authService.updateUserProfile(_user!.uid, data);
+    _profile = await _authService.getUserProfile(_user!.uid);
     notifyListeners();
   }
 }

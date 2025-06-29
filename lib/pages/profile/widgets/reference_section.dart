@@ -15,12 +15,15 @@ class ReferenceSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          ProfileHeader(text: local.references, onEditTap: () {}),
+          ProfileHeader(text: local.references),
           Card(
             child: Column(
               children: List.generate(references.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(height: 0.5, color: JobsyColors.greyColor);
+                  return const Divider(
+                    height: 0.5,
+                    color: JobsyColors.greyColor,
+                  );
                 }
 
                 final reference = references[index ~/ 2];

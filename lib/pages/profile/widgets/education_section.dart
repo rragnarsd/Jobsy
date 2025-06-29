@@ -15,12 +15,15 @@ class EducationSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          ProfileHeader(text: local.education, onEditTap: () {}),
+          ProfileHeader(text: local.education),
           Card(
             child: Column(
               children: List.generate(educations.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(height: 0.5, color:JobsyColors.greyColor);
+                  return const Divider(
+                    height: 0.5,
+                    color: JobsyColors.greyColor,
+                  );
                 }
 
                 final education = educations[index ~/ 2];
@@ -46,7 +49,7 @@ class EducationSection extends StatelessWidget {
                           Text(
                             education.type,
                             style: theme.textTheme.bodyLarge!.copyWith(
-                              color: JobsyColors.greyColor
+                              color: JobsyColors.greyColor,
                             ),
                           ),
                         ],

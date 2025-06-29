@@ -4,7 +4,6 @@ import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {
@@ -17,21 +16,32 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool _isRegisterMode = false;
+  bool _obscurePassword = true;
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _nameController.dispose();
+    _phoneNumberController.dispose();
     super.dispose();
   }
 
   void _toggleAuthMode() {
-    final authProvider = context.read<AuthProvider>();
-    authProvider.clearError();
-    authProvider.toggleAuthMode();
-    _formKey.currentState?.reset();
+    context.read<AuthUserProvider>().clearError();
+    setState(() {
+      _isRegisterMode = !_isRegisterMode;
+      _formKey.currentState?.reset();
+    });
   }
+
+  void _togglePasswordVisibility() =>
+      setState(() => _obscurePassword = !_obscurePassword);
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +52,30 @@ class _AuthPageState extends State<AuthPage> {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
-            child: Consumer<AuthProvider>(
+            child: Consumer<AuthUserProvider>(
               builder: (context, authProvider, child) {
+                final isLoading =
+                    authProvider.status == AuthStatus.authenticating;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      authProvider.isRegister
-                          ? 'Create Account'
-                          : 'Welcome Back',
+                      _isRegisterMode ? 'Create Account' : 'Welcome Back',
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      authProvider.isRegister
+                      _isRegisterMode
                           ? 'Sign up to get started with Jobsy'
                           : 'Sign in to continue with Jobsy',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: JobsyColors.greyColor.withValues(alpha: 0.6),
                       ),
                     ),
-                    const SizedBox(height: 32.0),
+                    const SizedBox(height: 32),
                     AppTextFormField(
                       controller: _emailController,
                       textInputAction: TextInputAction.next,
@@ -74,28 +84,48 @@ class _AuthPageState extends State<AuthPage> {
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) => value?.emailError,
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 16),
                     AppTextFormField(
                       controller: _passwordController,
                       textInputAction: TextInputAction.done,
                       prefixIcon: const Icon(Icons.lock),
                       suffix: GestureDetector(
-                        onTap: authProvider.togglePasswordVisibility,
+                        onTap: _togglePasswordVisibility,
                         child: Icon(
-                          !authProvider.obscurePassword
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
                       ),
                       labelText: 'Password',
-                      obscureText: authProvider.obscurePassword,
+                      obscureText: _obscurePassword,
                       validator: (value) => value?.passwordError,
                     ),
-                    const SizedBox(height: 24.0),
+                    const SizedBox(height: 16),
+                    if (_isRegisterMode) ...[
+                      AppTextFormField(
+                        controller: _nameController,
+                        textInputAction: TextInputAction.next,
+                        prefixIcon: const Icon(Icons.person),
+                        labelText: 'Name',
+                        keyboardType: TextInputType.name,
+                        validator: (value) => null,
+                      ),
+                      const SizedBox(height: 16),
+                      AppTextFormField(
+                        controller: _phoneNumberController,
+                        textInputAction: TextInputAction.next,
+                        prefixIcon: const Icon(Icons.phone),
+                        labelText: 'Phone Number',
+                        keyboardType: TextInputType.phone,
+                        validator: (value) => null,
+                      ),
+                      const SizedBox(height: 20),
+                    ],
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: authProvider.isLoading ? null : submitForm,
+                        onPressed: isLoading ? null : submitForm,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: JobsyColors.primaryColor,
                           padding: const EdgeInsets.all(16),
@@ -103,7 +133,7 @@ class _AuthPageState extends State<AuthPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: authProvider.isLoading
+                        child: isLoading
                             ? const SizedBox(
                                 width: 26,
                                 height: 26,
@@ -113,21 +143,19 @@ class _AuthPageState extends State<AuthPage> {
                                 ),
                               )
                             : Text(
-                                authProvider.isRegister
-                                    ? 'Register'
-                                    : 'Sign In',
+                                _isRegisterMode ? 'Register' : 'Sign In',
                                 style: theme.textTheme.titleLarge?.copyWith(
                                   color: JobsyColors.whiteColor,
                                 ),
                               ),
                       ),
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 16),
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: authProvider.isRegister
+                            text: _isRegisterMode
                                 ? 'Already have an account?'
                                 : 'Don\'t have an account?',
                             style: theme.textTheme.bodyMedium,
@@ -135,9 +163,7 @@ class _AuthPageState extends State<AuthPage> {
                           TextSpan(
                             recognizer: TapGestureRecognizer()
                               ..onTap = _toggleAuthMode,
-                            text: authProvider.isRegister
-                                ? ' Sign In'
-                                : ' Register',
+                            text: _isRegisterMode ? ' Sign In' : ' Register',
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: JobsyColors.primaryColor,
                               fontWeight: FontWeight.w600,
@@ -159,36 +185,28 @@ class _AuthPageState extends State<AuthPage> {
   Future<void> submitForm() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final authProvider = context.read<AuthProvider>();
-
+    final authProvider = context.read<AuthUserProvider>();
     authProvider.clearError();
 
-    if (authProvider.isRegister) {
-      await authProvider.signUpWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-    } else {
-      await authProvider.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-    }
-
-    if (authProvider.authErrorMessage != null) {
-      if (!mounted) return;
-
-      context.showToast(
-        title: authProvider.authErrorMessage!,
-        type: ToastType.error,
-        textColor: JobsyColors.whiteColor,
-        backgroundColor: JobsyColors.errorColor,
-        duration: const Duration(seconds: 5),
-      );
-      return;
-    }
+    await authProvider.authenticate(
+      register: _isRegisterMode,
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+      name: _nameController.text.trim(),
+      phoneNumber: _phoneNumberController.text.trim(),
+    );
 
     if (!mounted) return;
-    context.go('/home');
+
+    final error = authProvider.authErrorMessage;
+    if (error != null) {
+      context.showToast(
+        title: error,
+        type: ToastType.error,
+        backgroundColor: JobsyColors.errorColor,
+        textColor: JobsyColors.whiteColor,
+        duration: const Duration(seconds: 5),
+      );
+    }
   }
 }

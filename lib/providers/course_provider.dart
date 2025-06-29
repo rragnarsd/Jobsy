@@ -23,4 +23,10 @@ class CourseProvider extends ChangeNotifier {
   CourseModel? getCourseById(String id) {
     return _courses.firstWhereOrNull((course) => course.id == id);
   }
+
+  List<CourseModel> getCoursesByBusinessName(String businessName) {
+    return _courses
+        .where((course) => course.businessName == businessName)
+        .toList();
+  }
 }

@@ -89,24 +89,37 @@ class WorkplaceProvider extends ChangeNotifier {
 
   List<JobSectionItem> getJobsWithSections() {
     final grouped = groupJobsBySection();
-    final todayJobs = grouped[JobSection.today]!;
-    final olderJobs = grouped[JobSection.older]!;
+    final todayJobs = grouped[JobSection.today] ?? [];
+    final olderJobs = grouped[JobSection.older] ?? [];
 
-    final sections = <JobSectionItem>[
-      for (final entry in todayJobs)
-        JobSectionItem(
-          job: entry.key,
-          workplace: entry.value,
-          section: JobSection.today,
-        ),
-      if (olderJobs.isNotEmpty) JobSectionItem.divider(),
-      for (final entry in olderJobs)
-        JobSectionItem(
-          job: entry.key,
-          workplace: entry.value,
-          section: JobSection.older,
-        ),
-    ];
+    final sections = <JobSectionItem>[];
+
+    if (todayJobs.isNotEmpty) {
+      for (final entry in todayJobs) {
+        sections.add(
+          JobSectionItem(
+            job: entry.key,
+            workplace: entry.value,
+            section: JobSection.today,
+          ),
+        );
+      }
+    }
+
+    if (olderJobs.isNotEmpty) {
+      if (sections.isNotEmpty) {
+        sections.add(JobSectionItem.divider());
+      }
+      for (final entry in olderJobs) {
+        sections.add(
+          JobSectionItem(
+            job: entry.key,
+            workplace: entry.value,
+            section: JobSection.older,
+          ),
+        );
+      }
+    }
 
     return sections;
   }

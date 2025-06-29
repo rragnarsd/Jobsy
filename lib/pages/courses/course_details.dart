@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/enums.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CourseDetailsPage extends StatelessWidget {
   const CourseDetailsPage({super.key, required this.course});
@@ -14,6 +16,12 @@ class CourseDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+    final courseProvider = context.watch<CourseProvider>();
+
+    final coursesFromSameBusiness = courseProvider.getCoursesByBusinessName(
+      course.businessName,
+    );
+    final hasMultipleCourses = coursesFromSameBusiness.length > 1;
 
     return Scaffold(
       bottomNavigationBar: const CourseBottomBar(),
@@ -32,9 +40,10 @@ class CourseDetailsPage extends StatelessWidget {
                 CourseDivider(text: local.about_course),
                 CourseInfo(course: course),
                 CourseCategory(course: course),
-                CourseDivider(
-                  text: '${local.more_from} ${course.businessName}',
-                ),
+                if (hasMultipleCourses)
+                  CourseDivider(
+                    text: '${local.more_from} ${course.businessName}',
+                  ),
               ],
             ),
           ),

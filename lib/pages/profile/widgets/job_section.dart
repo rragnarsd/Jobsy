@@ -17,7 +17,7 @@ class JobSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          ProfileHeader(text: local.job_experience, onEditTap: () {}),
+          ProfileHeader(text: local.job_experience),
           Card(
             child: Column(
               children: List.generate(jobExperience.length * 2 - 1, (index) {

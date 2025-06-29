@@ -1,6 +1,8 @@
+import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -145,12 +147,12 @@ class SettingsPage extends StatelessWidget {
               ),
             ],
           ),
-          const SettingsSection(
+          SettingsSection(
             title: 'User',
             tiles: [
               SettingsTileGroup(
                 tiles: [
-                  SettingsTile(
+                  const SettingsTile(
                     title: 'Manage Account',
                     leading: Icon(
                       Icons.person,
@@ -162,14 +164,17 @@ class SettingsPage extends StatelessWidget {
                       color: JobsyColors.primaryColor,
                     ),
                   ),
-                  Divider(color: Colors.grey, thickness: 0.5),
+                  const Divider(color: Colors.grey, thickness: 0.5),
                   SettingsTile(
                     title: 'Log out',
-                    leading: Icon(
+                    leading: const Icon(
                       Icons.logout,
                       color: JobsyColors.primaryColor,
                     ),
-                    trailing: Icon(
+                    onTap: () {
+                      context.read<AuthUserProvider>().signOut();
+                    },
+                    trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
                       color: JobsyColors.primaryColor,

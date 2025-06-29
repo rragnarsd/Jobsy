@@ -14,6 +14,8 @@ class AppTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffix,
     this.obscureText = false,
+    this.isMultiline = false,
+    this.maxLines,
     super.key,
   });
 
@@ -27,6 +29,8 @@ class AppTextFormField extends StatelessWidget {
   final Icon? prefixIcon;
   final Widget? suffix;
   final bool obscureText;
+  final bool isMultiline;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class AppTextFormField extends StatelessWidget {
       validator: validator,
       textInputAction: textInputAction,
       obscureText: obscureText,
+      maxLines: isMultiline ? maxLines : 1,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffix,

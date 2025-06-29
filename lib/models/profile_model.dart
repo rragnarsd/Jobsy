@@ -4,7 +4,7 @@ class ProfileModel {
   final String id;
   final String name;
   final String phoneNumber;
-  final String dateOfBirth;
+  final DateTime dateOfBirth;
   final String aboutYou;
   final String idNumber;
   final String imageUrl;

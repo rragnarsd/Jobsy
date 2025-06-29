@@ -15,7 +15,7 @@ class LanguageSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          ProfileHeader(text: local.languages, onEditTap: () {}),
+          ProfileHeader(text: local.languages),
           Card(
             child: Column(
               children: List.generate(languages.length * 2 - 1, (index) {

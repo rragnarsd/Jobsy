@@ -44,10 +44,14 @@ class WorkplacePage extends StatelessWidget {
           WorkplaceSize(size: workplace.size),
           WorkplaceAwards(awards: workplace.awards),
           WorkplacePerks(perks: workplace.perks),
+          const SliverToBoxAdapter(child: SizedBox(height: 8)),
           jobsForWorkplace.isNotEmpty
               ? SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     child: Text(
                       local.newest_jobs,
                       style: theme.textTheme.titleLarge,
@@ -127,9 +131,18 @@ class WorkplaceDescription extends StatelessWidget {
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Text(
-            description,
-            style: Theme.of(context).textTheme.bodyLarge,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'About the company',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              Text(description, style: Theme.of(context).textTheme.bodyLarge),
+            ],
           ),
         ),
       ),
@@ -227,25 +240,38 @@ class WorkplacePerks extends StatelessWidget {
     }
 
     return SliverToBoxAdapter(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Column(
-            children: List.generate(perks!.length * 2 - 1, (index) {
-              if (index.isOdd) {
-                return Divider(
-                  color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                );
-              }
-              final perk = perks![index ~/ 2];
-              return WorkplaceTile(
-                title: perk.title,
-                subtitle: perk.description,
-                iconUrl: perk.iconUrl,
-              );
-            }),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              'Work Environment',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
-        ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Column(
+                children: List.generate(perks!.length * 2 - 1, (index) {
+                  if (index.isOdd) {
+                    return Divider(
+                      color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    );
+                  }
+                  final perk = perks![index ~/ 2];
+                  return WorkplaceTile(
+                    title: perk.title,
+                    subtitle: perk.description,
+                    iconUrl: perk.iconUrl,
+                  );
+                }),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

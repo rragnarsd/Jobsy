@@ -5,6 +5,21 @@ ThemeData get darkTheme {
   return ThemeData(
     scaffoldBackgroundColor: JobsyColors.scaffoldColor,
     colorScheme: ColorScheme.fromSeed(seedColor: JobsyColors.primaryColor),
+    datePickerTheme: DatePickerThemeData(
+      yearStyle: const TextStyle(color: JobsyColors.whiteColor),
+      backgroundColor: JobsyColors.cardColor,
+      headerBackgroundColor: JobsyColors.cardColor,
+      dayStyle: const TextStyle(color: JobsyColors.whiteColor, fontSize: 16),
+      headerForegroundColor: JobsyColors.whiteColor,
+      rangePickerHeaderBackgroundColor: JobsyColors.whiteColor,
+      surfaceTintColor: JobsyColors.greyColor.withValues(alpha: 0.3),
+      cancelButtonStyle: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(JobsyColors.whiteColor),
+      ),
+      confirmButtonStyle: ButtonStyle(
+        foregroundColor: WidgetStateProperty.all(JobsyColors.primaryColor),
+      ),
+    ),
     cardTheme: const CardThemeData(
       color: JobsyColors.cardColor,
       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),

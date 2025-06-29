@@ -69,7 +69,8 @@ class _HomePageState extends State<HomePage> {
       body: CustomScrollView(
         slivers: [
           if (_showSearch) const AppSearchBar(),
-          const AppTodayDivider(),
+          if (workplaceProvider.getTodayJobsCount() > 0)
+            const AppTodayDivider(),
           const AppJobList(),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
@@ -86,14 +87,30 @@ class AppJobList extends StatelessWidget {
     final workplaceProvider = context.watch<WorkplaceProvider>();
     final jobSections = workplaceProvider.getJobsWithSections();
 
+    if (jobSections.isEmpty) {
+      return const SliverToBoxAdapter(child: Center(child: SizedBox.shrink()));
+    }
+
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
         final section = jobSections[index];
 
         if (section.isDivider) {
           return const AppOlderDivider();
+        } else if (section.section == JobSection.today) {
+          return JobCard(
+            workplace: section.workplace!,
+            job: section.job!,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          );
+        } else if (section.section == JobSection.older) {
+          return JobCard(
+            workplace: section.workplace!,
+            job: section.job!,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          );
         } else {
-          return JobCard(workplace: section.workplace!, job: section.job!);
+          return const SizedBox.shrink();
         }
       }, childCount: jobSections.length),
     );

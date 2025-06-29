@@ -83,5 +83,13 @@
   "home": "Heim",
   "startDate": "Hefst",
   "duration": "Tímalengd",
-  "job_not_found": "Starf fannst ekki"
+  "job_not_found": "Starf fannst ekki",
+
+  "date_of_birth": "Fæðingardagur",
+  "email": "Netfang",
+  "name": "Nafn",
+  "phone_nr": "Símanúmer",
+  "take_photo": "Taka mynd",
+  "select_from_gallery": "Sækja úr myndagallerý",
+  "cancel": "Hætta við"
 }
