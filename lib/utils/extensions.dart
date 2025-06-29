@@ -11,6 +11,14 @@ extension DateFormatting on DateTime {
   }
 }
 
+extension DateRangeValidator on BuildContext {
+  String? validateDateRange(DateTime? start, DateTime? end) {
+    if (start == null || end == null) return 'Start and end dates are required';
+    if (end.isBefore(start)) return 'End date cannot be before start date';
+    return null;
+  }
+}
+
 extension StringValidators on String {
   bool get isValidEmail {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$');
@@ -19,12 +27,49 @@ extension StringValidators on String {
 
   bool get isValidPassword => trim().length >= 6;
 
+  bool get isValidName {
+    final nameRegex = RegExp(r'^[a-zA-Z\s]{2,}$');
+    return nameRegex.hasMatch(trim());
+  }
+
+  bool get isValidPhone {
+    final phoneRegex = RegExp(r'^\+?\d{7,15}$');
+    return phoneRegex.hasMatch(trim());
+  }
+
+  bool get isValidCompany {
+    final companyRegex = RegExp(r'^[a-zA-Z0-9\s&.,\-]{2,}$');
+    return companyRegex.hasMatch(trim());
+  }
+
+  bool get isValidPosition {
+    final positionRegex = RegExp(r'^[a-zA-Z0-9\s&.,\-]{2,}$');
+    return positionRegex.hasMatch(trim());
+  }
+
   String? get emailError =>
       isEmpty ? 'Email is required' : (!isValidEmail ? 'Invalid email' : null);
 
   String? get passwordError => isEmpty
       ? 'Password is required'
       : (!isValidPassword ? 'Password must be at least 6 characters' : null);
+
+  String? get nameError =>
+      isEmpty ? 'Name is required' : (!isValidName ? 'Invalid name' : null);
+
+  String? get phoneError => isEmpty
+      ? 'Phone number is required'
+      : (!isValidPhone ? 'Invalid phone number' : null);
+
+  String? get companyError => isEmpty
+      ? 'Please enter company name'
+      : (!isValidCompany ? 'Invalid company name' : null);
+
+  String? get positionError => isEmpty
+      ? 'Please enter job position'
+      : (!isValidPosition ? 'Invalid position' : null);
+
+  String? get dateError => isEmpty ? 'Please select a date' : null;
 }
 
 extension AppSharedPrefs on SharedPreferences {
@@ -82,7 +127,7 @@ extension ToastTypeProperties on ToastType {
   Color get primaryColor {
     switch (this) {
       case ToastType.success:
-        return JobsyColors.primaryColor;
+        return JobsyColors.successColor;
       case ToastType.error:
         return JobsyColors.errorColor;
       case ToastType.info:

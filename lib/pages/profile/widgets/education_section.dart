@@ -20,9 +20,9 @@ class EducationSection extends StatelessWidget {
             child: Column(
               children: List.generate(educations.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(
-                    height: 0.5,
-                    color: JobsyColors.greyColor,
+                  return Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
                   );
                 }
 
@@ -37,7 +37,7 @@ class EducationSection extends StatelessWidget {
                         children: [
                           Text(
                             education.name,
-                            style: theme.textTheme.titleLarge,
+                            style: theme.textTheme.bodyLarge,
                           ),
                           const SizedBox(height: 4),
                           Text(
@@ -60,13 +60,13 @@ class EducationSection extends StatelessWidget {
                         children: [
                           Text(
                             education.yearStart,
-                            style: theme.textTheme.bodyLarge!.copyWith(
+                            style: theme.textTheme.bodyMedium!.copyWith(
                               color: JobsyColors.greyColor,
                             ),
                           ),
                           Text(
                             education.yearEnd,
-                            style: theme.textTheme.bodyLarge!.copyWith(
+                            style: theme.textTheme.bodyMedium!.copyWith(
                               color: JobsyColors.greyColor,
                             ),
                           ),
@@ -78,7 +78,7 @@ class EducationSection extends StatelessWidget {
               }),
             ),
           ),
-          ProfileAddBtn(title: local.add_education),
+          ProfileAddBtn(title: local.add_education, onPressed: () {}),
         ],
       ),
     );

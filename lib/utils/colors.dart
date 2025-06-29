@@ -8,4 +8,5 @@ class JobsyColors {
   static const Color greyColor = Color(0xFF9E9E9E);
   static const Color blackColor = Color(0xFF000000);
   static const Color errorColor = Color(0xFFD32F2F);
+  static const Color successColor = Color(0xFF00C853);
 }

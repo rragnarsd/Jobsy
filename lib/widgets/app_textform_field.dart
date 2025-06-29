@@ -43,6 +43,7 @@ class AppTextFormField extends StatelessWidget {
       obscureText: obscureText,
       maxLines: isMultiline ? maxLines : 1,
       decoration: InputDecoration(
+        alignLabelWithHint: true,
         prefixIcon: prefixIcon,
         suffixIcon: suffix,
         border: OutlineInputBorder(

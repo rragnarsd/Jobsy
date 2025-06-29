@@ -11,7 +11,7 @@ class ResetPasswordPage extends StatefulWidget {
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {

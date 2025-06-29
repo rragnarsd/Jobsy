@@ -4,7 +4,7 @@ import 'package:codehatch/pages/profile/widgets/education_section.dart';
 import 'package:codehatch/pages/profile/widgets/job_section.dart';
 import 'package:codehatch/pages/profile/widgets/language_section.dart';
 import 'package:codehatch/pages/profile/widgets/link_section.dart';
-import 'package:codehatch/pages/profile/widgets/profile_action_btn.dart';
+import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_section.dart';
 import 'package:codehatch/pages/profile/widgets/reference_section.dart';
 import 'package:codehatch/pages/profile/widgets/skill_section.dart';
@@ -24,6 +24,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+
     final authProvider = context.watch<AuthUserProvider>();
     final user = authProvider.currentUser;
     final profile = authProvider.userProfile;
@@ -49,11 +51,23 @@ class _ProfilePageState extends State<ProfilePage> {
       body: CustomScrollView(
         slivers: [
           ProfileSection(user: user, profile: profile),
-          const ProfileActionButtons(),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  ProfileIconActionButton(text: local.download_profile),
+                  const SizedBox(width: 16),
+                  ProfileIconActionButton(text: '${local.attachments} (4)'),
+                ],
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 8)),
+          SliverToBoxAdapter(
             child: Divider(
-              color: JobsyColors.greyColor,
-              thickness: 0.5,
+              color: JobsyColors.greyColor.withValues(alpha: 0.3),
+              thickness: 1,
               endIndent: 16,
               indent: 16,
             ),

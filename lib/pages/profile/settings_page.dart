@@ -37,7 +37,10 @@ class SettingsPage extends StatelessWidget {
                       color: JobsyColors.primaryColor,
                     ),
                   ),
-                  const Divider(color: JobsyColors.greyColor, thickness: 0.5),
+                  Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
+                  ),
                   SettingsTile(
                     title: 'Machine Translation',
                     subtitle:
@@ -77,12 +80,12 @@ class SettingsPage extends StatelessWidget {
               ),
             ],
           ),
-          const SettingsSection(
+          SettingsSection(
             title: 'Notification Settings',
             tiles: [
               SettingsTileGroup(
                 tiles: [
-                  SettingsTile(
+                  const SettingsTile(
                     title: 'New Job Matches',
                     subtitle: 'Push, SMS',
                     leading: Icon(
@@ -95,8 +98,11 @@ class SettingsPage extends StatelessWidget {
                       color: JobsyColors.primaryColor,
                     ),
                   ),
-                  Divider(color: Colors.grey, thickness: 0.5),
-                  SettingsTile(
+                  Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
+                  ),
+                  const SettingsTile(
                     title: 'Application Updates',
                     subtitle: 'Push, emails, SMS',
                     leading: Icon(
@@ -113,12 +119,12 @@ class SettingsPage extends StatelessWidget {
               ),
             ],
           ),
-          const SettingsSection(
+          SettingsSection(
             title: 'Help & Support',
             tiles: [
               SettingsTileGroup(
                 tiles: [
-                  SettingsTile(
+                  const SettingsTile(
                     title: 'Help Centre',
                     leading: Icon(
                       Icons.question_mark,
@@ -130,8 +136,11 @@ class SettingsPage extends StatelessWidget {
                       color: JobsyColors.primaryColor,
                     ),
                   ),
-                  Divider(color: Colors.grey, thickness: 0.5),
-                  SettingsTile(
+                  Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
+                  ),
+                  const SettingsTile(
                     title: 'Send Us An Email',
                     leading: Icon(
                       Icons.message,
@@ -164,7 +173,10 @@ class SettingsPage extends StatelessWidget {
                       color: JobsyColors.primaryColor,
                     ),
                   ),
-                  const Divider(color: Colors.grey, thickness: 0.5),
+                  Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
+                  ),
                   SettingsTile(
                     title: 'Log out',
                     leading: const Icon(

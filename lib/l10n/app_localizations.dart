@@ -547,6 +547,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Job not found'**
   String get job_not_found;
+
+  /// No description provided for @date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get date_of_birth;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @phone_nr.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phone_nr;
+
+  /// No description provided for @take_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get take_photo;
+
+  /// No description provided for @select_from_gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Select from gallery'**
+  String get select_from_gallery;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @which_company.
+  ///
+  /// In en, this message translates to:
+  /// **'Which company'**
+  String get which_company;
+
+  /// No description provided for @which_position.
+  ///
+  /// In en, this message translates to:
+  /// **'What was your position'**
+  String get which_position;
+
+  /// No description provided for @start_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get start_date;
+
+  /// No description provided for @end_date.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get end_date;
+
+  /// No description provided for @describe_position.
+  ///
+  /// In en, this message translates to:
+  /// **'What were your responsibilities, the projects you were working on and more...'**
+  String get describe_position;
+
+  /// No description provided for @describe_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your job and responsibilities'**
+  String get describe_label;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @about_yourself.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about yourself'**
+  String get about_yourself;
+
+  /// No description provided for @describe_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your experience, skills, and what makes you unique...'**
+  String get describe_experience;
+
+  /// No description provided for @no_job_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No job experience added yet'**
+  String get no_job_added;
+
+  /// No description provided for @end_date_error.
+  ///
+  /// In en, this message translates to:
+  /// **'End date cannot be before start date'**
+  String get end_date_error;
+
+  /// No description provided for @job_successfully_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Job experience saved successfully!'**
+  String get job_successfully_added;
+
+  /// No description provided for @job_add_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save job experience'**
+  String get job_add_failed;
 }
 
 class _AppLocalizationsDelegate

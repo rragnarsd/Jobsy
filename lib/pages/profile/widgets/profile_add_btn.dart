@@ -2,9 +2,14 @@ import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileAddBtn extends StatelessWidget {
-  const ProfileAddBtn({super.key, required this.title});
+  const ProfileAddBtn({
+    super.key,
+    required this.title,
+    required this.onPressed,
+  });
 
   final String title;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +17,7 @@ class ProfileAddBtn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),

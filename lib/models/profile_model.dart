@@ -38,6 +38,7 @@ class JobExperienceModel {
   final String companyName;
   final DateTime startDate;
   final DateTime endDate;
+  final String? description;
 
   JobExperienceModel({
     required this.id,
@@ -45,6 +46,7 @@ class JobExperienceModel {
     required this.companyName,
     required this.startDate,
     required this.endDate,
+    this.description,
   });
 }
 

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
@@ -59,7 +61,9 @@ class _ProfileSectionState extends State<ProfileSection> {
   }
 
   String _formatDateForDisplay(dynamic birthDateData) {
-    if (birthDateData == null) return 'Fæðingardagur';
+    if (birthDateData == null) {
+      return AppLocalizations.of(context)!.date_of_birth;
+    }
 
     DateTime? date;
 
@@ -73,7 +77,9 @@ class _ProfileSectionState extends State<ProfileSection> {
       }
     }
 
-    return date != null ? date.toShortFormattedDate() : 'Fæðingardagur';
+    return date != null
+        ? date.toShortFormattedDate()
+        : AppLocalizations.of(context)!.date_of_birth;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -106,10 +112,11 @@ class _ProfileSectionState extends State<ProfileSection> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
 
-    final String email = widget.user?.email ?? 'Netfang';
-    final String name = widget.profile?['name'] ?? 'Nafn';
-    final String phone = widget.profile?['phoneNumber'] ?? 'Símanúmer';
+    final String email = widget.user?.email ?? local.email;
+    final String name = widget.profile?['name'] ?? local.name;
+    final String phone = widget.profile?['phoneNumber'] ?? local.phone_nr;
 
     final birthDateDisplay = _formatDateForDisplay(
       widget.profile?['dateOfBirth'],
@@ -121,63 +128,12 @@ class _ProfileSectionState extends State<ProfileSection> {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  WoltModalSheet.show(
-                    context: context,
-                    pageListBuilder: (bottomSheetContext) => [
-                      SliverWoltModalSheetPage(
-                        backgroundColor: JobsyColors.scaffoldColor,
-                        navBarHeight: 32,
-                        mainContentSliversBuilder: (context) => [
-                          SliverList.separated(
-                            itemCount: 2,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                  index == 0
-                                      ? 'Take a photo'
-                                      : 'Select from gallery',
-                                  style: theme.textTheme.bodyLarge,
-                                ),
-                                leading: Icon(
-                                  index == 0 ? Icons.camera_alt : Icons.image,
-                                  color: JobsyColors.primaryColor,
-                                ),
-                                onTap: Navigator.of(bottomSheetContext).pop,
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                                  return Divider(
-                                    color: JobsyColors.greyColor.withValues(
-                                      alpha: 0.3,
-                                    ),
-                                    height: 1,
-                                  );
-                                },
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-                child: const CircleAvatar(
-                  radius: 32,
-                  backgroundColor: JobsyColors.greyColor,
-                ),
-              ),
-              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      name,
-                      style: theme.textTheme.titleLarge!.copyWith(fontSize: 18),
-                    ),
-                    const SizedBox(height: 8),
                     ...[
+                      [Icons.person, name],
                       [Icons.email, email],
                       [Icons.cake, birthDateDisplay],
                       [Icons.phone, phone],
@@ -206,7 +162,7 @@ class _ProfileSectionState extends State<ProfileSection> {
               IconButton(
                 padding: EdgeInsets.zero,
                 icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                onPressed: () => showModalSheet(context, theme),
+                onPressed: () => showEditsheet(context, theme, local),
                 color: JobsyColors.primaryColor,
               ),
             ],
@@ -216,10 +172,13 @@ class _ProfileSectionState extends State<ProfileSection> {
     );
   }
 
-  void showModalSheet(BuildContext context, ThemeData theme) {
+  void showEditsheet(
+    BuildContext context,
+    ThemeData theme,
+    AppLocalizations local,
+  ) {
     WoltModalSheet.show(
       context: context,
-
       pageListBuilder: (bottomSheetContext) => [
         SliverWoltModalSheetPage(
           trailingNavBarWidget: IconButton(
@@ -235,55 +194,20 @@ class _ProfileSectionState extends State<ProfileSection> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ..._buildEditFields(theme),
+                    ..._buildEditFields(theme, local),
                     const SizedBox(height: 16),
                     Row(
                       children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: JobsyColors.greyColor.withValues(
-                                alpha: 0.2,
-                              ),
-                              padding: const EdgeInsets.all(16),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12.0),
-                                ),
-                              ),
-                            ),
-                            onPressed: Navigator.of(bottomSheetContext).pop,
-                            child: Center(
-                              child: Text(
-                                'Cancel',
-                                style: theme.textTheme.bodyLarge,
-                              ),
-                            ),
-                          ),
+                        ProfileActionButton(
+                          text: local.cancel,
+                          color: JobsyColors.greyColor.withValues(alpha: 0.2),
+                          onPressed: () => context.pop(),
                         ),
                         const SizedBox(width: 16),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: JobsyColors.primaryColor,
-                              padding: const EdgeInsets.all(16),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12.0),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              _saveChanges();
-                              context.pop();
-                            },
-                            child: Center(
-                              child: Text(
-                                'Save',
-                                style: theme.textTheme.bodyLarge,
-                              ),
-                            ),
-                          ),
+                        ProfileActionButton(
+                          text: local.save,
+                          color: JobsyColors.primaryColor,
+                          onPressed: _saveChanges,
                         ),
                       ],
                     ),
@@ -297,7 +221,7 @@ class _ProfileSectionState extends State<ProfileSection> {
     );
   }
 
-  void _saveChanges() async {
+  Future<void> _saveChanges() async {
     final authProvider = Provider.of<AuthUserProvider>(context, listen: false);
 
     final updatedProfile = {
@@ -310,35 +234,37 @@ class _ProfileSectionState extends State<ProfileSection> {
     };
 
     await authProvider.updateUserProfile(updatedProfile);
+
+    if (mounted) context.pop();
   }
 
-  List<Widget> _buildEditFields(ThemeData theme) {
+  List<Widget> _buildEditFields(ThemeData theme, AppLocalizations local) {
     return [
       AppTextFormField(
         controller: _nameController,
         textInputAction: TextInputAction.next,
         prefixIcon: const Icon(Icons.person),
-        labelText: 'Name',
+        labelText: local.name,
         keyboardType: TextInputType.name,
-        validator: (value) => null,
+        validator: (value) => value?.nameError,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _emailController,
         textInputAction: TextInputAction.next,
         prefixIcon: const Icon(Icons.email),
-        labelText: 'Email',
+        labelText: local.email,
         keyboardType: TextInputType.emailAddress,
-        validator: (value) => null,
+        validator: (value) => value?.emailError,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _phoneController,
         textInputAction: TextInputAction.next,
         prefixIcon: const Icon(Icons.phone),
-        labelText: 'Phone Number',
+        labelText: local.phone_nr,
         keyboardType: TextInputType.phone,
-        validator: (value) => null,
+        validator: (value) => value?.phoneError,
       ),
       const SizedBox(height: 16),
       GestureDetector(
@@ -348,8 +274,7 @@ class _ProfileSectionState extends State<ProfileSection> {
             controller: _birthDateController,
             textInputAction: TextInputAction.done,
             prefixIcon: const Icon(Icons.cake),
-            labelText: 'Birth Date',
-            hintText: 'Tap to select date',
+            labelText: local.date_of_birth,
             validator: (value) => null,
           ),
         ),

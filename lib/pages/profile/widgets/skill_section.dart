@@ -42,7 +42,7 @@ class SkillSection extends StatelessWidget {
                   .toList(),
             ),
           ),
-          ProfileAddBtn(title: local.add_skills),
+          ProfileAddBtn(title: local.add_skills, onPressed: () {}),
         ],
       ),
     );

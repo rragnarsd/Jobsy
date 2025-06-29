@@ -91,5 +91,20 @@
   "phone_nr": "Símanúmer",
   "take_photo": "Taka mynd",
   "select_from_gallery": "Sækja úr myndagallerý",
-  "cancel": "Hætta við"
+  "cancel": "Hætta við",
+
+  "which_company": "Fyrirtæki",
+  "which_position": "Starfstitill",
+  "start_date": "Frá",
+  "end_date": "Til",
+  "describe_position": "Lýstu starfinu. Hver voru/eru þín helstu verkefni og ábyrgðasvið...",
+  "describe_label": "Lýstu starfi þínu og ábyrgð",
+  "next": "Áfram",
+  "about_yourself": "Segðu okkur frá þér",
+  "describe_experience": "Lýstu reynslu þinni, færni og hvað gerir þig einstaka/n...",
+  "no_job_added": "Engin starfsreynsla hefur verið bætt inn",
+  "end_date_error": "Lokadagur má ekki vera fyrir upphafsdag",
+  "job_successfully_added": "Starfsreynsla vistuð!",
+  "job_add_failed": "Ekki tókst að vista starfsreynslu"
+
 }

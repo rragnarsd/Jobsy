@@ -20,9 +20,9 @@ class LanguageSection extends StatelessWidget {
             child: Column(
               children: List.generate(languages.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(
-                    height: 0.5,
-                    color: JobsyColors.greyColor,
+                  return Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
                   );
                 }
 
@@ -54,7 +54,7 @@ class LanguageSection extends StatelessWidget {
               }),
             ),
           ),
-          ProfileAddBtn(title: local.add_language),
+          ProfileAddBtn(title: local.add_language, onPressed: () {}),
         ],
       ),
     );

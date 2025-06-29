@@ -20,9 +20,9 @@ class LinkSection extends StatelessWidget {
             child: Column(
               children: List.generate(links.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(
-                    height: 0.5,
-                    color: JobsyColors.greyColor,
+                  return Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
                   );
                 }
 
@@ -48,7 +48,7 @@ class LinkSection extends StatelessWidget {
                           ),
                           Text(
                             link.media,
-                            style: theme.textTheme.bodyLarge!.copyWith(
+                            style: theme.textTheme.bodyMedium!.copyWith(
                               color: JobsyColors.greyColor,
                             ),
                           ),
@@ -61,7 +61,7 @@ class LinkSection extends StatelessWidget {
             ),
           ),
 
-          ProfileAddBtn(title: local.add_link),
+          ProfileAddBtn(title: local.add_link, onPressed: () {}),
         ],
       ),
     );

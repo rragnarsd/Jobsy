@@ -20,9 +20,9 @@ class ReferenceSection extends StatelessWidget {
             child: Column(
               children: List.generate(references.length * 2 - 1, (index) {
                 if (index.isOdd) {
-                  return const Divider(
-                    height: 0.5,
-                    color: JobsyColors.greyColor,
+                  return Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
                   );
                 }
 
@@ -67,7 +67,7 @@ class ReferenceSection extends StatelessWidget {
               }),
             ),
           ),
-          ProfileAddBtn(title: local.add_reference),
+          ProfileAddBtn(title: local.add_reference, onPressed: () {}),
         ],
       ),
     );

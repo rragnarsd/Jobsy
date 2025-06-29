@@ -89,7 +89,21 @@
   "email": "Email",
   "name": "Name",
   "phone_nr": "Phone number",
-  "take_photo": "Take a photo,
+  "take_photo": "Take a photo",
   "select_from_gallery": "Select from gallery",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+
+  "which_company": "Which company",
+  "which_position": "What was your position",
+  "start_date": "Start Date",
+  "end_date": "End Date",
+  "describe_position": "What were your responsibilities, the projects you were working on and more...",
+  "describe_label": "Describe your job and responsibilities",
+  "next": "Next",
+  "about_yourself": "Tell us about yourself",
+  "describe_experience": "Describe your experience, skills, and what makes you unique...",
+  "no_job_added": "No job experience added yet",
+  "end_date_error": "End date cannot be before start date",
+  "job_successfully_added": "Job experience saved successfully!",
+  "job_add_failed": "Failed to save job experience"
 }

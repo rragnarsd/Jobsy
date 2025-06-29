@@ -232,4 +232,66 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get job_not_found => 'Starf fannst ekki';
+
+  @override
+  String get date_of_birth => 'Fæðingardagur';
+
+  @override
+  String get email => 'Netfang';
+
+  @override
+  String get name => 'Nafn';
+
+  @override
+  String get phone_nr => 'Símanúmer';
+
+  @override
+  String get take_photo => 'Taka mynd';
+
+  @override
+  String get select_from_gallery => 'Sækja úr myndagallerý';
+
+  @override
+  String get cancel => 'Hætta við';
+
+  @override
+  String get which_company => 'Fyrirtæki';
+
+  @override
+  String get which_position => 'Starfstitill';
+
+  @override
+  String get start_date => 'Frá';
+
+  @override
+  String get end_date => 'Til';
+
+  @override
+  String get describe_position =>
+      'Lýstu starfinu. Hver voru/eru þín helstu verkefni og ábyrgðasvið...';
+
+  @override
+  String get describe_label => 'Lýstu starfi þínu og ábyrgð';
+
+  @override
+  String get next => 'Áfram';
+
+  @override
+  String get about_yourself => 'Segðu okkur frá þér';
+
+  @override
+  String get describe_experience =>
+      'Lýstu reynslu þinni, færni og hvað gerir þig einstaka/n...';
+
+  @override
+  String get no_job_added => 'Engin starfsreynsla hefur verið bætt inn';
+
+  @override
+  String get end_date_error => 'Lokadagur má ekki vera fyrir upphafsdag';
+
+  @override
+  String get job_successfully_added => 'Starfsreynsla vistuð!';
+
+  @override
+  String get job_add_failed => 'Ekki tókst að vista starfsreynslu';
 }

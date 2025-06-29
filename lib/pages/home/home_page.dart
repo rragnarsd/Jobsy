@@ -153,6 +153,7 @@ class JobCard extends StatelessWidget {
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+
                         children: [
                           Text(
                             job.title,

@@ -1,4 +1,5 @@
 import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
@@ -34,12 +35,13 @@ class _AboutSectionState extends State<AboutSection> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: Column(
         children: [
           ProfileHeader(
             text: AppLocalizations.of(context)!.about_you,
-            onEditTap: () => _showEditModal(context),
+            onEditTap: () => _showEditModal(context, local),
           ),
           Card(
             child: Padding(
@@ -56,22 +58,12 @@ class _AboutSectionState extends State<AboutSection> {
     );
   }
 
-  void _showEditModal(BuildContext context) {
-    final theme = Theme.of(context);
-
+  void _showEditModal(BuildContext context, AppLocalizations local) {
     WoltModalSheet.show(
-      modalTypeBuilder: (context) => WoltModalType.dialog(),
       context: context,
       enableDrag: true,
       pageListBuilder: (bottomSheetContext) => [
         SliverWoltModalSheetPage(
-          topBarTitle: Text(
-            'About You',
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          isTopBarLayerAlwaysVisible: true,
           trailingNavBarWidget: IconButton(
             padding: const EdgeInsets.all(16),
             icon: const Icon(Icons.close),
@@ -89,47 +81,25 @@ class _AboutSectionState extends State<AboutSection> {
                       isMultiline: true,
                       maxLines: 6,
                       controller: _aboutController,
-                      labelText: 'Tell us about yourself',
-                      hintText:
-                          'Describe your experience, skills, and what makes you unique...',
+                      labelText: local.about_yourself,
+                      hintText: local.describe_experience,
                       validator: (value) => null,
                     ),
                     const SizedBox(height: 16),
-                    Column(
+                    Row(
                       children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: JobsyColors.greyColor.withValues(
-                              alpha: 0.2,
-                            ),
-                          ),
-                          onPressed: Navigator.of(bottomSheetContext).pop,
-                          child: Center(
-                            child: Text(
-                              'Cancel',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: JobsyColors.primaryColor,
-                          ),
+                        ProfileActionButton(
+                          text: local.cancel,
+                          color: JobsyColors.greyColor.withValues(alpha: 0.2),
                           onPressed: () {
-                            _saveChanges();
-                            context.pop();
+                            Navigator.of(bottomSheetContext).pop;
                           },
-                          child: Center(
-                            child: Text(
-                              'Save',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        ProfileActionButton(
+                          text: local.save,
+                          color: JobsyColors.primaryColor,
+                          onPressed: _saveChanges,
                         ),
                       ],
                     ),
@@ -150,5 +120,7 @@ class _AboutSectionState extends State<AboutSection> {
 
     await authProvider.updateUserProfile(updatedProfile);
     setState(() {});
+    //TODO
+    if (mounted) context.pop();
   }
 }

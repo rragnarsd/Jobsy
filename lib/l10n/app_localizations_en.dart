@@ -232,4 +232,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get job_not_found => 'Job not found';
+
+  @override
+  String get date_of_birth => 'Date of birth';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get phone_nr => 'Phone number';
+
+  @override
+  String get take_photo => 'Take a photo';
+
+  @override
+  String get select_from_gallery => 'Select from gallery';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get which_company => 'Which company';
+
+  @override
+  String get which_position => 'What was your position';
+
+  @override
+  String get start_date => 'Start Date';
+
+  @override
+  String get end_date => 'End Date';
+
+  @override
+  String get describe_position =>
+      'What were your responsibilities, the projects you were working on and more...';
+
+  @override
+  String get describe_label => 'Describe your job and responsibilities';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get about_yourself => 'Tell us about yourself';
+
+  @override
+  String get describe_experience =>
+      'Describe your experience, skills, and what makes you unique...';
+
+  @override
+  String get no_job_added => 'No job experience added yet';
+
+  @override
+  String get end_date_error => 'End date cannot be before start date';
+
+  @override
+  String get job_successfully_added => 'Job experience saved successfully!';
+
+  @override
+  String get job_add_failed => 'Failed to save job experience';
 }

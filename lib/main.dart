@@ -2,6 +2,7 @@ import 'package:codehatch/firebase_options.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/providers/course_provider.dart';
+import 'package:codehatch/providers/job_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/routes.dart';
 import 'package:codehatch/utils/theme.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
         ChangeNotifierProvider.value(value: authProvider),
         ChangeNotifierProvider(create: (_) => WorkplaceProvider()),
         ChangeNotifierProvider(create: (_) => CourseProvider()),
+        ChangeNotifierProvider(create: (_) => JobProvider()),
       ],
       child: const JobsyWrapper(),
     ),
