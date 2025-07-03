@@ -8,6 +8,7 @@ import 'package:codehatch/pages/home/workplace_page.dart';
 import 'package:codehatch/pages/inbox/inbox_page.dart';
 import 'package:codehatch/pages/profile/profile_page.dart';
 import 'package:codehatch/pages/profile/settings_page.dart';
+import 'package:codehatch/pages/profile/skills_page.dart';
 import 'package:codehatch/pages/workplaces/workplaces.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/root.dart';
@@ -28,13 +29,10 @@ GoRouter createRouter(BuildContext context) {
       final isInitialized = authProvider.isInitialized;
       final isGoingToAuth = state.matchedLocation == '/auth';
 
-      // Wait until auth provider is initialized
       if (!isInitialized) return null;
 
-      // If user is not logged in and trying to access protected routes
       if (!isLoggedIn && !isGoingToAuth) return '/auth';
 
-      // If user is logged in and trying to access the auth page, send to home
       if (isLoggedIn && isGoingToAuth) return '/home';
 
       // No redirect needed
@@ -87,6 +85,11 @@ GoRouter createRouter(BuildContext context) {
           GoRoute(
             path: 'settings',
             builder: (context, state) => const SettingsPage(),
+          ),
+          GoRoute(
+            path: 'skills',
+            builder: (context, state) =>
+                SkillsPage(initialTabIndex: state.extra as int? ?? 0),
           ),
         ],
       ),

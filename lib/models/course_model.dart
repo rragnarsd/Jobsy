@@ -59,21 +59,3 @@ class CourseModel {
     };
   }
 }
-
-extension CourseModelConverter on CourseModel {
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'businessName': businessName,
-      'startDate': startDate.toIso8601String(),
-      'timeSpan': timeSpan,
-      'price': price,
-      'type': type.name,
-      'courseInfo': courseInfo,
-      'categories': categories,
-      'logoUrl': logoUrl,
-      'imageUrl': imageUrl,
-    };
-  }
-}

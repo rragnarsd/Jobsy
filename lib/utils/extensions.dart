@@ -121,6 +121,17 @@ extension TimeAgoExtension on DateTime {
   }
 }
 
+extension CategoryFormat on String {
+  String toTitleCaseWithSpaces() {
+    final spaced = replaceAllMapped(
+      RegExp(r'([a-z])([A-Z])'),
+      (match) => '${match.group(1)} ${match.group(2)}',
+    );
+
+    return spaced[0].toUpperCase() + spaced.substring(1);
+  }
+}
+
 enum ToastType { success, error, info, warning }
 
 extension ToastTypeProperties on ToastType {

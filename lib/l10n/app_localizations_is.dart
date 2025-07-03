@@ -294,4 +294,49 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get job_add_failed => 'Ekki tókst að vista starfsreynslu';
+
+  @override
+  String get school => 'Skóli';
+
+  @override
+  String get field => 'Námsgrein';
+
+  @override
+  String get degree => 'Veldu gráðu';
+
+  @override
+  String get education_successfully_added => 'Menntun bætt við';
+
+  @override
+  String get education_add_failed => 'Ekki tókst að vista menntun';
+
+  @override
+  String get no_education_added => 'No education added yet';
+
+  @override
+  String get job_title => 'Starfstitill';
+
+  @override
+  String get no_reference_added => 'Engum tilvísunum bætt við ennþá';
+
+  @override
+  String get reference_successfully_added => 'Tilvísun bætt við';
+
+  @override
+  String get reference_add_failed => 'Ekki tókst að vista tilvísun';
+
+  @override
+  String get no_link_added => 'Engum tengli bætt við ennþá';
+
+  @override
+  String get link_succesfully_added => 'Tengli bætt við';
+
+  @override
+  String get link_add_failed => 'Ekki tókst að bæta við tengli';
+
+  @override
+  String get link_site => 'Vefsíða';
+
+  @override
+  String get link_media => 'Miðill';
 }

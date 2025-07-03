@@ -8,36 +8,37 @@ class JobService {
 
   User? get currentUser => _auth.currentUser;
 
-  Future<void> addJobExperience(JobExperienceModel jobExperience) async {
+  Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
+    final user = currentUser;
+    if (user == null) throw Exception('User not authenticated');
+    return _firestore.collection('users').doc(user.uid);
+  }
+
+  List<dynamic> _getJobList(DocumentSnapshot userDoc) {
+    final data = userDoc.data() as Map<String, dynamic>? ?? {};
+    return List<dynamic>.from(data['jobExperience'] ?? []);
+  }
+
+  Map<String, dynamic> _jobToMap(JobExperienceModel job) => {
+    'id': job.id,
+    'jobTitle': job.jobTitle,
+    'companyName': job.companyName,
+    'startDate': Timestamp.fromDate(job.startDate),
+    'endDate': Timestamp.fromDate(job.endDate),
+  };
+
+  Future<void> addJobExperience(JobExperienceModel job) async {
     try {
-      final user = currentUser;
-      if (user == null) {
-        throw Exception('User not authenticated');
-      }
+      final userDocRef = await _getUserDoc();
+      final userDoc = await userDocRef.get();
 
-      final jobData = {
-        'id': jobExperience.id,
-        'jobTitle': jobExperience.jobTitle,
-        'companyName': jobExperience.companyName,
-        'startDate': Timestamp.fromDate(jobExperience.startDate),
-        'endDate': Timestamp.fromDate(jobExperience.endDate),
-      };
+      if (!userDoc.exists) throw Exception('User profile not found');
 
-      final userDoc = await _firestore.collection('users').doc(user.uid).get();
+      final jobList = _getJobList(userDoc);
+      jobList.add(_jobToMap(job));
 
-      if (!userDoc.exists) {
-        throw Exception('User profile not found');
-      }
-
-      final currentData = userDoc.data()!;
-      List<dynamic> jobExperienceList = List<dynamic>.from(
-        currentData['jobExperience'] ?? [],
-      );
-
-      jobExperienceList.add(jobData);
-
-      await _firestore.collection('users').doc(user.uid).update({
-        'jobExperience': jobExperienceList,
+      await userDocRef.update({
+        'jobExperience': jobList,
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
@@ -47,21 +48,14 @@ class JobService {
 
   Future<List<JobExperienceModel>> getUserJobExperience() async {
     try {
-      final user = currentUser;
-      if (user == null) {
-        throw Exception('User not authenticated');
-      }
+      final userDocRef = await _getUserDoc();
+      final userDoc = await userDocRef.get();
 
-      final doc = await _firestore.collection('users').doc(user.uid).get();
+      if (!userDoc.exists) return [];
 
-      if (!doc.exists) {
-        return [];
-      }
+      final jobList = _getJobList(userDoc);
 
-      final data = doc.data()!;
-      final jobExperienceList = List<dynamic>.from(data['jobExperience'] ?? []);
-
-      return jobExperienceList.map((job) {
+      return jobList.map((job) {
         return JobExperienceModel(
           id: job['id'],
           jobTitle: job['jobTitle'],
@@ -80,40 +74,20 @@ class JobService {
     JobExperienceModel updatedJob,
   ) async {
     try {
-      final user = currentUser;
-      if (user == null) {
-        throw Exception('User not authenticated');
-      }
+      final userDocRef = await _getUserDoc();
+      final userDoc = await userDocRef.get();
 
-      final userDoc = await _firestore.collection('users').doc(user.uid).get();
+      if (!userDoc.exists) throw Exception('User profile not found');
 
-      if (!userDoc.exists) {
-        throw Exception('User profile not found');
-      }
+      final jobList = _getJobList(userDoc);
+      final index = jobList.indexWhere((job) => job['id'] == jobId);
 
-      final currentData = userDoc.data()!;
-      List<dynamic> jobExperienceList = List<dynamic>.from(
-        currentData['jobExperience'] ?? [],
-      );
+      if (index == -1) throw Exception('Job experience not found');
 
-      final jobIndex = jobExperienceList.indexWhere(
-        (job) => job['id'] == jobId,
-      );
+      jobList[index] = _jobToMap(updatedJob);
 
-      if (jobIndex == -1) {
-        throw Exception('Job experience not found');
-      }
-
-      jobExperienceList[jobIndex] = {
-        'id': updatedJob.id,
-        'jobTitle': updatedJob.jobTitle,
-        'companyName': updatedJob.companyName,
-        'startDate': Timestamp.fromDate(updatedJob.startDate),
-        'endDate': Timestamp.fromDate(updatedJob.endDate),
-      };
-
-      await _firestore.collection('users').doc(user.uid).update({
-        'jobExperience': jobExperienceList,
+      await userDocRef.update({
+        'jobExperience': jobList,
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
@@ -123,26 +97,16 @@ class JobService {
 
   Future<void> deleteJobExperience(String jobId) async {
     try {
-      final user = currentUser;
-      if (user == null) {
-        throw Exception('User not authenticated');
-      }
+      final userDocRef = await _getUserDoc();
+      final userDoc = await userDocRef.get();
 
-      final userDoc = await _firestore.collection('users').doc(user.uid).get();
+      if (!userDoc.exists) throw Exception('User profile not found');
 
-      if (!userDoc.exists) {
-        throw Exception('User profile not found');
-      }
+      final jobList = _getJobList(userDoc);
+      jobList.removeWhere((job) => job['id'] == jobId);
 
-      final currentData = userDoc.data()!;
-      List<dynamic> jobExperienceList = List<dynamic>.from(
-        currentData['jobExperience'] ?? [],
-      );
-
-      jobExperienceList.removeWhere((job) => job['id'] == jobId);
-
-      await _firestore.collection('users').doc(user.uid).update({
-        'jobExperience': jobExperienceList,
+      await userDocRef.update({
+        'jobExperience': jobList,
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {

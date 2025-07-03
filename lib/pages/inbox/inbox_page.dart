@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/inbox_model.dart';
 import 'package:codehatch/utils/colors.dart';
@@ -12,7 +13,7 @@ class InboxPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${AppLocalizations.of(context)!.inbox} (20)'),
+        title: Text('${AppLocalizations.of(context)!.inbox} (3)'),
         leading: Padding(
           padding: const EdgeInsets.all(16.0),
           child: GestureDetector(
@@ -90,8 +91,8 @@ class InboxCard extends StatelessWidget {
             child: Row(
               spacing: 16,
               children: [
-                Image.asset(
-                  inboxItem.logoUrl,
+                CachedNetworkImage(
+                  imageUrl: inboxItem.logoUrl,
                   width: 60,
                   height: 60,
                   fit: BoxFit.fitWidth,

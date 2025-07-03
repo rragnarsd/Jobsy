@@ -115,7 +115,7 @@ class JobProfession extends StatelessWidget {
                       (profession) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: JobsyColors.greyColor),
+                          color: JobsyColors.primaryColor,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -124,7 +124,9 @@ class JobProfession extends StatelessWidget {
                           ),
                           child: Text(
                             profession,
-                            style: theme.textTheme.bodyMedium,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
@@ -164,15 +166,20 @@ class JobType extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
+                  color: JobsyColors.primaryColor,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: JobsyColors.greyColor),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 4,
                   ),
-                  child: Text(jobType, style: theme.textTheme.bodyMedium),
+                  child: Text(
+                    jobType,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
             ],

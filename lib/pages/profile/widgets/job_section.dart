@@ -52,11 +52,10 @@ class _JobSectionState extends State<JobSection> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Consumer<JobProvider>(
       builder: (context, jobProvider, child) {
-        final theme = Theme.of(context);
-
         return SliverList(
           delegate: SliverChildListDelegate([
             ProfileHeader(text: local.job_experience),
@@ -102,7 +101,10 @@ class _JobSectionState extends State<JobSection> {
                         key: Key(job.id.toString()),
                         direction: DismissDirection.endToStart,
                         background: Container(
-                          color: JobsyColors.errorColor,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: JobsyColors.errorColor,
+                          ),
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: 16.0),
                           child: const Icon(
@@ -119,13 +121,13 @@ class _JobSectionState extends State<JobSection> {
                             children: [
                               Expanded(
                                 child: Column(
+                                  spacing: 2,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       job.jobTitle,
                                       style: theme.textTheme.bodyLarge,
                                     ),
-                                    const SizedBox(height: 4),
                                     Text(
                                       job.companyName,
                                       style: theme.textTheme.bodyLarge!
@@ -311,28 +313,36 @@ class _JobSectionState extends State<JobSection> {
         validator: (value) => value?.positionError,
       ),
       const SizedBox(height: 16),
-      GestureDetector(
-        onTap: () => _selectStartDate(context),
-        child: AbsorbPointer(
-          child: AppTextFormField(
-            controller: _startDateController,
-            labelText: local.start_date,
-            prefixIcon: const Icon(Icons.calendar_month),
-            validator: (value) => value?.dateError,
+      Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => _selectStartDate(context),
+              child: AbsorbPointer(
+                child: AppTextFormField(
+                  controller: _startDateController,
+                  labelText: local.start_date,
+                  prefixIcon: const Icon(Icons.calendar_month),
+                  validator: (value) => value?.dateError,
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-      const SizedBox(height: 16),
-      GestureDetector(
-        onTap: () => _selectEndDate(context),
-        child: AbsorbPointer(
-          child: AppTextFormField(
-            controller: _endDateController,
-            labelText: local.end_date,
-            prefixIcon: const Icon(Icons.calendar_month),
-            validator: (value) => value?.dateError,
+          const SizedBox(width: 16),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => _selectEndDate(context),
+              child: AbsorbPointer(
+                child: AppTextFormField(
+                  controller: _endDateController,
+                  labelText: local.end_date,
+                  prefixIcon: const Icon(Icons.calendar_month),
+                  validator: (value) => value?.dateError,
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
       const SizedBox(height: 16),
     ];

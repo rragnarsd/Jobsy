@@ -294,7 +294,12 @@ class CourseWorkplaceTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: ListTile(
           title: Text(course.businessName, style: theme.textTheme.titleLarge),
-          leading: Image.asset(course.logoUrl, width: 60, height: 60),
+          leading: CachedNetworkImage(
+            imageUrl: course.logoUrl,
+            width: 60,
+            height: 60,
+            fit: BoxFit.fitWidth,
+          ),
           trailing: IconButton(
             onPressed: () {},
             icon: const Icon(Icons.keyboard_arrow_right),

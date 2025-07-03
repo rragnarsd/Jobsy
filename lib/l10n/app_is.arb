@@ -105,6 +105,22 @@
   "no_job_added": "Engin starfsreynsla hefur verið bætt inn",
   "end_date_error": "Lokadagur má ekki vera fyrir upphafsdag",
   "job_successfully_added": "Starfsreynsla vistuð!",
-  "job_add_failed": "Ekki tókst að vista starfsreynslu"
+  "job_add_failed": "Ekki tókst að vista starfsreynslu",
 
+  "school": "Skóli",
+  "field": "Námsgrein",
+  "degree": "Veldu gráðu",
+  "education_successfully_added": "Menntun bætt við",
+  "education_add_failed": "Ekki tókst að vista menntun",
+
+  "job_title": "Starfstitill",
+  "no_reference_added": "Engum tilvísunum bætt við ennþá",
+  "reference_successfully_added": "Tilvísun bætt við",
+  "reference_add_failed": "Ekki tókst að vista tilvísun",
+
+  "no_link_added": "Engum tengli bætt við ennþá",
+  "link_succesfully_added": "Tengli bætt við",
+  "link_add_failed": "Ekki tókst að bæta við tengli",
+  "link_site": "Vefsíða",
+  "link_media": "Miðill"
 }

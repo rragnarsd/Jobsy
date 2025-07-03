@@ -105,5 +105,23 @@
   "no_job_added": "No job experience added yet",
   "end_date_error": "End date cannot be before start date",
   "job_successfully_added": "Job experience saved successfully!",
-  "job_add_failed": "Failed to save job experience"
+  "job_add_failed": "Failed to save job experience",
+
+  "school": "School",
+  "field": "Field of study",
+  "degree": "Select a degree",
+  "education_successfully_added": "Education successfully added",
+  "education_add_failed": "Education add failed",
+  "no_education_added": "No education added yet",
+
+  "job_title": "Job title",
+  "no_reference_added": "No references added yet",
+  "reference_successfully_added": "Reference successfully added",
+  "reference_add_failed": "Refence add failed",
+
+  "no_link_added": "No link added yet",
+  "link_succesfully_added": "Link successfully added",
+  "link_add_failed": "Link add failed",
+  "link_site": "Website",
+  "link_media": "Media"
 }

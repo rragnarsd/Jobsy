@@ -667,6 +667,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to save job experience'**
   String get job_add_failed;
+
+  /// No description provided for @school.
+  ///
+  /// In en, this message translates to:
+  /// **'School'**
+  String get school;
+
+  /// No description provided for @field.
+  ///
+  /// In en, this message translates to:
+  /// **'Field of study'**
+  String get field;
+
+  /// No description provided for @degree.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a degree'**
+  String get degree;
+
+  /// No description provided for @education_successfully_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Education successfully added'**
+  String get education_successfully_added;
+
+  /// No description provided for @education_add_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Education add failed'**
+  String get education_add_failed;
+
+  /// No description provided for @no_education_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No education added yet'**
+  String get no_education_added;
+
+  /// No description provided for @job_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Job title'**
+  String get job_title;
+
+  /// No description provided for @no_reference_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No references added yet'**
+  String get no_reference_added;
+
+  /// No description provided for @reference_successfully_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference successfully added'**
+  String get reference_successfully_added;
+
+  /// No description provided for @reference_add_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Refence add failed'**
+  String get reference_add_failed;
+
+  /// No description provided for @no_link_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No link added yet'**
+  String get no_link_added;
+
+  /// No description provided for @link_succesfully_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Link successfully added'**
+  String get link_succesfully_added;
+
+  /// No description provided for @link_add_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Link add failed'**
+  String get link_add_failed;
+
+  /// No description provided for @link_site.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get link_site;
+
+  /// No description provided for @link_media.
+  ///
+  /// In en, this message translates to:
+  /// **'Media'**
+  String get link_media;
 }
 
 class _AppLocalizationsDelegate

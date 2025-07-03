@@ -34,7 +34,7 @@ class AppOlderDivider extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: DividerItem(
-        text: '${AppLocalizations.of(context)!.older_jobs}($olderJobsCount)',
+        text: '${AppLocalizations.of(context)!.older_jobs} ($olderJobsCount)',
       ),
     );
   }

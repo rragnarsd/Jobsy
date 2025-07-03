@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
 import 'package:codehatch/providers/course_provider.dart';
@@ -101,7 +102,12 @@ class CoursesCard extends StatelessWidget {
               Row(
                 spacing: 16,
                 children: [
-                  Image.asset(course.logoUrl, width: 80, height: 80),
+                  CachedNetworkImage(
+                    imageUrl: course.logoUrl,
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.fitWidth,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

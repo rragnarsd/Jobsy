@@ -294,4 +294,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get job_add_failed => 'Failed to save job experience';
+
+  @override
+  String get school => 'School';
+
+  @override
+  String get field => 'Field of study';
+
+  @override
+  String get degree => 'Select a degree';
+
+  @override
+  String get education_successfully_added => 'Education successfully added';
+
+  @override
+  String get education_add_failed => 'Education add failed';
+
+  @override
+  String get no_education_added => 'No education added yet';
+
+  @override
+  String get job_title => 'Job title';
+
+  @override
+  String get no_reference_added => 'No references added yet';
+
+  @override
+  String get reference_successfully_added => 'Reference successfully added';
+
+  @override
+  String get reference_add_failed => 'Refence add failed';
+
+  @override
+  String get no_link_added => 'No link added yet';
+
+  @override
+  String get link_succesfully_added => 'Link successfully added';
+
+  @override
+  String get link_add_failed => 'Link add failed';
+
+  @override
+  String get link_site => 'Website';
+
+  @override
+  String get link_media => 'Media';
 }

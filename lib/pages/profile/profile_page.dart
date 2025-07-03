@@ -75,11 +75,11 @@ class _ProfilePageState extends State<ProfilePage> {
           const AboutSection(),
           const JobSection(),
           const EducationSection(),
-          SkillSection(),
+          const SkillSection(),
           const LanguageSection(),
           const ReferenceSection(),
           const LinkSection(),
-          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
       ),
     );

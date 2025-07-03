@@ -60,61 +60,12 @@ class _ProfileSectionState extends State<ProfileSection> {
     super.dispose();
   }
 
-  String _formatDateForDisplay(dynamic birthDateData) {
-    if (birthDateData == null) {
-      return AppLocalizations.of(context)!.date_of_birth;
-    }
-
-    DateTime? date;
-
-    if (birthDateData is Timestamp) {
-      date = birthDateData.toDate();
-    } else if (birthDateData is String) {
-      try {
-        date = DateTime.parse(birthDateData);
-      } catch (e) {
-        return birthDateData;
-      }
-    }
-
-    return date != null
-        ? date.toShortFormattedDate()
-        : AppLocalizations.of(context)!.date_of_birth;
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1940),
-      lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: JobsyColors.primaryColor,
-              onSurface: JobsyColors.whiteColor,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked;
-        _birthDateController.text = picked.toShortFormattedDate();
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
 
-    final String email = widget.user?.email ?? local.email;
+    final String email = widget.profile?['email'] ?? local.email;
     final String name = widget.profile?['name'] ?? local.name;
     final String phone = widget.profile?['phoneNumber'] ?? local.phone_nr;
 
@@ -219,6 +170,55 @@ class _ProfileSectionState extends State<ProfileSection> {
         ),
       ],
     );
+  }
+
+  String _formatDateForDisplay(dynamic birthDateData) {
+    if (birthDateData == null) {
+      return AppLocalizations.of(context)!.date_of_birth;
+    }
+
+    DateTime? date;
+
+    if (birthDateData is Timestamp) {
+      date = birthDateData.toDate();
+    } else if (birthDateData is String) {
+      try {
+        date = DateTime.parse(birthDateData);
+      } catch (e) {
+        return birthDateData;
+      }
+    }
+
+    return date != null
+        ? date.toShortFormattedDate()
+        : AppLocalizations.of(context)!.date_of_birth;
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1940),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: JobsyColors.primaryColor,
+              onSurface: JobsyColors.whiteColor,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        _birthDateController.text = picked.toShortFormattedDate();
+      });
+    }
   }
 
   Future<void> _saveChanges() async {

@@ -50,66 +50,23 @@ class JobExperienceModel {
   });
 }
 
-final List<JobExperienceModel> jobExperience = [
-  JobExperienceModel(
-    id: '1',
-    jobTitle: 'Software Engineer',
-    companyName: 'Tech Solutions Inc.',
-    startDate: DateTime(2018, 6, 1),
-    endDate: DateTime(2021, 5, 31),
-  ),
-  JobExperienceModel(
-    id: '2',
-    jobTitle: 'Senior Developer',
-    companyName: 'Innovatech LLC',
-    startDate: DateTime(2021, 6, 1),
-    endDate: DateTime(2023, 3, 31),
-  ),
-  JobExperienceModel(
-    id: '3',
-    jobTitle: 'Lead Engineer',
-    companyName: 'Future Apps Ltd.',
-    startDate: DateTime(2023, 4, 1),
-    endDate: DateTime.now(),
-  ),
-];
-
 class EducationModel {
   final String id;
-  final String name;
   final String school;
-  final String type;
+  final String field;
+  final String degree;
   final String yearStart;
   final String yearEnd;
 
   EducationModel({
     required this.id,
-    required this.name,
     required this.school,
-    required this.type,
+    required this.field,
+    required this.degree,
     required this.yearStart,
     required this.yearEnd,
   });
 }
-
-final List<EducationModel> educations = [
-  EducationModel(
-    id: '1',
-    name: 'Nám',
-    school: 'Skóli',
-    type: 'Type of school',
-    yearStart: 'Year start',
-    yearEnd: 'Year end',
-  ),
-  EducationModel(
-    id: '2',
-    name: 'Another Education',
-    school: 'Another School',
-    type: 'Another Type',
-    yearStart: '2020',
-    yearEnd: '2022',
-  ),
-];
 
 class ReferenceModel {
   final String id;
