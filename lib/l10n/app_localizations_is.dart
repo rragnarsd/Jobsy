@@ -42,6 +42,9 @@ class AppLocalizationsIs extends AppLocalizations {
   String get about_you => 'Um þig';
 
   @override
+  String get about_you_empty => 'Engar upplýsingar um þig ennþá';
+
+  @override
   String get edit => 'Breyta';
 
   @override
@@ -66,6 +69,9 @@ class AppLocalizationsIs extends AppLocalizations {
   String get add_skills => 'Bæta við hæfni';
 
   @override
+  String get no_skills => 'Engin kunnáttu bætt við ennþá';
+
+  @override
   String get my_skills => 'Mín hæfni';
 
   @override
@@ -79,6 +85,21 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get add_language => 'Bæta við tungumáli';
+
+  @override
+  String get no_language_added => 'Engum tungumálum bætt við ennþá';
+
+  @override
+  String get language_succesfully_added => 'Tungumáli bætt við';
+
+  @override
+  String get language_add_failed => 'Ekki tókst að bæta við tungumáli';
+
+  @override
+  String get which_language_do_you_speak => 'Hvaða tungumál talar þú?';
+
+  @override
+  String get how_well_do_you_speak_it => 'Hversu vel talar þú það?';
 
   @override
   String get references => 'Meðmælendur';
@@ -339,4 +360,119 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get link_media => 'Miðill';
+
+  @override
+  String get log_out => 'Skrá þig út';
+
+  @override
+  String get sure_to_logout => 'Ertu viss um að þú viljir skrá þig út?';
+
+  @override
+  String get have_been_logged_out => 'Þú hefur verið skráð/ur út';
+
+  @override
+  String get create_account => 'Búa til aðgang';
+
+  @override
+  String get welcome_back => 'Velkomin aftur';
+
+  @override
+  String get signup_start => 'Skráðu þig til að byrja að nota Jobsy';
+
+  @override
+  String get signin_start => 'Skráðu þig inn til að halda áfram';
+
+  @override
+  String get password => 'Lykilorð';
+
+  @override
+  String get register => 'Skráning';
+
+  @override
+  String get sign_in => 'Innskráning';
+
+  @override
+  String get already_have_account => 'Áttu nú þegar aðgang?';
+
+  @override
+  String get dont_have_account => 'Áttu ekki aðgang?';
+
+  @override
+  String get reset_password => 'Endustilla lykilorð';
+
+  @override
+  String get just_now => 'Rétt í þessu';
+
+  @override
+  String get remote => 'Fjarvinna';
+
+  @override
+  String get workplace_not_found => 'Vinnustaður fannst ekki';
+
+  @override
+  String get beginner => 'Byrjandi';
+
+  @override
+  String get basic_skills => 'Grunnfærni';
+
+  @override
+  String get intermediate => 'Miðlungs';
+
+  @override
+  String get advanced => 'Ítarleg';
+
+  @override
+  String get expert => 'Sérfræðingur';
+
+  @override
+  String get user => 'Notandi';
+
+  @override
+  String get send_email => 'Sendu okkur tölvupóst';
+
+  @override
+  String get help_centre => 'Þjónustuver';
+
+  @override
+  String get help_support => 'Spurt & svarað';
+
+  @override
+  String get application_updates => 'Ný skilaboð í innhólfi';
+
+  @override
+  String get push_emails_sms => 'Tilkynningar í síma, email, SMS tilkynningar';
+
+  @override
+  String get push_sms => 'Tilkynningar í síma, SMS tilkynningar';
+
+  @override
+  String get new_job => 'Ný störf í vaktinni';
+
+  @override
+  String get notification_settings => 'Tilkynningar';
+
+  @override
+  String get dark_theme => 'Dökkt Þema';
+
+  @override
+  String get light_theme => 'Ljóst Þema';
+
+  @override
+  String get theme => 'Þema';
+
+  @override
+  String get automatic_translation =>
+      'Automatically translate all job information to english';
+
+  @override
+  String get machine_translation => 'Machine Translation';
+
+  @override
+  String get change_language => 'Breyta tungumáli';
+
+  @override
+  String get language => 'Tungumál';
+
+  @override
+  String get settings => 'Stillingar';
 }

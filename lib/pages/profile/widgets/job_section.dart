@@ -1,10 +1,12 @@
 import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/job_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -74,7 +76,7 @@ class _JobSectionState extends State<JobSection> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      'No job experience added yet',
+                      local.no_job_added,
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: JobsyColors.greyColor,
                       ),
@@ -266,10 +268,13 @@ class _JobSectionState extends State<JobSection> {
 
     try {
       await jobProvider.addJobExperience(
-        jobTitle: _positionController.text.trim(),
-        companyName: _companyController.text.trim(),
-        startDate: _startDate!,
-        endDate: _endDate!,
+        JobExperienceModel(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          jobTitle: _positionController.text.trim(),
+          companyName: _companyController.text.trim(),
+          startDate: _startDate!,
+          endDate: _endDate!,
+        ),
       );
 
       if (context.mounted) {

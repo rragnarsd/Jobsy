@@ -27,20 +27,24 @@ GoRouter createRouter(BuildContext context) {
     redirect: (context, state) {
       final isLoggedIn = authProvider.isLoggedIn;
       final isInitialized = authProvider.isInitialized;
-      final isGoingToAuth = state.matchedLocation == '/auth';
+
+      final isOnAuthPage = state.matchedLocation == '/auth';
 
       if (!isInitialized) return null;
 
-      if (!isLoggedIn && !isGoingToAuth) return '/auth';
+      if (!isLoggedIn && !isOnAuthPage) {
+        return '/auth';
+      }
 
-      if (isLoggedIn && isGoingToAuth) return '/home';
+      if (isLoggedIn && isOnAuthPage) {
+        return '/home';
+      }
 
-      // No redirect needed
       return null;
     },
+
     routes: [
       GoRoute(path: '/auth', builder: (context, state) => const AuthPage()),
-
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => Root(navigationShell),
         branches: [
@@ -88,8 +92,10 @@ GoRouter createRouter(BuildContext context) {
           ),
           GoRoute(
             path: 'skills',
-            builder: (context, state) =>
-                SkillsPage(initialTabIndex: state.extra as int? ?? 0),
+            builder: (context, state) {
+              final initialTabIndex = state.extra as int? ?? 0;
+              return SkillsPage(initialTabIndex: initialTabIndex);
+            },
           ),
         ],
       ),

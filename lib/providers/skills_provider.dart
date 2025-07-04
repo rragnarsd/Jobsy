@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:codehatch/models/skills_model.dart';
+import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/services/skills_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SkillsProvider extends ChangeNotifier {
@@ -11,15 +12,11 @@ class SkillsProvider extends ChangeNotifier {
   final SkillsService _skillsService = SkillsService();
   StreamSubscription<List<SkillsModel>>? _userSkillsSubscription;
   StreamSubscription<List<Map<String, dynamic>>>? _skillsDocumentsSubscription;
+  StreamSubscription<User?>? _authSubscription;
 
   SkillsProvider() {
-    _userSkillsSubscription = _skillsService.getUserSkillsStream().listen((
-      skills,
-    ) {
-      _skills
-        ..clear()
-        ..addAll(skills);
-      notifyListeners();
+    _authSubscription = FirebaseAuth.instance.authStateChanges().listen((user) {
+      _listenToUserSkills();
     });
 
     _skillsDocumentsSubscription = _skillsService
@@ -30,12 +27,27 @@ class SkillsProvider extends ChangeNotifier {
             ..addAll(docs);
           notifyListeners();
         });
+
+    _listenToUserSkills();
+  }
+
+  void _listenToUserSkills() {
+    _userSkillsSubscription?.cancel();
+    _userSkillsSubscription = _skillsService.getUserSkillsStream().listen((
+      skills,
+    ) {
+      _skills
+        ..clear()
+        ..addAll(skills);
+      notifyListeners();
+    });
   }
 
   @override
   void dispose() {
     _userSkillsSubscription?.cancel();
     _skillsDocumentsSubscription?.cancel();
+    _authSubscription?.cancel();
     super.dispose();
   }
 

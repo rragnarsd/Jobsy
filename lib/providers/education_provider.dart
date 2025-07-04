@@ -31,17 +31,8 @@ class EducationProvider extends ChangeNotifier {
     _clearError();
 
     try {
-      final newEducation = EducationModel(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        school: education.school,
-        field: education.field,
-        degree: education.degree,
-        yearStart: education.yearStart,
-        yearEnd: education.yearEnd,
-      );
-
-      await _educationService.addEducation(newEducation);
-      _education.add(newEducation);
+      await _educationService.addEducation(education);
+      _education.add(education);
       notifyListeners();
     } catch (e) {
       _setError(e.toString());

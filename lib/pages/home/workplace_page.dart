@@ -21,7 +21,7 @@ class WorkplacePage extends StatelessWidget {
       workplaceId,
     );
     if (workplace == null) {
-      return const Scaffold(body: Center(child: Text('Workplace not found')));
+      return Scaffold(body: Center(child: Text(local.workplace_not_found)));
     }
 
     final workplaceProvider = context.watch<WorkplaceProvider>();
@@ -135,7 +135,7 @@ class WorkplaceDescription extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'About the company',
+                AppLocalizations.of(context)!.about_company,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
@@ -247,7 +247,7 @@ class WorkplacePerks extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
-              'Work Environment',
+              AppLocalizations.of(context)!.work_environment,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),

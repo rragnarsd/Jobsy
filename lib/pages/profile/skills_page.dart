@@ -1,14 +1,17 @@
-import 'package:codehatch/models/skills_model.dart';
+import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/providers/skills_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/widgets/app_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SkillsPage extends StatefulWidget {
-  final int initialTabIndex;
   const SkillsPage({super.key, this.initialTabIndex = 0});
+
+  final int initialTabIndex;
 
   @override
   State<SkillsPage> createState() => _SkillsPageState();
@@ -41,12 +44,12 @@ class _SkillsPageState extends State<SkillsPage>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final local = AppLocalizations.of(context)!;
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            title: const Text('Skills'),
+            title: Text(local.skills),
             centerTitle: true,
             floating: false,
             pinned: true,
@@ -92,7 +95,7 @@ class _SkillsPageState extends State<SkillsPage>
                           if (_tabController.index == 0)
                             const SizedBox(width: 6),
                           Text(
-                            'My skills',
+                            local.my_skills,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -109,7 +112,7 @@ class _SkillsPageState extends State<SkillsPage>
                           if (_tabController.index == 1)
                             const SizedBox(width: 6),
                           Text(
-                            'Categories',
+                            local.categories,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -125,7 +128,13 @@ class _SkillsPageState extends State<SkillsPage>
         ],
         body: TabBarView(
           controller: _tabController,
-          children: const [UserSkillList(), SkillsFirestoreList()],
+          children: [
+            UserSkillList(
+              onAddSkillsPressed: () => _tabController.animateTo(1),
+            ),
+
+            const SkillsFirestoreList(),
+          ],
         ),
       ),
     );
@@ -143,15 +152,12 @@ class SkillsFirestoreList extends StatelessWidget {
       builder: (context, provider, _) {
         final docs = provider.skillsDocuments;
 
-        if (docs.isEmpty) {
-          return const Center(child: Text('No skills available.'));
-        }
-
         return ListView.builder(
           itemCount: docs.length,
           padding: EdgeInsets.zero,
           itemBuilder: (context, docIndex) {
             final doc = docs[docIndex];
+            //TODO - Unknown?
             final docId = doc['id'] as String? ?? 'Unknown';
             final data = doc['data'] as Map<String, dynamic>? ?? {};
 
@@ -218,16 +224,37 @@ class SkillsFirestoreList extends StatelessWidget {
 }
 
 class UserSkillList extends StatelessWidget {
-  const UserSkillList({super.key});
+  const UserSkillList({super.key, this.onAddSkillsPressed});
+
+  final VoidCallback? onAddSkillsPressed;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Consumer<SkillsProvider>(
       builder: (context, skillsProvider, _) {
         final userSkills = skillsProvider.skills;
 
         if (userSkills.isEmpty) {
-          return const Center(child: Text('You have no skills added yet.'));
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                local.no_skills,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: JobsyColors.greyColor,
+                ),
+              ),
+              const SizedBox(height: 16),
+              AppIconElevatedButton(
+                text: local.add_skills,
+                icon: Icons.add,
+                onPressed: () => onAddSkillsPressed,
+              ),
+            ],
+          );
         }
 
         return Padding(
@@ -258,14 +285,15 @@ class SkillButton extends StatelessWidget {
   const SkillButton({
     super.key,
     required this.skillModel,
-    required this.isSelected,
     required this.onPressed,
+    required this.isSelected,
   });
 
   final SkillsModel skillModel;
+  final VoidCallback onPressed;
   final bool isSelected;
-  final void Function() onPressed;
 
+  //TODO
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

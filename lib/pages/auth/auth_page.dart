@@ -1,6 +1,9 @@
+import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/utils/validators.dart';
+import 'package:codehatch/widgets/app_buttons.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +49,7 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -61,16 +65,16 @@ class _AuthPageState extends State<AuthPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _isRegisterMode ? 'Create Account' : 'Welcome Back',
+                      _isRegisterMode
+                          ? local.create_account
+                          : local.welcome_back,
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      _isRegisterMode
-                          ? 'Sign up to get started with Jobsy'
-                          : 'Sign in to continue with Jobsy',
+                      _isRegisterMode ? local.signup_start : local.signin_start,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: JobsyColors.greyColor.withValues(alpha: 0.6),
                       ),
@@ -80,7 +84,7 @@ class _AuthPageState extends State<AuthPage> {
                       controller: _emailController,
                       textInputAction: TextInputAction.next,
                       prefixIcon: const Icon(Icons.email),
-                      labelText: 'Email',
+                      labelText: local.email,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) => value?.emailError,
                     ),
@@ -97,7 +101,7 @@ class _AuthPageState extends State<AuthPage> {
                               : Icons.visibility,
                         ),
                       ),
-                      labelText: 'Password',
+                      labelText: local.password,
                       obscureText: _obscurePassword,
                       validator: (value) => value?.passwordError,
                     ),
@@ -107,7 +111,7 @@ class _AuthPageState extends State<AuthPage> {
                         controller: _nameController,
                         textInputAction: TextInputAction.next,
                         prefixIcon: const Icon(Icons.person),
-                        labelText: 'Name',
+                        labelText: local.name,
                         keyboardType: TextInputType.name,
                         validator: (value) => null,
                       ),
@@ -116,39 +120,16 @@ class _AuthPageState extends State<AuthPage> {
                         controller: _phoneNumberController,
                         textInputAction: TextInputAction.next,
                         prefixIcon: const Icon(Icons.phone),
-                        labelText: 'Phone Number',
+                        labelText: local.phone_nr,
                         keyboardType: TextInputType.phone,
                         validator: (value) => null,
                       ),
                       const SizedBox(height: 20),
                     ],
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: isLoading ? null : submitForm,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: JobsyColors.primaryColor,
-                          padding: const EdgeInsets.all(16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: isLoading
-                            ? const SizedBox(
-                                width: 26,
-                                height: 26,
-                                child: CircularProgressIndicator(
-                                  color: JobsyColors.whiteColor,
-                                  strokeWidth: 3,
-                                ),
-                              )
-                            : Text(
-                                _isRegisterMode ? 'Register' : 'Sign In',
-                                style: theme.textTheme.titleLarge?.copyWith(
-                                  color: JobsyColors.whiteColor,
-                                ),
-                              ),
-                      ),
+                    SubmitButton(
+                      isLoading: isLoading,
+                      isRegisterMode: _isRegisterMode,
+                      onPressed: submitForm,
                     ),
                     const SizedBox(height: 16),
                     RichText(
@@ -156,14 +137,16 @@ class _AuthPageState extends State<AuthPage> {
                         children: [
                           TextSpan(
                             text: _isRegisterMode
-                                ? 'Already have an account?'
-                                : 'Don\'t have an account?',
+                                ? '${local.already_have_account} '
+                                : '${local.dont_have_account} ',
                             style: theme.textTheme.bodyMedium,
                           ),
                           TextSpan(
                             recognizer: TapGestureRecognizer()
                               ..onTap = _toggleAuthMode,
-                            text: _isRegisterMode ? ' Sign In' : ' Register',
+                            text: _isRegisterMode
+                                ? local.sign_in
+                                : local.register,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: JobsyColors.primaryColor,
                               fontWeight: FontWeight.w600,
@@ -208,5 +191,45 @@ class _AuthPageState extends State<AuthPage> {
         duration: const Duration(seconds: 5),
       );
     }
+  }
+}
+
+class SubmitButton extends StatelessWidget {
+  const SubmitButton({
+    super.key,
+    required this.isLoading,
+    required this.isRegisterMode,
+    required this.onPressed,
+  });
+
+  final bool isLoading;
+  final bool isRegisterMode;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: double.infinity,
+      child: AppElevatedButton(
+        onPressed: () => isLoading ? null : onPressed,
+        child: isLoading
+            ? const SizedBox(
+                width: 26,
+                height: 26,
+                child: CircularProgressIndicator(
+                  color: JobsyColors.whiteColor,
+                  strokeWidth: 3,
+                ),
+              )
+            : Text(
+                isRegisterMode ? local.register : local.sign_in,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: JobsyColors.whiteColor,
+                ),
+              ),
+      ),
+    );
   }
 }

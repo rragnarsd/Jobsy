@@ -6,6 +6,7 @@ import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/reference_provider.dart';
 import 'package:codehatch/utils/colors.dart' show JobsyColors;
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -91,7 +92,10 @@ class _ReferenceSectionState extends State<ReferenceSection> {
                         key: Key(reference.id.toString()),
                         direction: DismissDirection.endToStart,
                         background: Container(
-                          color: JobsyColors.errorColor,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: JobsyColors.errorColor,
+                          ),
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: 16.0),
                           child: const Icon(
@@ -271,27 +275,21 @@ class _ReferenceSectionState extends State<ReferenceSection> {
         controller: _nameController,
         labelText: local.name,
         prefixIcon: const Icon(Icons.person),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.nameError,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _jobTitleController,
         labelText: local.job_title,
         prefixIcon: const Icon(Icons.work),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.jobTitleError,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _emailController,
         labelText: local.email,
         prefixIcon: const Icon(Icons.email),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.emailError,
       ),
       const SizedBox(height: 16),
     ];

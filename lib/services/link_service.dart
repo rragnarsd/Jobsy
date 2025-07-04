@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codehatch/models/link_model.dart';
+import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LinkService {

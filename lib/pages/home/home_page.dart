@@ -88,30 +88,22 @@ class AppJobList extends StatelessWidget {
     final jobSections = workplaceProvider.getJobsWithSections();
 
     if (jobSections.isEmpty) {
-      return const SliverToBoxAdapter(child: Center(child: SizedBox.shrink()));
+      return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        final section = jobSections[index];
+        final sectionItem = jobSections[index];
 
-        if (section.isDivider) {
+        if (sectionItem.isDivider) {
           return const AppOlderDivider();
-        } else if (section.section == JobSection.today) {
-          return JobCard(
-            workplace: section.workplace!,
-            job: section.job!,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          );
-        } else if (section.section == JobSection.older) {
-          return JobCard(
-            workplace: section.workplace!,
-            job: section.job!,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          );
-        } else {
-          return const SizedBox.shrink();
         }
+
+        return JobCard(
+          workplace: sectionItem.workplace!,
+          job: sectionItem.job!,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        );
       }, childCount: jobSections.length),
     );
   }
@@ -132,6 +124,7 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
 
     return GestureDetector(
       onTap: () => context.push('/job-description/${job.id}'),
@@ -153,7 +146,6 @@ class JobCard extends StatelessWidget {
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-
                         children: [
                           Text(
                             job.title,
@@ -179,7 +171,7 @@ class JobCard extends StatelessWidget {
                       IconTextRow(
                         icon: Icons.location_on,
                         text: job.isRemote
-                            ? 'Remote'
+                            ? local.remote
                             : workplace.location.split(',').first.trim(),
                       ),
                       const VerticalDivider(),
@@ -196,7 +188,7 @@ class JobCard extends StatelessWidget {
               top: 12,
               right: 12,
               child: Text(
-                job.publishedDate?.timeAgo ?? 'Just now',
+                job.publishedDate?.timeAgo ?? local.just_now,
                 style: const TextStyle(
                   color: JobsyColors.greyColor,
                   fontSize: 12,

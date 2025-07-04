@@ -13,7 +13,6 @@ enum AuthStatus {
 
 class AuthUserProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
-  FirebaseAuth get _firebaseAuth => FirebaseAuth.instance;
 
   bool _isInitialized = false;
 
@@ -48,8 +47,6 @@ class AuthUserProvider extends ChangeNotifier {
   bool get hasProfile => _profile != null;
 
   Future<void> initAuth() async {
-    final user = _firebaseAuth.currentUser;
-    _user = user;
     _isInitialized = true;
     notifyListeners();
   }

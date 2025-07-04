@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
+import 'package:codehatch/pages/home/job_description_page.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/enums.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/widgets/app_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +26,19 @@ class CourseDetailsPage extends StatelessWidget {
     final hasMultipleCourses = coursesFromSameBusiness.length > 1;
 
     return Scaffold(
-      bottomNavigationBar: const CourseBottomBar(),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          top: 16,
+          bottom: 32,
+          left: 16,
+          right: 16,
+        ),
+        child: AppIconElevatedButton(
+          text: local.open_course,
+          icon: Icons.school,
+          onPressed: () {},
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           CourseSliverBar(course: course),
@@ -131,24 +145,7 @@ class CourseCategory extends StatelessWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: course.categories
-                    .map(
-                      (category) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: JobsyColors.greyColor),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          child: Text(
-                            category,
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                        ),
-                      ),
-                    )
+                    .map((category) => JobTag(text: category))
                     .toList(),
               ),
             ],
@@ -364,33 +361,6 @@ class CourseSliverBar extends StatelessWidget {
           imageUrl: course.imageUrl,
           fit: BoxFit.cover,
         ),
-      ),
-    );
-  }
-}
-
-class CourseBottomBar extends StatelessWidget {
-  const CourseBottomBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: 16, bottom: 32, left: 16, right: 16),
-      child: ElevatedButton.icon(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: JobsyColors.primaryColor,
-          padding: const EdgeInsets.all(16),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12.0)),
-          ),
-        ),
-        label: Text(
-          AppLocalizations.of(context)!.open_course,
-          style: theme.textTheme.titleLarge,
-        ),
-        icon: const Icon(Icons.school, size: 24, color: JobsyColors.whiteColor),
       ),
     );
   }

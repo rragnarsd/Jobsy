@@ -1,11 +1,12 @@
 import 'package:codehatch/l10n/app_localizations.dart';
-import 'package:codehatch/models/link_model.dart';
+import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/link_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -88,7 +89,10 @@ class _LinkSectionState extends State<LinkSection> {
                       key: Key(link.id.toString()),
                       direction: DismissDirection.endToStart,
                       background: Container(
-                        color: JobsyColors.errorColor,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: JobsyColors.errorColor,
+                        ),
                         alignment: Alignment.centerRight,
                         padding: const EdgeInsets.only(right: 16.0),
                         child: const Icon(
@@ -218,18 +222,14 @@ class _LinkSectionState extends State<LinkSection> {
         controller: _siteController,
         labelText: local.link_site,
         prefixIcon: const Icon(Icons.link),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.siteError,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _mediaController,
         labelText: local.link_media,
         prefixIcon: const Icon(Icons.language),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.mediaError,
       ),
     ];
   }

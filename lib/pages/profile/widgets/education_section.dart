@@ -6,6 +6,7 @@ import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/education_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -52,7 +53,6 @@ class _EducationSectionState extends State<EducationSection> {
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
-
     final theme = Theme.of(context);
 
     return Consumer<EducationProvider>(
@@ -300,27 +300,21 @@ class _EducationSectionState extends State<EducationSection> {
         controller: _schoolController,
         labelText: local.school,
         prefixIcon: const Icon(Icons.school),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.schoolError,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _fieldController,
         labelText: local.field,
         prefixIcon: const Icon(Icons.school),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.fieldError,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _degreeController,
         labelText: local.degree,
         prefixIcon: const Icon(Icons.school),
-        validator: (value) {
-          return null;
-        },
+        validator: (value) => value?.degreeError,
       ),
       const SizedBox(height: 16),
       Row(
@@ -333,9 +327,8 @@ class _EducationSectionState extends State<EducationSection> {
                   controller: _startDateController,
                   labelText: local.start_date,
                   prefixIcon: const Icon(Icons.calendar_month),
-                  validator: (value) {
-                    return null;
-                  },
+                  validator: (value) =>
+                      context.validateDateRange(_startDate, _endDate),
                 ),
               ),
             ),
@@ -349,9 +342,8 @@ class _EducationSectionState extends State<EducationSection> {
                   controller: _endDateController,
                   labelText: local.end_date,
                   prefixIcon: const Icon(Icons.calendar_month),
-                  validator: (value) {
-                    return null;
-                  },
+                  validator: (value) =>
+                      context.validateDateRange(_startDate, _endDate),
                 ),
               ),
             ),

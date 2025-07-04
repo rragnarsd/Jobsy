@@ -4,6 +4,8 @@ import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/widgets/app_buttons.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -35,43 +37,7 @@ class JobDescriptionPage extends StatelessWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  JobHeader(job: job),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
-                      job.title,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      job.description,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Divider(
-                    endIndent: 16,
-                    indent: 16,
-                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                  ),
-                  JobResponsibility(job: job),
-                  Divider(
-                    endIndent: 16,
-                    indent: 16,
-                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                  ),
-                  JobQualification(job: job),
-                ],
-              ),
-            ),
-          ),
+          JobInfo(job: job),
           JobDeadline(job: job),
           JobLanguageSkills(job: job),
           JobLocation(job: job),
@@ -79,6 +45,53 @@ class JobDescriptionPage extends StatelessWidget {
           JobProfession(job: job),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
+      ),
+    );
+  }
+}
+
+class JobInfo extends StatelessWidget {
+  const JobInfo({super.key, required this.job});
+
+  final JobModel job;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            JobHeader(job: job),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                job.title,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                job.description,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Divider(
+              endIndent: 16,
+              indent: 16,
+              color: JobsyColors.greyColor.withValues(alpha: 0.3),
+            ),
+            JobResponsibility(job: job),
+            Divider(
+              endIndent: 16,
+              indent: 16,
+              color: JobsyColors.greyColor.withValues(alpha: 0.3),
+            ),
+            JobQualification(job: job),
+          ],
+        ),
       ),
     );
   }
@@ -111,29 +124,37 @@ class JobProfession extends StatelessWidget {
                 spacing: 8,
                 runSpacing: 8,
                 children: job.professions
-                    .map(
-                      (profession) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: JobsyColors.primaryColor,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          child: Text(
-                            profession,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
+                    .map((profession) => JobTag(text: profession))
                     .toList(),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class JobTag extends StatelessWidget {
+  const JobTag({super.key, required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: JobsyColors.greyColor),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: Text(
+          text,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -164,24 +185,7 @@ class JobType extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: JobsyColors.primaryColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  child: Text(
-                    jobType,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
+              JobTag(text: jobType),
             ],
           ),
         ),
@@ -198,6 +202,7 @@ class JobLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     final workplace = context.watch<WorkplaceProvider>().getWorkplaceById(
       job.workplaceId,
     );
@@ -210,7 +215,7 @@ class JobLocation extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context)!.job_location,
+                local.job_location,
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -226,7 +231,7 @@ class JobLocation extends StatelessWidget {
                 spacing: 8,
                 children: [
                   Text(
-                    job.isRemote ? 'Remote' : workplace?.location ?? 'N/A',
+                    job.isRemote ? local.remote : workplace?.location ?? 'N/A',
                     style: theme.textTheme.bodyLarge,
                   ),
                   job.isRemote
@@ -269,18 +274,15 @@ class JobLanguageSkills extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              if (job.languageSkills.isNotEmpty)
-                ...List.generate(job.languageSkills.length * 2 - 1, (index) {
-                  if (index.isOdd) {
-                    return const SizedBox(height: 16);
-                  }
-                  final skill = job.languageSkills[index ~/ 2];
-
-                  return Row(
+              ...job.languageSkills.mapIndexed((i, skill) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    bottom: i < job.languageSkills.length - 1 ? 16 : 0,
+                  ),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        spacing: 12,
                         children: [
                           CachedNetworkImage(
                             imageUrl: skill.flagUrl,
@@ -288,28 +290,29 @@ class JobLanguageSkills extends StatelessWidget {
                             height: 20,
                             fit: BoxFit.cover,
                           ),
+                          const SizedBox(width: 12),
                           Text(skill.title, style: theme.textTheme.bodyLarge),
+                          const SizedBox(width: 12),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(color: JobsyColors.greyColor),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
-                              ),
-                              child: Text(
-                                local.requirement,
-                                style: theme.textTheme.bodyMedium,
-                              ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            child: Text(
+                              local.requirement,
+                              style: theme.textTheme.bodyMedium,
                             ),
                           ),
                         ],
                       ),
                     ],
-                  );
-                }),
+                  ),
+                );
+              }),
             ],
           ),
         ),
@@ -376,61 +379,57 @@ class JobDeadline extends StatelessWidget {
                   color: JobsyColors.greyColor.withValues(alpha: 0.3),
                 ),
               ),
+
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton.icon(
+                child: AppIconElevatedButton(
+                  text: local.apply,
+                  icon: Icons.person,
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: JobsyColors.primaryColor,
-                    padding: const EdgeInsets.all(16),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                    ),
-                  ),
-                  label: Text(local.apply, style: theme.textTheme.titleLarge),
-                  icon: const Icon(
-                    Icons.person,
-                    size: 24,
-                    color: JobsyColors.whiteColor,
-                  ),
                 ),
               ),
               const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Row(
-                      children: [
-                        const Icon(
-                          Icons.favorite,
-                          color: JobsyColors.primaryColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(local.save, style: theme.textTheme.bodyLarge),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Row(
-                      children: [
-                        const Icon(
-                          Icons.share,
-                          color: JobsyColors.primaryColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(local.share, style: theme.textTheme.bodyLarge),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              const JobSaveAndSharebtns(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class JobSaveAndSharebtns extends StatelessWidget {
+  const JobSaveAndSharebtns({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          onPressed: () {},
+          icon: Row(
+            children: [
+              const Icon(Icons.favorite, color: JobsyColors.primaryColor),
+              const SizedBox(width: 8),
+              Text(local.save, style: theme.textTheme.bodyLarge),
+            ],
+          ),
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: Row(
+            children: [
+              const Icon(Icons.share, color: JobsyColors.primaryColor),
+              const SizedBox(width: 8),
+              Text(local.share, style: theme.textTheme.bodyLarge),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codehatch/models/skills_model.dart';
+import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SkillsService {
@@ -50,6 +50,7 @@ class SkillsService {
         final skillsList = List<Map<String, dynamic>>.from(
           data['skills'] ?? [],
         );
+
         return skillsList.map((json) => SkillsModel.fromJson(json)).toList();
       });
     } catch (e) {

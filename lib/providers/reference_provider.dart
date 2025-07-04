@@ -29,17 +29,9 @@ class ReferenceProvider extends ChangeNotifier {
   Future<void> addReference(ReferenceModel reference) async {
     _setLoading(true);
     _clearError();
-
     try {
-      final newReference = ReferenceModel(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        name: reference.name,
-        jobTitle: reference.jobTitle,
-        email: reference.email,
-      );
-
-      await _referenceService.addReference(newReference);
-      _references.add(newReference);
+      await _referenceService.addReference(reference);
+      _references.add(reference);
       notifyListeners();
     } catch (e) {
       _setError(e.toString());

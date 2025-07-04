@@ -116,25 +116,6 @@ class AuthService {
     }
   }
 
-  Future<void> deleteAccount({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      AuthCredential credential = EmailAuthProvider.credential(
-        email: email,
-        password: password,
-      );
-      await currentUser?.reauthenticateWithCredential(credential);
-      await currentUser?.delete();
-      await _auth.signOut();
-    } on FirebaseAuthException catch (e) {
-      throw AuthException('Failed to delete account: ${e.message}');
-    } catch (e) {
-      throw AuthException('An unexpected error occurred.');
-    }
-  }
-
   Future<void> resetPasswordFromCurrentPassword({
     required String currentPassword,
     required String newPassword,

@@ -4,9 +4,11 @@ import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
@@ -27,6 +29,7 @@ class _ProfileSectionState extends State<ProfileSection> {
   late TextEditingController _phoneController;
   late TextEditingController _birthDateController;
   DateTime? _selectedDate;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -142,27 +145,30 @@ class _ProfileSectionState extends State<ProfileSection> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ..._buildEditFields(theme, local),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        ProfileActionButton(
-                          text: local.cancel,
-                          color: JobsyColors.greyColor.withValues(alpha: 0.2),
-                          onPressed: () => context.pop(),
-                        ),
-                        const SizedBox(width: 16),
-                        ProfileActionButton(
-                          text: local.save,
-                          color: JobsyColors.primaryColor,
-                          onPressed: _saveChanges,
-                        ),
-                      ],
-                    ),
-                  ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ..._buildEditFields(theme, local),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          ProfileActionButton(
+                            text: local.cancel,
+                            color: JobsyColors.greyColor.withValues(alpha: 0.2),
+                            onPressed: () => context.pop(),
+                          ),
+                          const SizedBox(width: 16),
+                          ProfileActionButton(
+                            text: local.save,
+                            color: JobsyColors.primaryColor,
+                            onPressed: _saveChanges,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -222,6 +228,12 @@ class _ProfileSectionState extends State<ProfileSection> {
   }
 
   Future<void> _saveChanges() async {
+    final isValid = _formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
     final authProvider = Provider.of<AuthUserProvider>(context, listen: false);
 
     final updatedProfile = {
@@ -258,13 +270,31 @@ class _ProfileSectionState extends State<ProfileSection> {
         validator: (value) => value?.emailError,
       ),
       const SizedBox(height: 16),
+      //TODO - Add better validation for phone number
       AppTextFormField(
         controller: _phoneController,
         textInputAction: TextInputAction.next,
         prefixIcon: const Icon(Icons.phone),
         labelText: local.phone_nr,
         keyboardType: TextInputType.phone,
-        validator: (value) => value?.phoneError,
+        inputFormatter: [
+          FilteringTextInputFormatter.allow(RegExp(r'[\d\s\-\(\)\+]')),
+        ],
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Phone number is required';
+          }
+
+          final cleaned = value.replaceAll(RegExp(r'[^\d\+]'), '');
+
+          final isValid = RegExp(r'^\+?\d{7,15}$').hasMatch(cleaned);
+
+          if (!isValid) {
+            return 'Invalid phone number';
+          }
+
+          return null;
+        },
       ),
       const SizedBox(height: 16),
       GestureDetector(

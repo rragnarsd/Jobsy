@@ -1,14 +1,20 @@
+import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
+import 'package:codehatch/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -20,39 +26,21 @@ class SettingsPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SettingsSection(
-            title: 'Language',
+            title: local.language,
             tiles: [
               SettingsTileGroup(
                 tiles: [
-                  const SettingsTile(
-                    title: 'Change Language',
-                    subtitle: 'English',
-                    leading: Icon(
+                  SettingsTile(
+                    title: local.change_language,
+                    subtitle: local.english,
+                    leading: const Icon(
                       Icons.language,
                       color: JobsyColors.primaryColor,
                     ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
                       color: JobsyColors.primaryColor,
-                    ),
-                  ),
-                  Divider(
-                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                    thickness: 1,
-                  ),
-                  SettingsTile(
-                    title: 'Machine Translation',
-                    subtitle:
-                        'Automatically translate all job information to english',
-                    leading: const Icon(
-                      Icons.translate,
-                      color: JobsyColors.primaryColor,
-                    ),
-                    trailing: Switch(
-                      padding: EdgeInsets.zero,
-                      value: true,
-                      onChanged: (value) {},
                     ),
                   ),
                 ],
@@ -60,12 +48,12 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            title: 'Theme',
+            title: local.theme,
             tiles: [
               SettingsTileGroup(
                 tiles: [
                   SettingsTile(
-                    title: 'Dark Theme / Light Theme',
+                    title: local.dark_theme,
                     leading: const Icon(
                       Icons.settings,
                       color: JobsyColors.primaryColor,
@@ -81,93 +69,18 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            title: 'Notification Settings',
+            title: local.notification_settings,
             tiles: [
               SettingsTileGroup(
                 tiles: [
-                  const SettingsTile(
-                    title: 'New Job Matches',
-                    subtitle: 'Push, SMS',
-                    leading: Icon(
+                  SettingsTile(
+                    title: local.new_job,
+                    subtitle: local.push_sms,
+                    leading: const Icon(
                       Icons.watch_later,
                       color: JobsyColors.primaryColor,
                     ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: JobsyColors.primaryColor,
-                    ),
-                  ),
-                  Divider(
-                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                    thickness: 1,
-                  ),
-                  const SettingsTile(
-                    title: 'Application Updates',
-                    subtitle: 'Push, emails, SMS',
-                    leading: Icon(
-                      Icons.message,
-                      color: JobsyColors.primaryColor,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: JobsyColors.primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: 'Help & Support',
-            tiles: [
-              SettingsTileGroup(
-                tiles: [
-                  const SettingsTile(
-                    title: 'Help Centre',
-                    leading: Icon(
-                      Icons.question_mark,
-                      color: JobsyColors.primaryColor,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: JobsyColors.primaryColor,
-                    ),
-                  ),
-                  Divider(
-                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
-                    thickness: 1,
-                  ),
-                  const SettingsTile(
-                    title: 'Send Us An Email',
-                    leading: Icon(
-                      Icons.message,
-                      color: JobsyColors.primaryColor,
-                    ),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                      color: JobsyColors.primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SettingsSection(
-            title: 'User',
-            tiles: [
-              SettingsTileGroup(
-                tiles: [
-                  const SettingsTile(
-                    title: 'Manage Account',
-                    leading: Icon(
-                      Icons.person,
-                      color: JobsyColors.primaryColor,
-                    ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
                       color: JobsyColors.primaryColor,
@@ -178,14 +91,71 @@ class SettingsPage extends StatelessWidget {
                     thickness: 1,
                   ),
                   SettingsTile(
-                    title: 'Log out',
+                    title: local.application_updates,
+                    subtitle: local.push_emails_sms,
+                    leading: const Icon(
+                      Icons.message,
+                      color: JobsyColors.primaryColor,
+                    ),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: JobsyColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: local.help_support,
+            tiles: [
+              SettingsTileGroup(
+                tiles: [
+                  SettingsTile(
+                    title: local.help_centre,
+                    leading: const Icon(
+                      Icons.question_mark,
+                      color: JobsyColors.primaryColor,
+                    ),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: JobsyColors.primaryColor,
+                    ),
+                  ),
+                  Divider(
+                    color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                    thickness: 1,
+                  ),
+                  SettingsTile(
+                    title: local.send_email,
+                    leading: const Icon(
+                      Icons.message,
+                      color: JobsyColors.primaryColor,
+                    ),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 16,
+                      color: JobsyColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: local.user,
+            tiles: [
+              SettingsTileGroup(
+                tiles: [
+                  SettingsTile(
+                    title: local.log_out,
                     leading: const Icon(
                       Icons.logout,
                       color: JobsyColors.primaryColor,
                     ),
-                    onTap: () {
-                      context.read<AuthUserProvider>().signOut();
-                    },
+                    onTap: () => _logout(context, local, theme),
                     trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
@@ -199,6 +169,72 @@ class SettingsPage extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
       ),
+    );
+  }
+
+  void _logout(BuildContext context, AppLocalizations local, ThemeData theme) {
+    WoltModalSheet.show(
+      context: context,
+      barrierDismissible: true,
+      pageListBuilder: (context) => [
+        SliverWoltModalSheetPage(
+          backgroundColor: JobsyColors.scaffoldColor,
+          hasTopBarLayer: false,
+          mainContentSliversBuilder: (context) => [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 32),
+                    const Icon(
+                      Icons.info,
+                      size: 64,
+                      color: JobsyColors.primaryColor,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(local.log_out, style: theme.textTheme.titleLarge),
+                    const SizedBox(height: 4),
+                    Text(
+                      local.sure_to_logout,
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                    const SizedBox(height: 32),
+                    Row(
+                      children: [
+                        ProfileActionButton(
+                          text: local.cancel,
+                          color: JobsyColors.greyColor.withValues(alpha: 0.2),
+                          onPressed: () => context.pop(),
+                        ),
+                        const SizedBox(width: 16),
+                        ProfileActionButton(
+                          text: local.log_out,
+                          color: JobsyColors.primaryColor,
+                          onPressed: () {
+                            context.read<AuthUserProvider>().signOut();
+                            _logoutSuccess(context, local);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _logoutSuccess(BuildContext context, AppLocalizations local) {
+    context.showToast(
+      title: local.have_been_logged_out,
+      type: ToastType.success,
+      textColor: JobsyColors.whiteColor,
+      duration: const Duration(seconds: 5),
     );
   }
 }

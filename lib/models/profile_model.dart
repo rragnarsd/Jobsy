@@ -1,5 +1,3 @@
-import 'package:codehatch/models/language_model.dart';
-
 class ProfileModel {
   final String id;
   final String name;
@@ -10,10 +8,10 @@ class ProfileModel {
   final String imageUrl;
   final List<JobExperienceModel> jobExperience;
   final List<EducationModel> education;
-  final List<String> skills;
+  final List<SkillsModel> skills;
   final List<LanguageModel> languages;
   final List<ReferenceModel> references;
-  final List<String> links;
+  final List<LinkModel> links;
 
   ProfileModel({
     required this.id,
@@ -48,6 +46,26 @@ class JobExperienceModel {
     required this.endDate,
     this.description,
   });
+
+  factory JobExperienceModel.fromJson(Map<String, dynamic> json) {
+    return JobExperienceModel(
+      id: json['id'],
+      jobTitle: json['jobTitle'],
+      companyName: json['companyName'],
+      startDate: json['startDate'],
+      endDate: json['endDate'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'jobTitle': jobTitle,
+      'companyName': companyName,
+      'startDate': startDate,
+      'endDate': endDate,
+    };
+  }
 }
 
 class EducationModel {
@@ -66,6 +84,28 @@ class EducationModel {
     required this.yearStart,
     required this.yearEnd,
   });
+
+  factory EducationModel.fromJson(Map<String, dynamic> json) {
+    return EducationModel(
+      id: json['id'],
+      school: json['school'],
+      field: json['field'],
+      degree: json['degree'],
+      yearStart: json['yearStart'],
+      yearEnd: json['yearEnd'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'school': school,
+      'field': field,
+      'degree': degree,
+      'yearStart': yearStart,
+      'yearEnd': yearEnd,
+    };
+  }
 }
 
 class ReferenceModel {
@@ -80,19 +120,104 @@ class ReferenceModel {
     required this.jobTitle,
     required this.email,
   });
+
+  factory ReferenceModel.fromJson(Map<String, dynamic> json) {
+    return ReferenceModel(
+      id: json['id'],
+      name: json['name'],
+      jobTitle: json['jobTitle'],
+      email: json['email'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'name': name, 'jobTitle': jobTitle, 'email': email};
+  }
 }
 
-final List<ReferenceModel> references = [
-  ReferenceModel(
-    id: '1',
-    name: 'Paul Newman',
-    jobTitle: 'CEO',
-    email: 'paul_ceo@hotmail.com',
-  ),
-  ReferenceModel(
-    id: '2',
-    name: 'John Doe',
-    jobTitle: 'Senior Developer',
-    email: 'john.doe@example.com',
-  ),
-];
+class LinkModel {
+  final String id;
+  final String site;
+  final String media;
+  final String? iconUrl;
+
+  LinkModel({
+    required this.id,
+    required this.site,
+    required this.media,
+    this.iconUrl,
+  });
+
+  factory LinkModel.fromJson(Map<String, dynamic> json) {
+    return LinkModel(
+      id: json['id'],
+      site: json['site'],
+      media: json['media'],
+      iconUrl: json['iconUrl'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'site': site, 'media': media, 'iconUrl': iconUrl};
+  }
+}
+
+class SkillsModel {
+  final String id;
+  final String category;
+  final String categoryItem;
+
+  SkillsModel({
+    required this.id,
+    required this.category,
+    required this.categoryItem,
+  });
+
+  factory SkillsModel.fromJson(Map<String, dynamic> json) {
+    return SkillsModel(
+      id: json['id'],
+      category: json['category'],
+      categoryItem: json['categoryItem'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'category': category, 'categoryItem': categoryItem};
+  }
+}
+
+class LanguageModel {
+  final String id;
+  final String name;
+  final String level;
+  final String flagCode;
+  final String flagEmoji;
+
+  LanguageModel({
+    required this.id,
+    required this.name,
+    required this.level,
+    required this.flagCode,
+    required this.flagEmoji,
+  });
+
+  factory LanguageModel.fromJson(Map<String, dynamic> json) {
+    return LanguageModel(
+      id: json['id'],
+      name: json['name'],
+      level: json['level'],
+      flagCode: json['flagCode'],
+      flagEmoji: json['flagEmoji'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'level': level,
+      'flagCode': flagCode,
+      'flagEmoji': flagEmoji,
+    };
+  }
+}

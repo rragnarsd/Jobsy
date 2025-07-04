@@ -1,24 +1,26 @@
 import 'package:codehatch/models/profile_model.dart';
-import 'package:codehatch/services/link_service.dart';
+import 'package:codehatch/services/language_service.dart';
 import 'package:flutter/material.dart';
 
-class LinkProvider extends ChangeNotifier {
-  final LinkService _linkService = LinkService();
+class LanguageProvider extends ChangeNotifier {
+  final LanguageService _languageService = LanguageService();
 
-  List<LinkModel> _links = [];
+  LanguageService get languageService => _languageService;
+
+  List<LanguageModel> _languages = [];
   bool _isLoading = false;
   String? _error;
 
-  List<LinkModel> get links => _links;
+  List<LanguageModel> get languages => _languages;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<void> loadLinks() async {
+  Future<void> loadLanguages() async {
     _setLoading(true);
     _clearError();
 
     try {
-      _links = await _linkService.getUserLinks();
+      _languages = await _languageService.getUserLanguages();
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -26,13 +28,13 @@ class LinkProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addLink(LinkModel link) async {
+  Future<void> addLanguage(LanguageModel language) async {
     _setLoading(true);
     _clearError();
 
     try {
-      await _linkService.addLink(link);
-      await loadLinks();
+      await _languageService.addLanguage(language);
+      await loadLanguages();
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -40,13 +42,13 @@ class LinkProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateLink(LinkModel link) async {
+  Future<void> updateLanguage(LanguageModel language) async {
     _setLoading(true);
     _clearError();
 
     try {
-      await _linkService.updateLink(link);
-      await loadLinks();
+      await _languageService.updateLanguage(language);
+      await loadLanguages();
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -54,13 +56,13 @@ class LinkProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteLink(String linkId) async {
+  Future<void> deleteLanguage(String languageId) async {
     _setLoading(true);
     _clearError();
 
     try {
-      await _linkService.deleteLink(linkId);
-      await loadLinks();
+      await _languageService.deleteLanguage(languageId);
+      await loadLanguages();
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -81,9 +83,5 @@ class LinkProvider extends ChangeNotifier {
   void _setError(String error) {
     _error = error;
     notifyListeners();
-  }
-
-  void clearError() {
-    _clearError();
   }
 }

@@ -42,6 +42,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get about_you => 'About You';
 
   @override
+  String get about_you_empty => 'No information about you added yet';
+
+  @override
   String get edit => 'Edit';
 
   @override
@@ -66,6 +69,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get add_skills => 'Add skills';
 
   @override
+  String get no_skills => 'No skills added yet';
+
+  @override
   String get my_skills => 'My skills';
 
   @override
@@ -79,6 +85,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get add_language => 'Add a language';
+
+  @override
+  String get no_language_added => 'No languages added yet';
+
+  @override
+  String get language_succesfully_added => 'Language successfully added';
+
+  @override
+  String get language_add_failed => 'Failed to add language';
+
+  @override
+  String get which_language_do_you_speak => 'Which language do you speak?';
+
+  @override
+  String get how_well_do_you_speak_it => 'How well do you speak it?';
 
   @override
   String get references => 'References';
@@ -339,4 +360,119 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get link_media => 'Media';
+
+  @override
+  String get log_out => 'Log out';
+
+  @override
+  String get sure_to_logout => 'Are you sure you want to log out?';
+
+  @override
+  String get have_been_logged_out => 'You have been signed out';
+
+  @override
+  String get create_account => 'Create Account';
+
+  @override
+  String get welcome_back => 'Welcome Back';
+
+  @override
+  String get signup_start => 'Sign up to get started with Jobsy';
+
+  @override
+  String get signin_start => 'Sign in to continue with Jobsy';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get sign_in => 'Sign In';
+
+  @override
+  String get already_have_account => 'Already have an account?';
+
+  @override
+  String get dont_have_account => 'Don\'t have an account?';
+
+  @override
+  String get reset_password => 'Reset Password';
+
+  @override
+  String get just_now => 'Just now';
+
+  @override
+  String get remote => 'Remote';
+
+  @override
+  String get workplace_not_found => 'Workplace not found';
+
+  @override
+  String get beginner => 'Beginner';
+
+  @override
+  String get basic_skills => 'Basic Skills';
+
+  @override
+  String get intermediate => 'Intermediate';
+
+  @override
+  String get advanced => 'Advanced';
+
+  @override
+  String get expert => 'Expert';
+
+  @override
+  String get user => 'User';
+
+  @override
+  String get send_email => 'Send us an Email';
+
+  @override
+  String get help_centre => 'Help Centre';
+
+  @override
+  String get help_support => 'Help & Support';
+
+  @override
+  String get application_updates => 'Application Updates';
+
+  @override
+  String get push_emails_sms => 'Push, emails, SMS';
+
+  @override
+  String get push_sms => 'Push, SMS';
+
+  @override
+  String get new_job => 'New Job Matches';
+
+  @override
+  String get notification_settings => 'Notification Settings';
+
+  @override
+  String get dark_theme => 'Dark Theme';
+
+  @override
+  String get light_theme => 'Light Theme';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get automatic_translation =>
+      'Automatically translate all job information to english';
+
+  @override
+  String get machine_translation => 'Machine Translation';
+
+  @override
+  String get change_language => 'Change Language';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get settings => 'Settings';
 }

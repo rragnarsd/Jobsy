@@ -164,6 +164,12 @@ abstract class AppLocalizations {
   /// **'About You'**
   String get about_you;
 
+  /// No description provided for @about_you_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'No information about you added yet'**
+  String get about_you_empty;
+
   /// No description provided for @edit.
   ///
   /// In en, this message translates to:
@@ -212,6 +218,12 @@ abstract class AppLocalizations {
   /// **'Add skills'**
   String get add_skills;
 
+  /// No description provided for @no_skills.
+  ///
+  /// In en, this message translates to:
+  /// **'No skills added yet'**
+  String get no_skills;
+
   /// No description provided for @my_skills.
   ///
   /// In en, this message translates to:
@@ -241,6 +253,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a language'**
   String get add_language;
+
+  /// No description provided for @no_language_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No languages added yet'**
+  String get no_language_added;
+
+  /// No description provided for @language_succesfully_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Language successfully added'**
+  String get language_succesfully_added;
+
+  /// No description provided for @language_add_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add language'**
+  String get language_add_failed;
+
+  /// No description provided for @which_language_do_you_speak.
+  ///
+  /// In en, this message translates to:
+  /// **'Which language do you speak?'**
+  String get which_language_do_you_speak;
+
+  /// No description provided for @how_well_do_you_speak_it.
+  ///
+  /// In en, this message translates to:
+  /// **'How well do you speak it?'**
+  String get how_well_do_you_speak_it;
 
   /// No description provided for @references.
   ///
@@ -757,6 +799,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Media'**
   String get link_media;
+
+  /// No description provided for @log_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get log_out;
+
+  /// No description provided for @sure_to_logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get sure_to_logout;
+
+  /// No description provided for @have_been_logged_out.
+  ///
+  /// In en, this message translates to:
+  /// **'You have been signed out'**
+  String get have_been_logged_out;
+
+  /// No description provided for @create_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get create_account;
+
+  /// No description provided for @welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get welcome_back;
+
+  /// No description provided for @signup_start.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up to get started with Jobsy'**
+  String get signup_start;
+
+  /// No description provided for @signin_start.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue with Jobsy'**
+  String get signin_start;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get sign_in;
+
+  /// No description provided for @already_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get already_have_account;
+
+  /// No description provided for @dont_have_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dont_have_account;
+
+  /// No description provided for @reset_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get reset_password;
+
+  /// No description provided for @just_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get just_now;
+
+  /// No description provided for @remote.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote'**
+  String get remote;
+
+  /// No description provided for @workplace_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Workplace not found'**
+  String get workplace_not_found;
+
+  /// No description provided for @beginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get beginner;
+
+  /// No description provided for @basic_skills.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Skills'**
+  String get basic_skills;
+
+  /// No description provided for @intermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get intermediate;
+
+  /// No description provided for @advanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advanced;
+
+  /// No description provided for @expert.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert'**
+  String get expert;
+
+  /// No description provided for @user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user;
+
+  /// No description provided for @send_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Send us an Email'**
+  String get send_email;
+
+  /// No description provided for @help_centre.
+  ///
+  /// In en, this message translates to:
+  /// **'Help Centre'**
+  String get help_centre;
+
+  /// No description provided for @help_support.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & Support'**
+  String get help_support;
+
+  /// No description provided for @application_updates.
+  ///
+  /// In en, this message translates to:
+  /// **'Application Updates'**
+  String get application_updates;
+
+  /// No description provided for @push_emails_sms.
+  ///
+  /// In en, this message translates to:
+  /// **'Push, emails, SMS'**
+  String get push_emails_sms;
+
+  /// No description provided for @push_sms.
+  ///
+  /// In en, this message translates to:
+  /// **'Push, SMS'**
+  String get push_sms;
+
+  /// No description provided for @new_job.
+  ///
+  /// In en, this message translates to:
+  /// **'New Job Matches'**
+  String get new_job;
+
+  /// No description provided for @notification_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Settings'**
+  String get notification_settings;
+
+  /// No description provided for @dark_theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Theme'**
+  String get dark_theme;
+
+  /// No description provided for @light_theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Light Theme'**
+  String get light_theme;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @automatic_translation.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically translate all job information to english'**
+  String get automatic_translation;
+
+  /// No description provided for @machine_translation.
+  ///
+  /// In en, this message translates to:
+  /// **'Machine Translation'**
+  String get machine_translation;
+
+  /// No description provided for @change_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Language'**
+  String get change_language;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
 }
 
 class _AppLocalizationsDelegate

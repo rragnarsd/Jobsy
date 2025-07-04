@@ -26,26 +26,13 @@ class JobProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addJobExperience({
-    required String jobTitle,
-    required String companyName,
-    required DateTime startDate,
-    required DateTime endDate,
-  }) async {
+  Future<void> addJobExperience(JobExperienceModel model) async {
     _setLoading(true);
     _clearError();
 
     try {
-      final newJob = JobExperienceModel(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        jobTitle: jobTitle,
-        companyName: companyName,
-        startDate: startDate,
-        endDate: endDate,
-      );
-
-      await _jobService.addJobExperience(newJob);
-      _jobExperience.add(newJob);
+      await _jobService.addJobExperience(model);
+      _jobExperience.add(model);
       notifyListeners();
     } catch (e) {
       _setError(e.toString());
@@ -54,32 +41,15 @@ class JobProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateJobExperience({
-    required String jobId,
-    required String jobTitle,
-    required String companyName,
-    required DateTime startDate,
-    required DateTime endDate,
-  }) async {
+  Future<void> updateJobExperience(JobExperienceModel model) async {
     _setLoading(true);
     _clearError();
 
     try {
-      final updatedJob = JobExperienceModel(
-        id: jobId,
-        jobTitle: jobTitle,
-        companyName: companyName,
-        startDate: startDate,
-        endDate: endDate,
-      );
-
-      await _jobService.updateJobExperience(jobId, updatedJob);
-
-      final index = _jobExperience.indexWhere((job) => job.id == jobId);
-      if (index != -1) {
-        _jobExperience[index] = updatedJob;
-        notifyListeners();
-      }
+      await _jobService.updateJobExperience(model.id, model);
+      _jobExperience.removeWhere((job) => job.id == model.id);
+      _jobExperience.add(model);
+      notifyListeners();
     } catch (e) {
       _setError(e.toString());
     } finally {
