@@ -10,6 +10,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class JobDescriptionPage extends StatelessWidget {
   const JobDescriptionPage({super.key, required this.jobId});
@@ -227,22 +228,31 @@ class JobLocation extends StatelessWidget {
                   color: JobsyColors.greyColor.withValues(alpha: 0.3),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                spacing: 8,
-                children: [
-                  Text(
-                    job.isRemote ? local.remote : workplace?.location ?? 'N/A',
-                    style: theme.textTheme.bodyLarge,
-                  ),
-                  job.isRemote
-                      ? const SizedBox.shrink()
-                      : const Icon(
-                          Icons.keyboard_arrow_right,
-                          size: 24,
-                          color: JobsyColors.whiteColor,
-                        ),
-                ],
+              GestureDetector(
+                onTap: () {
+                  if (!job.isRemote) {
+                    //TODO - Add Map
+                  }
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 8,
+                  children: [
+                    Text(
+                      job.isRemote
+                          ? local.remote
+                          : workplace?.location ?? 'N/A',
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                    job.isRemote
+                        ? const SizedBox.shrink()
+                        : const Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 24,
+                            color: JobsyColors.whiteColor,
+                          ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -278,7 +288,7 @@ class JobLanguageSkills extends StatelessWidget {
               ...job.languageSkills.mapIndexed((index, skill) {
                 return LanguageItem(
                   job: job,
-                  title: job.title,
+                  title: skill.title,
                   flagUrl: skill.flagUrl,
                   index: index,
                 );
@@ -463,7 +473,7 @@ class JobSaveAndSharebtns extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: shareJob,
           icon: Row(
             children: [
               const Icon(Icons.share, color: JobsyColors.primaryColor),
@@ -473,6 +483,12 @@ class JobSaveAndSharebtns extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  void shareJob() {
+    SharePlus.instance.share(
+      ShareParams(title: 'Share the latest job', text: 'Check out this job'),
     );
   }
 }

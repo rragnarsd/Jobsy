@@ -197,7 +197,7 @@ class SkillsFirestoreList extends StatelessWidget {
                               s.categoryItem == skillModel.categoryItem,
                         );
 
-                        return SkillButton(
+                        return SkillButtonTag(
                           skillModel: skillModel,
                           isSelected: isSelected,
                           onPressed: () {
@@ -238,8 +238,7 @@ class UserSkillList extends StatelessWidget {
           return EmptyState(
             icon: Icons.school,
             title: local.no_skills,
-            //TODO - Localize
-            subTitle: 'Your skills will appear here',
+            subTitle: local.skills_display,
           );
         }
 
@@ -254,7 +253,7 @@ class UserSkillList extends StatelessWidget {
                     s.categoryItem == skill.categoryItem,
               );
 
-              return SkillButton(
+              return SkillButtonTag(
                 skillModel: skill,
                 isSelected: isSelected,
                 onPressed: () => skillsProvider.removeUserSkill(skill),
@@ -267,8 +266,8 @@ class UserSkillList extends StatelessWidget {
   }
 }
 
-class SkillButton extends StatelessWidget {
-  const SkillButton({
+class SkillButtonTag extends StatelessWidget {
+  const SkillButtonTag({
     super.key,
     required this.skillModel,
     required this.onPressed,
@@ -279,7 +278,6 @@ class SkillButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isSelected;
 
-  //TODO - Reuse button?
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

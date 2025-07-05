@@ -23,17 +23,6 @@ class _WorkplacesState extends State<Workplaces> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.workplaces),
-        leading: Padding(
-          padding: const EdgeInsets.all(16),
-          child: GestureDetector(
-            onTap: () => context.push('/profile'),
-            child: const Icon(
-              Icons.person,
-              color: JobsyColors.whiteColor,
-              size: 26,
-            ),
-          ),
-        ),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),

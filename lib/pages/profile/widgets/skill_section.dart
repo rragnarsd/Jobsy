@@ -48,7 +48,7 @@ class SkillSection extends StatelessWidget {
               child: Wrap(
                 spacing: 12,
                 children: selectedSkills.map((skill) {
-                  return SkillButton(
+                  return SkillButtonTag(
                     skillModel: skill,
                     isSelected: true,
                     onPressed: () => skillsProvider.removeUserSkill(skill),

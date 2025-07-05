@@ -255,30 +255,32 @@ class _LanguageFormState extends State<LanguageForm> {
     }
   }
 
-  final CountryListThemeData _countryListTheme = CountryListThemeData(
-    flagSize: 32,
-    backgroundColor: JobsyColors.scaffoldColor,
-    textStyle: const TextStyle(fontSize: 16, color: JobsyColors.whiteColor),
-    borderRadius: const BorderRadius.only(
-      topLeft: Radius.circular(12.0),
-      topRight: Radius.circular(12.0),
-    ),
-    inputDecoration: InputDecoration(
-      filled: true,
-      fillColor: JobsyColors.cardColor,
-      hintText: 'local.search',
-      hintStyle: TextStyle(
-        color: JobsyColors.greyColor.withValues(alpha: 0.6),
-        fontSize: 16,
+  CountryListThemeData _buildCountryListTheme(AppLocalizations local) {
+    return CountryListThemeData(
+      flagSize: 32,
+      backgroundColor: JobsyColors.scaffoldColor,
+      textStyle: const TextStyle(fontSize: 16, color: JobsyColors.whiteColor),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(12.0),
+        topRight: Radius.circular(12.0),
       ),
-      prefixIcon: const Icon(Icons.search, color: JobsyColors.primaryColor),
-      contentPadding: const EdgeInsets.symmetric(vertical: 0),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(34),
-        borderSide: BorderSide.none,
+      inputDecoration: InputDecoration(
+        filled: true,
+        fillColor: JobsyColors.cardColor,
+        hintText: local.search,
+        hintStyle: TextStyle(
+          color: JobsyColors.greyColor.withValues(alpha: 0.6),
+          fontSize: 16,
+        ),
+        prefixIcon: const Icon(Icons.search, color: JobsyColors.primaryColor),
+        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(34),
+          borderSide: BorderSide.none,
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   List<Widget> _buildEditFields(
     ThemeData theme,
@@ -290,7 +292,7 @@ class _LanguageFormState extends State<LanguageForm> {
         onTap: () {
           showCountryPicker(
             context: context,
-            countryListTheme: _countryListTheme,
+            countryListTheme: _buildCountryListTheme(local),
             onSelect: (Country country) {
               setState(() {
                 _selectedCountry = country;
@@ -356,12 +358,14 @@ class _LanguageFormState extends State<LanguageForm> {
                         ),
                         onTap: () {
                           setState(() {
-                            _proficiencyController.text = proficiency.label;
+                            _proficiencyController.text = proficiency.getLabel(
+                              local,
+                            );
                           });
                           context.pop();
                         },
                         title: Text(
-                          proficiency.label,
+                          proficiency.getLabel(local),
                           style: theme.textTheme.bodyLarge,
                         ),
                       );
@@ -380,8 +384,7 @@ class _LanguageFormState extends State<LanguageForm> {
             labelText: local.how_well_do_you_speak_it,
             suffix: const Icon(Icons.keyboard_arrow_right),
             readOnly: true,
-            //TODO - Find appropriate icon
-            prefixIcon: const Icon(Icons.info),
+            prefixIcon: const Icon(Icons.school),
             validator: (value) => value?.languageError,
           ),
         ),

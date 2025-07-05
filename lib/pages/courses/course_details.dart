@@ -4,7 +4,6 @@ import 'package:codehatch/models/course_model.dart';
 import 'package:codehatch/pages/home/job_description_page.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
-import 'package:codehatch/utils/enums.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_buttons.dart';
 import 'package:flutter/material.dart';

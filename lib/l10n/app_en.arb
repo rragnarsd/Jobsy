@@ -23,6 +23,7 @@
   "add_skills": "Add skills",
   "no_skills": "No skills added yet",
   "my_skills": "My skills",
+  "skills_display": "Your skills will appear here",
   "languages": "Languages",
   "icelandic": "Icelandic",
   "english": "English",
@@ -179,5 +180,9 @@
   "language": "Language",
   "english": "English",
   "icelandic": "Icelandic",
-  "settings": "Settings"
+  "settings": "Settings",
+
+  "delete_jobs": "Delete jobs?",
+  "confirm_delete": "Are you sure you want to delete all jobs?",
+  "delete": "Delete"
 }

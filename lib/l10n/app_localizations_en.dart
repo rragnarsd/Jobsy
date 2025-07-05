@@ -75,6 +75,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get my_skills => 'My skills';
 
   @override
+  String get skills_display => 'Your skills will appear here';
+
+  @override
   String get languages => 'Languages';
 
   @override
@@ -487,4 +490,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get delete_jobs => 'Delete jobs?';
+
+  @override
+  String get confirm_delete => 'Are you sure you want to delete all jobs?';
+
+  @override
+  String get delete => 'Delete';
 }

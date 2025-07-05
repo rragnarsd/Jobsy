@@ -55,6 +55,21 @@ class FavoritesProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteAllFavorites() async {
+    _setLoading(true);
+    _clearError();
+
+    try {
+      await _favoriteService.deleteAllFavorites();
+      _favorites.clear();
+      notifyListeners();
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   void _setLoading(bool value) {
     _isLoading = value;
   }

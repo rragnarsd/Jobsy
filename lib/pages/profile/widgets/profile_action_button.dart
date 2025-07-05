@@ -1,4 +1,3 @@
-import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileActionButton extends StatelessWidget {
@@ -27,33 +26,6 @@ class ProfileActionButton extends StatelessWidget {
           ),
         ),
         child: Center(child: Text(text, style: theme.textTheme.bodyLarge)),
-      ),
-    );
-  }
-}
-
-class ProfileIconActionButton extends StatelessWidget {
-  const ProfileIconActionButton({
-    super.key,
-    required this.text,
-    this.onPressed,
-  });
-
-  final String text;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Expanded(
-      child: ElevatedButton.icon(
-        onPressed: () {},
-        icon: const Icon(Icons.download, color: JobsyColors.primaryColor),
-        label: Text(text, style: theme.textTheme.bodyMedium),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-          backgroundColor: JobsyColors.cardColor,
-        ),
       ),
     );
   }

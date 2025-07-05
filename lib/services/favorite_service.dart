@@ -64,4 +64,17 @@ class FavoriteService {
       throw Exception('Failed to remove favorite: $e');
     }
   }
+
+  Future<void> deleteAllFavorites() async {
+    try {
+      final userDocRef = await _getUserDoc();
+      final userDoc = await userDocRef.get();
+
+      if (!userDoc.exists) throw Exception('User profile not found');
+
+      await userDocRef.update({'favorites': []});
+    } catch (e) {
+      throw Exception('Failed to delete all favorites: $e');
+    }
+  }
 }

@@ -230,6 +230,12 @@ abstract class AppLocalizations {
   /// **'My skills'**
   String get my_skills;
 
+  /// No description provided for @skills_display.
+  ///
+  /// In en, this message translates to:
+  /// **'Your skills will appear here'**
+  String get skills_display;
+
   /// No description provided for @languages.
   ///
   /// In en, this message translates to:
@@ -1051,6 +1057,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @delete_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete jobs?'**
+  String get delete_jobs;
+
+  /// No description provided for @confirm_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete all jobs?'**
+  String get confirm_delete;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
 }
 
 class _AppLocalizationsDelegate

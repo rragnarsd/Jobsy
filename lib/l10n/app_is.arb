@@ -23,6 +23,7 @@
   "add_skills": "Bæta við hæfni",
   "no_skills": "Engin kunnáttu bætt við ennþá",
   "my_skills": "Mín hæfni",
+  "skills_display": "Hæfni þín mun birtast hér",
   "languages": "Tungumál",
   "icelandic": "Íslenska",
   "english": "Enska",
@@ -175,5 +176,9 @@
   "language": "Tungumál",
   "english": "Enska",
   "icelandic": "Íslenska",
-  "settings": "Stillingar"
+  "settings": "Stillingar",
+
+  "delete_jobs": "Eyða öllum störfum?",
+  "confirm_delete": "Ertu viss um að þú viljir eyða öllu?",
+  "delete": "Eyða"
 }

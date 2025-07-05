@@ -75,6 +75,9 @@ class AppLocalizationsIs extends AppLocalizations {
   String get my_skills => 'Mín hæfni';
 
   @override
+  String get skills_display => 'Hæfni þín mun birtast hér';
+
+  @override
   String get languages => 'Tungumál';
 
   @override
@@ -487,4 +490,13 @@ class AppLocalizationsIs extends AppLocalizations {
 
   @override
   String get settings => 'Stillingar';
+
+  @override
+  String get delete_jobs => 'Eyða öllum störfum?';
+
+  @override
+  String get confirm_delete => 'Ertu viss um að þú viljir eyða öllu?';
+
+  @override
+  String get delete => 'Eyða';
 }

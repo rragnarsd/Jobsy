@@ -1,4 +1,4 @@
-import 'package:codehatch/utils/enums.dart';
+import 'package:codehatch/utils/extensions.dart';
 
 class CourseModel {
   final String id;

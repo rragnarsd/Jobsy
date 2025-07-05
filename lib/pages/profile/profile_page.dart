@@ -6,7 +6,6 @@ import 'package:codehatch/pages/profile/widgets/education_section.dart';
 import 'package:codehatch/pages/profile/widgets/job_section.dart';
 import 'package:codehatch/pages/profile/widgets/language_section.dart';
 import 'package:codehatch/pages/profile/widgets/link_section.dart';
-import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_section.dart';
 import 'package:codehatch/pages/profile/widgets/reference_section.dart';
 import 'package:codehatch/pages/profile/widgets/skill_section.dart';
@@ -14,6 +13,7 @@ import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/providers/favorites_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart' as workplace;
 import 'package:codehatch/utils/colors.dart';
+import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_empty_state.dart';
 import 'package:codehatch/widgets/app_modal_item.dart';
@@ -47,8 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final profile = authProvider.userProfile;
     return Scaffold(
       appBar: AppBar(
-        //TODO - Add percentage
-        title: Text('${local.profile} (100%)'),
+        title: Text(local.profile),
         leading: IconButton(
           icon: const Icon(Icons.close, color: JobsyColors.whiteColor),
           onPressed: () => context.pop(),
@@ -68,18 +67,6 @@ class _ProfilePageState extends State<ProfilePage> {
       body: CustomScrollView(
         slivers: [
           ProfileSection(user: user, profile: profile),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  ProfileIconActionButton(text: local.download_profile),
-                  const SizedBox(width: 16),
-                  ProfileIconActionButton(text: '${local.attachments} (4)'),
-                ],
-              ),
-            ),
-          ),
           const SliverToBoxAdapter(child: SizedBox(height: 8)),
           SliverToBoxAdapter(
             child: Divider(
@@ -143,7 +130,7 @@ class FavoritesSheet extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () =>
-                deleteJobs(context: context, theme: theme, local: local),
+                deleteAllJobs(context: context, theme: theme, local: local),
             icon: const Icon(Icons.delete, color: JobsyColors.whiteColor),
           ),
         ],
@@ -151,11 +138,11 @@ class FavoritesSheet extends StatelessWidget {
       body: Consumer<FavoritesProvider>(
         builder: (context, favoritesProvider, child) {
           if (favoritesProvider.isLoading) {
-            const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (favoritesProvider.favorites.isEmpty) {
-            EmptyState(
+            return EmptyState(
               icon: Icons.favorite_border,
               title: local.no_saved_jobs,
               subTitle: local.jobs_displayed,
@@ -202,7 +189,7 @@ class FavoritesSheet extends StatelessWidget {
     );
   }
 
-  void deleteJobs({
+  void deleteAllJobs({
     required BuildContext context,
     required ThemeData theme,
     required AppLocalizations local,
@@ -215,14 +202,31 @@ class FavoritesSheet extends StatelessWidget {
           hasTopBarLayer: false,
           mainContentSliversBuilder: (context) => [
             ModalSheetItem(
-              mainText: 'Delete jobs?',
-              subText: 'Are you sure you want to delete all jobs?',
-              btnText: 'Delete',
-              onPressed: () {},
+              mainText: local.delete_jobs,
+              subText: local.confirm_delete,
+              btnText: local.delete,
+              onPressed: () => deleteJob(context: context, local: local),
             ),
           ],
         ),
       ],
     );
+  }
+
+  void deleteJob({
+    required BuildContext context,
+    required AppLocalizations local,
+  }) async {
+    final favoritesProvider = context.read<FavoritesProvider>();
+    await favoritesProvider.deleteAllFavorites();
+    if (context.mounted) {
+      context.pop();
+      context.showToast(
+        title: 'All jobs deleted',
+        type: ToastType.success,
+        textColor: JobsyColors.whiteColor,
+        duration: const Duration(seconds: 5),
+      );
+    }
   }
 }

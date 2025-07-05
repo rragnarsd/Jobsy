@@ -13,27 +13,31 @@ class EmptyState extends StatelessWidget {
   final String title;
   final String subTitle;
 
+  //TODO - Fix the height - center without the appbar
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, size: 64, color: JobsyColors.greyColor),
-        const SizedBox(height: 16),
-        Text(
-          title,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(color: JobsyColors.greyColor),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          subTitle,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyMedium?.copyWith(color: JobsyColors.greyColor),
-        ),
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 64, color: JobsyColors.greyColor),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(color: JobsyColors.greyColor),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            subTitle,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: JobsyColors.greyColor),
+          ),
+        ],
+      ),
     );
   }
 }

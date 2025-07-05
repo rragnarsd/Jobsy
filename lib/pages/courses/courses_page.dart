@@ -3,7 +3,6 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
-import 'package:codehatch/utils/enums.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -34,17 +33,7 @@ class _CoursesPageState extends State<CoursesPage> {
         title: Text(
           '${AppLocalizations.of(context)!.courses} (${courseProvider.courses.length})',
         ),
-        leading: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: GestureDetector(
-            onTap: () => context.push('/profile'),
-            child: const Icon(
-              Icons.person,
-              color: JobsyColors.whiteColor,
-              size: 26,
-            ),
-          ),
-        ),
+
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),
