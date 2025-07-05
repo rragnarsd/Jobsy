@@ -5,13 +5,13 @@ class ProfileModel {
   final DateTime dateOfBirth;
   final String aboutYou;
   final String idNumber;
-  final String imageUrl;
   final List<JobExperienceModel> jobExperience;
   final List<EducationModel> education;
   final List<SkillsModel> skills;
   final List<LanguageModel> languages;
   final List<ReferenceModel> references;
   final List<LinkModel> links;
+  final List<Favorites> favorites;
 
   ProfileModel({
     required this.id,
@@ -20,13 +20,13 @@ class ProfileModel {
     required this.dateOfBirth,
     required this.aboutYou,
     required this.idNumber,
-    required this.imageUrl,
     required this.jobExperience,
     required this.education,
     required this.skills,
     required this.languages,
     required this.references,
     required this.links,
+    required this.favorites,
   });
 }
 
@@ -220,4 +220,11 @@ class LanguageModel {
       'flagEmoji': flagEmoji,
     };
   }
+}
+
+class Favorites {
+  final String id;
+  final String workplaceId;
+
+  Favorites({required this.id, required this.workplaceId});
 }

@@ -210,10 +210,22 @@ class AppLocalizationsIs extends AppLocalizations {
   String get save => 'Vista';
 
   @override
+  String get unsave => 'Fjarlægja';
+
+  @override
   String get share => 'Deila';
 
   @override
   String get requirement => 'Nauðsyn';
+
+  @override
+  String get saved_jobs => 'Vistuð Störf';
+
+  @override
+  String get no_saved_jobs => 'Engin vistuð störf ennþá';
+
+  @override
+  String get jobs_displayed => 'Störf sem þú vistar birtast hér';
 
   @override
   String get search => 'Leita';

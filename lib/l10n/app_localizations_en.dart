@@ -210,10 +210,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save => 'Save';
 
   @override
+  String get unsave => 'Unsave';
+
+  @override
   String get share => 'Share';
 
   @override
   String get requirement => 'Requirement';
+
+  @override
+  String get saved_jobs => 'Saved Jobs';
+
+  @override
+  String get no_saved_jobs => 'No saved jobs yet';
+
+  @override
+  String get jobs_displayed => 'Jobs you save will appear here';
 
   @override
   String get search => 'Search';

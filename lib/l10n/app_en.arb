@@ -72,8 +72,12 @@
   "workplaces": "Workplaces",
   "the_workplace": "The workplace",
   "save": "Save",
+  "unsave": "Unsave",
   "share": "Share",
   "requirement": "Requirement",
+  "saved_jobs": "Saved Jobs",
+  "no_saved_jobs": "No saved jobs yet",
+  "jobs_displayed": "Jobs you save will appear here",
 
   "search": "Search",
   "sort_search": "Sort",

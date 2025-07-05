@@ -17,6 +17,7 @@ class AppSearchBar extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
+                textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: JobsyColors.scaffoldColor,

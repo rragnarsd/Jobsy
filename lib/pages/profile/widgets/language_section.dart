@@ -7,6 +7,7 @@ import 'package:codehatch/providers/language_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
+import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
@@ -75,21 +76,9 @@ class _LanguageSectionState extends State<LanguageSection> {
                       }
 
                       final language = languageProvider.languages[index ~/ 2];
-                      return Dismissible(
-                        key: Key(language.id),
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: JobsyColors.errorColor,
-                          ),
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: const Icon(
-                            Icons.delete,
-                            color: JobsyColors.whiteColor,
-                          ),
-                        ),
+
+                      return AppDismissibleItem(
+                        itemKey: Key(language.id),
                         onDismissed: (direction) =>
                             languageProvider.deleteLanguage(language.id),
                         child: Padding(
@@ -313,7 +302,7 @@ class _LanguageFormState extends State<LanguageForm> {
         child: AbsorbPointer(
           child: AppTextFormField(
             controller: _languageController,
-            textInputAction: TextInputAction.done,
+            textInputAction: TextInputAction.next,
             hintText: _selectedCountry != null
                 ? _selectedCountry!.name
                 : local.which_language_do_you_speak,
@@ -387,6 +376,7 @@ class _LanguageFormState extends State<LanguageForm> {
         child: AbsorbPointer(
           child: AppTextFormField(
             controller: _proficiencyController,
+            textInputAction: TextInputAction.done,
             labelText: local.how_well_do_you_speak_it,
             suffix: const Icon(Icons.keyboard_arrow_right),
             readOnly: true,

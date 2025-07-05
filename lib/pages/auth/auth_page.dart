@@ -129,7 +129,7 @@ class _AuthPageState extends State<AuthPage> {
                     SubmitButton(
                       isLoading: isLoading,
                       isRegisterMode: _isRegisterMode,
-                      onPressed: submitForm,
+                      onPressed: () => isLoading ? null : submitForm(),
                     ),
                     const SizedBox(height: 16),
                     RichText(
@@ -169,6 +169,7 @@ class _AuthPageState extends State<AuthPage> {
     if (!_formKey.currentState!.validate()) return;
 
     final authProvider = context.read<AuthUserProvider>();
+
     authProvider.clearError();
 
     await authProvider.authenticate(
@@ -213,7 +214,7 @@ class SubmitButton extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: AppElevatedButton(
-        onPressed: () => isLoading ? null : onPressed,
+        onPressed: onPressed,
         child: isLoading
             ? const SizedBox(
                 width: 26,

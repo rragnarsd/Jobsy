@@ -28,12 +28,16 @@ class _ProfileSectionState extends State<ProfileSection> {
   late TextEditingController _emailController;
   late TextEditingController _phoneController;
   late TextEditingController _birthDateController;
-  DateTime? _selectedDate;
   final _formKey = GlobalKey<FormState>();
+  DateTime? _selectedDate;
 
   @override
   void initState() {
+    init();
     super.initState();
+  }
+
+  void init() {
     _nameController = TextEditingController(
       text: widget.profile?['name'] ?? '',
     );
@@ -230,9 +234,7 @@ class _ProfileSectionState extends State<ProfileSection> {
   Future<void> _saveChanges() async {
     final isValid = _formKey.currentState!.validate();
 
-    if (!isValid) {
-      return;
-    }
+    if (!isValid) return;
 
     final authProvider = Provider.of<AuthUserProvider>(context, listen: false);
 
@@ -270,7 +272,6 @@ class _ProfileSectionState extends State<ProfileSection> {
         validator: (value) => value?.emailError,
       ),
       const SizedBox(height: 16),
-      //TODO - Add better validation for phone number
       AppTextFormField(
         controller: _phoneController,
         textInputAction: TextInputAction.next,
@@ -280,21 +281,7 @@ class _ProfileSectionState extends State<ProfileSection> {
         inputFormatter: [
           FilteringTextInputFormatter.allow(RegExp(r'[\d\s\-\(\)\+]')),
         ],
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Phone number is required';
-          }
-
-          final cleaned = value.replaceAll(RegExp(r'[^\d\+]'), '');
-
-          final isValid = RegExp(r'^\+?\d{7,15}$').hasMatch(cleaned);
-
-          if (!isValid) {
-            return 'Invalid phone number';
-          }
-
-          return null;
-        },
+        validator: (value) => value?.phoneError,
       ),
       const SizedBox(height: 16),
       GestureDetector(
@@ -305,7 +292,7 @@ class _ProfileSectionState extends State<ProfileSection> {
             textInputAction: TextInputAction.done,
             prefixIcon: const Icon(Icons.cake),
             labelText: local.date_of_birth,
-            validator: (value) => null,
+            validator: (value) => value?.dateError,
           ),
         ),
       ),

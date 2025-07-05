@@ -6,9 +6,6 @@ import 'package:codehatch/pages/home/home_page.dart';
 import 'package:codehatch/pages/home/job_description_page.dart';
 import 'package:codehatch/pages/home/workplace_page.dart';
 import 'package:codehatch/pages/inbox/inbox_page.dart';
-import 'package:codehatch/pages/profile/profile_page.dart';
-import 'package:codehatch/pages/profile/settings_page.dart';
-import 'package:codehatch/pages/profile/skills_page.dart';
 import 'package:codehatch/pages/workplaces/workplaces.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/root.dart';
@@ -79,23 +76,6 @@ GoRouter createRouter(BuildContext context) {
                 builder: (context, state) => const InboxPage(),
               ),
             ],
-          ),
-        ],
-      ),
-      GoRoute(
-        path: '/profile',
-        builder: (context, state) => const ProfilePage(),
-        routes: [
-          GoRoute(
-            path: 'settings',
-            builder: (context, state) => const SettingsPage(),
-          ),
-          GoRoute(
-            path: 'skills',
-            builder: (context, state) {
-              final initialTabIndex = state.extra as int? ?? 0;
-              return SkillsPage(initialTabIndex: initialTabIndex);
-            },
           ),
         ],
       ),

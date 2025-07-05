@@ -7,6 +7,7 @@ import 'package:codehatch/providers/job_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
+import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -99,21 +100,8 @@ class _JobSectionState extends State<JobSection> {
 
                       final job = jobProvider.jobExperience[index ~/ 2];
 
-                      return Dismissible(
-                        key: Key(job.id.toString()),
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: JobsyColors.errorColor,
-                          ),
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: const Icon(
-                            Icons.delete,
-                            color: JobsyColors.whiteColor,
-                          ),
-                        ),
+                      return AppDismissibleItem(
+                        itemKey: Key(job.id.toString()),
                         onDismissed: (direction) =>
                             jobProvider.deleteJobExperience(job.id),
                         child: Padding(
@@ -309,6 +297,7 @@ class _JobSectionState extends State<JobSection> {
         labelText: local.which_company,
         prefixIcon: const Icon(Icons.business),
         validator: (value) => value?.companyError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
@@ -316,6 +305,7 @@ class _JobSectionState extends State<JobSection> {
         labelText: local.which_position,
         prefixIcon: const Icon(Icons.work),
         validator: (value) => value?.positionError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       Row(
@@ -329,6 +319,7 @@ class _JobSectionState extends State<JobSection> {
                   labelText: local.start_date,
                   prefixIcon: const Icon(Icons.calendar_month),
                   validator: (value) => value?.dateError,
+                  textInputAction: TextInputAction.next,
                 ),
               ),
             ),
@@ -343,6 +334,7 @@ class _JobSectionState extends State<JobSection> {
                   labelText: local.end_date,
                   prefixIcon: const Icon(Icons.calendar_month),
                   validator: (value) => value?.dateError,
+                  textInputAction: TextInputAction.done,
                 ),
               ),
             ),

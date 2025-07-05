@@ -3,6 +3,7 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/home/widgets/dividers.dart';
+import 'package:codehatch/pages/profile/profile_page.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
@@ -35,28 +36,12 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           '${AppLocalizations.of(context)!.vacancies} (${workplaceProvider.jobs.length})',
         ),
-        leadingWidth: 100,
-        leading: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 8,
-            children: [
-              GestureDetector(
-                onTap: () => context.push('/profile'),
-                child: const Icon(
-                  Icons.person,
-                  color: JobsyColors.whiteColor,
-                  size: 26,
-                ),
-              ),
-              const Icon(
-                Icons.favorite,
-                color: JobsyColors.whiteColor,
-                size: 24,
-              ),
-            ],
+        leading: GestureDetector(
+          onTap: () => showProfile(),
+          child: const Icon(
+            Icons.person,
+            color: JobsyColors.whiteColor,
+            size: 26,
           ),
         ),
         actions: [
@@ -74,6 +59,17 @@ class _HomePageState extends State<HomePage> {
           const AppJobList(),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
+      ),
+    );
+  }
+
+  void showProfile() {
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return const ProfilePage();
+        },
       ),
     );
   }

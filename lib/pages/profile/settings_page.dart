@@ -1,8 +1,8 @@
 import 'package:codehatch/l10n/app_localizations.dart';
-import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:codehatch/widgets/app_modal_item.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -155,7 +155,8 @@ class SettingsPage extends StatelessWidget {
                       Icons.logout,
                       color: JobsyColors.primaryColor,
                     ),
-                    onTap: () => _logout(context, local, theme),
+                    onTap: () =>
+                        _logout(context: context, local: local, theme: theme),
                     trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
@@ -172,7 +173,11 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _logout(BuildContext context, AppLocalizations local, ThemeData theme) {
+  void _logout({
+    required BuildContext context,
+    required AppLocalizations local,
+    required ThemeData theme,
+  }) {
     WoltModalSheet.show(
       context: context,
       barrierDismissible: true,
@@ -181,47 +186,14 @@ class SettingsPage extends StatelessWidget {
           backgroundColor: JobsyColors.scaffoldColor,
           hasTopBarLayer: false,
           mainContentSliversBuilder: (context) => [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 32),
-                    const Icon(
-                      Icons.info,
-                      size: 64,
-                      color: JobsyColors.primaryColor,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(local.log_out, style: theme.textTheme.titleLarge),
-                    const SizedBox(height: 4),
-                    Text(
-                      local.sure_to_logout,
-                      style: theme.textTheme.bodyLarge,
-                    ),
-                    const SizedBox(height: 32),
-                    Row(
-                      children: [
-                        ProfileActionButton(
-                          text: local.cancel,
-                          color: JobsyColors.greyColor.withValues(alpha: 0.2),
-                          onPressed: () => context.pop(),
-                        ),
-                        const SizedBox(width: 16),
-                        ProfileActionButton(
-                          text: local.log_out,
-                          color: JobsyColors.primaryColor,
-                          onPressed: () {
-                            context.read<AuthUserProvider>().signOut();
-                            _logoutSuccess(context, local);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            ModalSheetItem(
+              mainText: local.log_out,
+              subText: local.sure_to_logout,
+              btnText: local.log_out,
+              onPressed: () {
+                context.read<AuthUserProvider>().signOut();
+                _logoutSuccess(context, local);
+              },
             ),
           ],
         ),

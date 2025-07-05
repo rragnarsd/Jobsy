@@ -3,6 +3,7 @@ import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/providers/education_provider.dart';
+import 'package:codehatch/providers/favorites_provider.dart';
 import 'package:codehatch/providers/job_provider.dart';
 import 'package:codehatch/providers/language_provider.dart';
 import 'package:codehatch/providers/link_provider.dart';
@@ -35,6 +36,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => LinkProvider()),
         ChangeNotifierProvider(create: (_) => SkillsProvider()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
       ],
       child: const JobsyWrapper(),
     ),

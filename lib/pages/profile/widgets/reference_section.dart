@@ -7,6 +7,7 @@ import 'package:codehatch/providers/reference_provider.dart';
 import 'package:codehatch/utils/colors.dart' show JobsyColors;
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
+import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -88,21 +89,9 @@ class _ReferenceSectionState extends State<ReferenceSection> {
                       }
                       final reference =
                           referenceProvider.references[index ~/ 2];
-                      return Dismissible(
-                        key: Key(reference.id.toString()),
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: JobsyColors.errorColor,
-                          ),
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: const Icon(
-                            Icons.delete,
-                            color: JobsyColors.whiteColor,
-                          ),
-                        ),
+
+                      return AppDismissibleItem(
+                        itemKey: Key(reference.id.toString()),
                         onDismissed: (direction) =>
                             referenceProvider.deleteReference(reference.id),
                         child: Padding(
@@ -276,6 +265,7 @@ class _ReferenceSectionState extends State<ReferenceSection> {
         labelText: local.name,
         prefixIcon: const Icon(Icons.person),
         validator: (value) => value?.nameError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
@@ -283,6 +273,7 @@ class _ReferenceSectionState extends State<ReferenceSection> {
         labelText: local.job_title,
         prefixIcon: const Icon(Icons.work),
         validator: (value) => value?.jobTitleError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
@@ -290,6 +281,8 @@ class _ReferenceSectionState extends State<ReferenceSection> {
         labelText: local.email,
         prefixIcon: const Icon(Icons.email),
         validator: (value) => value?.emailError,
+        textInputAction: TextInputAction.done,
+        keyboardType: TextInputType.emailAddress,
       ),
       const SizedBox(height: 16),
     ];

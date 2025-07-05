@@ -7,6 +7,7 @@ import 'package:codehatch/providers/education_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
+import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -95,21 +96,9 @@ class _EducationSectionState extends State<EducationSection> {
                         );
                       }
                       final education = educationProvider.education[index ~/ 2];
-                      return Dismissible(
-                        key: Key(education.id.toString()),
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: JobsyColors.errorColor,
-                          ),
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: const Icon(
-                            Icons.delete,
-                            color: JobsyColors.whiteColor,
-                          ),
-                        ),
+
+                      return AppDismissibleItem(
+                        itemKey: Key(education.id.toString()),
                         onDismissed: (direction) =>
                             educationProvider.deleteEducation(education.id),
                         child: Padding(
@@ -301,6 +290,7 @@ class _EducationSectionState extends State<EducationSection> {
         labelText: local.school,
         prefixIcon: const Icon(Icons.school),
         validator: (value) => value?.schoolError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
@@ -308,6 +298,7 @@ class _EducationSectionState extends State<EducationSection> {
         labelText: local.field,
         prefixIcon: const Icon(Icons.school),
         validator: (value) => value?.fieldError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
@@ -315,6 +306,7 @@ class _EducationSectionState extends State<EducationSection> {
         labelText: local.degree,
         prefixIcon: const Icon(Icons.school),
         validator: (value) => value?.degreeError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       Row(
@@ -329,6 +321,7 @@ class _EducationSectionState extends State<EducationSection> {
                   prefixIcon: const Icon(Icons.calendar_month),
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
+                  textInputAction: TextInputAction.next,
                 ),
               ),
             ),
@@ -344,6 +337,7 @@ class _EducationSectionState extends State<EducationSection> {
                   prefixIcon: const Icon(Icons.calendar_month),
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
+                  textInputAction: TextInputAction.done,
                 ),
               ),
             ),

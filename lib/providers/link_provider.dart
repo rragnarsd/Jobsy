@@ -32,7 +32,8 @@ class LinkProvider extends ChangeNotifier {
 
     try {
       await _linkService.addLink(link);
-      await loadLinks();
+      _links.add(link);
+      notifyListeners();
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -46,7 +47,8 @@ class LinkProvider extends ChangeNotifier {
 
     try {
       await _linkService.updateLink(link);
-      await loadLinks();
+      _links = _links.map((l) => l.id == link.id ? link : l).toList();
+      notifyListeners();
     } catch (e) {
       _setError(e.toString());
     } finally {
@@ -60,7 +62,8 @@ class LinkProvider extends ChangeNotifier {
 
     try {
       await _linkService.deleteLink(linkId);
-      await loadLinks();
+      _links = _links.where((l) => l.id != linkId).toList();
+      notifyListeners();
     } catch (e) {
       _setError(e.toString());
     } finally {

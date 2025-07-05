@@ -104,6 +104,7 @@ class _AboutSectionState extends State<AboutSection> {
                         labelText: local.about_yourself,
                         hintText: local.describe_experience,
                         validator: (value) => value?.aboutError,
+                        textInputAction: TextInputAction.done,
                       ),
                       const SizedBox(height: 16),
                       Row(

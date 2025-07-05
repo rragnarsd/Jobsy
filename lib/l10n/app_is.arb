@@ -67,8 +67,12 @@
   "workplaces": "Vinnustaðir",
   "the_workplace": "Vinnustaðurinn",
   "save": "Vista",
+  "unsave": "Fjarlægja",
   "share": "Deila",
   "requirement": "Nauðsyn",
+  "saved_jobs": "Vistuð Störf",
+  "no_saved_jobs": "Engin vistuð störf ennþá",
+  "jobs_displayed": "Störf sem þú vistar birtast hér",
 
   "search": "Leita",
   "sort_search": "Síur",

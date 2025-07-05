@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
+import 'package:codehatch/providers/favorites_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
@@ -146,7 +147,7 @@ class JobTag extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(6),
         border: Border.all(color: JobsyColors.greyColor),
       ),
       child: Padding(
@@ -274,48 +275,72 @@ class JobLanguageSkills extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              ...job.languageSkills.mapIndexed((i, skill) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: i < job.languageSkills.length - 1 ? 16 : 0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: skill.flagUrl,
-                            width: 40,
-                            height: 20,
-                            fit: BoxFit.cover,
-                          ),
-                          const SizedBox(width: 12),
-                          Text(skill.title, style: theme.textTheme.bodyLarge),
-                          const SizedBox(width: 12),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: JobsyColors.greyColor),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            child: Text(
-                              local.requirement,
-                              style: theme.textTheme.bodyMedium,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+              ...job.languageSkills.mapIndexed((index, skill) {
+                return LanguageItem(
+                  job: job,
+                  title: job.title,
+                  flagUrl: skill.flagUrl,
+                  index: index,
                 );
               }),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LanguageItem extends StatelessWidget {
+  const LanguageItem({
+    super.key,
+    required this.flagUrl,
+    required this.title,
+    required this.index,
+    required this.job,
+  });
+
+  final JobModel job;
+  final String flagUrl;
+  final String title;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final local = AppLocalizations.of(context)!;
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: index < job.languageSkills.length - 1 ? 16 : 0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: flagUrl,
+                width: 40,
+                height: 20,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(width: 12),
+              Text(title, style: theme.textTheme.bodyLarge),
+              const SizedBox(width: 12),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(color: JobsyColors.greyColor),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: Text(
+                  local.requirement,
+                  style: theme.textTheme.bodyMedium,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -389,7 +414,7 @@ class JobDeadline extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const JobSaveAndSharebtns(),
+              JobSaveAndSharebtns(jobId: job.id),
             ],
           ),
         ),
@@ -399,23 +424,41 @@ class JobDeadline extends StatelessWidget {
 }
 
 class JobSaveAndSharebtns extends StatelessWidget {
-  const JobSaveAndSharebtns({super.key});
+  const JobSaveAndSharebtns({super.key, required this.jobId});
+
+  final String jobId;
 
   @override
   Widget build(BuildContext context) {
     final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final favoritesProvider = context.watch<FavoritesProvider>();
+    final isFavorite = favoritesProvider.favorites.contains(jobId);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: favoritesProvider.isLoading
+              ? null
+              : () async {
+                  if (isFavorite) {
+                    await favoritesProvider.removeFavorite(jobId);
+                  } else {
+                    await favoritesProvider.addFavorite(jobId);
+                  }
+                },
           icon: Row(
             children: [
-              const Icon(Icons.favorite, color: JobsyColors.primaryColor),
+              Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : JobsyColors.primaryColor,
+              ),
               const SizedBox(width: 8),
-              Text(local.save, style: theme.textTheme.bodyLarge),
+              Text(
+                isFavorite ? local.unsave : local.save,
+                style: theme.textTheme.bodyLarge,
+              ),
             ],
           ),
         ),

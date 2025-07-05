@@ -5,7 +5,6 @@ import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/skills_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SkillSection extends StatelessWidget {
@@ -25,7 +24,7 @@ class SkillSection extends StatelessWidget {
         children: [
           ProfileHeader(
             text: local.skills,
-            onEditTap: () => context.push('/profile/skills'),
+            onEditTap: () => showSkills(context: context),
             trailingText: '${local.my_skills} (${selectedSkills.length})',
           ),
           if (selectedSkills.isEmpty)
@@ -59,9 +58,20 @@ class SkillSection extends StatelessWidget {
             ),
           ProfileAddBtn(
             title: local.add_skills,
-            onPressed: () => context.push('/profile/skills', extra: 1),
+            onPressed: () => showSkills(context: context, tabIndex: 1),
           ),
         ],
+      ),
+    );
+  }
+
+  void showSkills({required BuildContext context, int tabIndex = 0}) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (BuildContext context) {
+          return SkillsPage(initialTabIndex: tabIndex);
+        },
       ),
     );
   }

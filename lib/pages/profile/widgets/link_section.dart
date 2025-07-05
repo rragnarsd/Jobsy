@@ -7,6 +7,7 @@ import 'package:codehatch/providers/link_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
+import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -85,21 +86,8 @@ class _LinkSectionState extends State<LinkSection> {
                       );
                     }
                     final link = linkProvider.links[index ~/ 2];
-                    return Dismissible(
-                      key: Key(link.id.toString()),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: JobsyColors.errorColor,
-                        ),
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: const Icon(
-                          Icons.delete,
-                          color: JobsyColors.whiteColor,
-                        ),
-                      ),
+                    return AppDismissibleItem(
+                      itemKey: Key(link.id.toString()),
                       onDismissed: (direction) =>
                           linkProvider.deleteLink(link.id),
                       child: Padding(
@@ -223,6 +211,7 @@ class _LinkSectionState extends State<LinkSection> {
         labelText: local.link_site,
         prefixIcon: const Icon(Icons.link),
         validator: (value) => value?.siteError,
+        textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
       AppTextFormField(
@@ -230,6 +219,7 @@ class _LinkSectionState extends State<LinkSection> {
         labelText: local.link_media,
         prefixIcon: const Icon(Icons.language),
         validator: (value) => value?.mediaError,
+        textInputAction: TextInputAction.done,
       ),
     ];
   }

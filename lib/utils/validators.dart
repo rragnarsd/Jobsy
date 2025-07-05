@@ -11,7 +11,6 @@ extension DateRangeValidator on BuildContext {
 extension StringValidators on String {
   static final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$');
   static final RegExp _nameRegex = RegExp(r'^[a-zA-Z\s]{2,}$');
-  //static final RegExp _phoneRegex = RegExp(r'^\+?\d{7,15}$');
   static final RegExp _yearRegex = RegExp(r'^[0-9]{4}$');
   static final RegExp _generalTextRegex = RegExp(r'^[a-zA-Z0-9\s&.,\-]{2,}$');
 

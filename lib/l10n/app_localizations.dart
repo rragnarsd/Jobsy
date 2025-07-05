@@ -500,6 +500,12 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
+  /// No description provided for @unsave.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsave'**
+  String get unsave;
+
   /// No description provided for @share.
   ///
   /// In en, this message translates to:
@@ -511,6 +517,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Requirement'**
   String get requirement;
+
+  /// No description provided for @saved_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Jobs'**
+  String get saved_jobs;
+
+  /// No description provided for @no_saved_jobs.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved jobs yet'**
+  String get no_saved_jobs;
+
+  /// No description provided for @jobs_displayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Jobs you save will appear here'**
+  String get jobs_displayed;
 
   /// No description provided for @search.
   ///

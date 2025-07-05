@@ -3,7 +3,7 @@ import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/providers/skills_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
-import 'package:codehatch/widgets/app_buttons.dart';
+import 'package:codehatch/widgets/app_empty_state.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -157,7 +157,6 @@ class SkillsFirestoreList extends StatelessWidget {
           padding: EdgeInsets.zero,
           itemBuilder: (context, docIndex) {
             final doc = docs[docIndex];
-            //TODO - Unknown?
             final docId = doc['id'] as String? ?? 'Unknown';
             final data = doc['data'] as Map<String, dynamic>? ?? {};
 
@@ -230,30 +229,17 @@ class UserSkillList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
     return Consumer<SkillsProvider>(
       builder: (context, skillsProvider, _) {
         final userSkills = skillsProvider.skills;
 
         if (userSkills.isEmpty) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                local.no_skills,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: JobsyColors.greyColor,
-                ),
-              ),
-              const SizedBox(height: 16),
-              AppIconElevatedButton(
-                text: local.add_skills,
-                icon: Icons.add,
-                onPressed: () => onAddSkillsPressed,
-              ),
-            ],
+          return EmptyState(
+            icon: Icons.school,
+            title: local.no_skills,
+            //TODO - Localize
+            subTitle: 'Your skills will appear here',
           );
         }
 
@@ -293,7 +279,7 @@ class SkillButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isSelected;
 
-  //TODO
+  //TODO - Reuse button?
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
