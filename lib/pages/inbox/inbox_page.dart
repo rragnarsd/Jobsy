@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/inbox_model.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class InboxPage extends StatelessWidget {
@@ -13,7 +13,7 @@ class InboxPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         //TODO - Qty
-        title: Text('${AppLocalizations.of(context)!.inbox} (3)'),
+        title: Text('${'inbox'.tr()} (3)'),
         actions: [
           IconButton(
             onPressed: () {},

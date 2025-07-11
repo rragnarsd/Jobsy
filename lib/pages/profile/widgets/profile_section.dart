@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,11 +70,10 @@ class _ProfileSectionState extends State<ProfileSection> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
 
-    final String email = widget.profile?['email'] ?? local.email;
-    final String name = widget.profile?['name'] ?? local.name;
-    final String phone = widget.profile?['phoneNumber'] ?? local.phone_nr;
+    final String email = widget.profile?['email'] ?? 'email'.tr();
+    final String name = widget.profile?['name'] ?? 'name'.tr();
+    final String phone = widget.profile?['phoneNumber'] ?? 'phone_nr'.tr();
 
     final birthDateDisplay = _formatDateForDisplay(
       widget.profile?['dateOfBirth'],
@@ -120,7 +119,7 @@ class _ProfileSectionState extends State<ProfileSection> {
               IconButton(
                 padding: EdgeInsets.zero,
                 icon: const Icon(Icons.arrow_forward_ios, size: 16),
-                onPressed: () => showEditsheet(context, theme, local),
+                onPressed: () => showEditsheet(context, theme),
                 color: JobsyColors.primaryColor,
               ),
             ],
@@ -130,11 +129,7 @@ class _ProfileSectionState extends State<ProfileSection> {
     );
   }
 
-  void showEditsheet(
-    BuildContext context,
-    ThemeData theme,
-    AppLocalizations local,
-  ) {
+  void showEditsheet(BuildContext context, ThemeData theme) {
     WoltModalSheet.show(
       context: context,
       pageListBuilder: (bottomSheetContext) => [
@@ -154,18 +149,18 @@ class _ProfileSectionState extends State<ProfileSection> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ..._buildEditFields(theme, local),
+                      ..._buildEditFields(theme),
                       const SizedBox(height: 16),
                       Row(
                         children: [
                           ProfileActionButton(
-                            text: local.cancel,
+                            text: 'cancel'.tr(),
                             color: JobsyColors.greyColor.withValues(alpha: 0.2),
                             onPressed: () => context.pop(),
                           ),
                           const SizedBox(width: 16),
                           ProfileActionButton(
-                            text: local.save,
+                            text: 'save'.tr(),
                             color: JobsyColors.primaryColor,
                             onPressed: _saveChanges,
                           ),
@@ -184,7 +179,7 @@ class _ProfileSectionState extends State<ProfileSection> {
 
   String _formatDateForDisplay(dynamic birthDateData) {
     if (birthDateData == null) {
-      return AppLocalizations.of(context)!.date_of_birth;
+      return 'date_of_birth'.tr();
     }
 
     DateTime? date;
@@ -199,9 +194,7 @@ class _ProfileSectionState extends State<ProfileSection> {
       }
     }
 
-    return date != null
-        ? date.toShortFormattedDate()
-        : AppLocalizations.of(context)!.date_of_birth;
+    return date != null ? date.toShortFormattedDate() : 'date_of_birth'.tr();
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -252,13 +245,13 @@ class _ProfileSectionState extends State<ProfileSection> {
     if (mounted) context.pop();
   }
 
-  List<Widget> _buildEditFields(ThemeData theme, AppLocalizations local) {
+  List<Widget> _buildEditFields(ThemeData theme) {
     return [
       AppTextFormField(
         controller: _nameController,
         textInputAction: TextInputAction.next,
         prefixIcon: const Icon(Icons.person),
-        labelText: local.name,
+        labelText: 'name'.tr(),
         keyboardType: TextInputType.name,
         validator: (value) => value?.nameError,
       ),
@@ -267,7 +260,7 @@ class _ProfileSectionState extends State<ProfileSection> {
         controller: _emailController,
         textInputAction: TextInputAction.next,
         prefixIcon: const Icon(Icons.email),
-        labelText: local.email,
+        labelText: 'email'.tr(),
         keyboardType: TextInputType.emailAddress,
         validator: (value) => value?.emailError,
       ),
@@ -276,7 +269,7 @@ class _ProfileSectionState extends State<ProfileSection> {
         controller: _phoneController,
         textInputAction: TextInputAction.next,
         prefixIcon: const Icon(Icons.phone),
-        labelText: local.phone_nr,
+        labelText: 'phone_nr'.tr(),
         keyboardType: TextInputType.phone,
         inputFormatter: [
           FilteringTextInputFormatter.allow(RegExp(r'[\d\s\-\(\)\+]')),
@@ -291,8 +284,13 @@ class _ProfileSectionState extends State<ProfileSection> {
             controller: _birthDateController,
             textInputAction: TextInputAction.done,
             prefixIcon: const Icon(Icons.cake),
-            labelText: local.date_of_birth,
-            validator: (value) => value?.dateError,
+            labelText: 'date_of_birth'.tr(),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'date_of_birth'.tr();
+              }
+              return null;
+            },
           ),
         ),
       ),

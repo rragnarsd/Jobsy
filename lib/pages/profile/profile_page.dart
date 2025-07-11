@@ -1,4 +1,3 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/home/home_page.dart';
 import 'package:codehatch/pages/profile/settings_page.dart';
 import 'package:codehatch/pages/profile/widgets/about_section.dart';
@@ -17,6 +16,7 @@ import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_empty_state.dart';
 import 'package:codehatch/widgets/app_modal_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -40,14 +40,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
-
     final authProvider = context.watch<AuthUserProvider>();
     final user = authProvider.currentUser;
     final profile = authProvider.userProfile;
     return Scaffold(
       appBar: AppBar(
-        title: Text(local.profile),
+        title: Text('profile'.tr()),
         leading: IconButton(
           icon: const Icon(Icons.close, color: JobsyColors.whiteColor),
           onPressed: () => context.pop(),
@@ -117,20 +115,18 @@ class FavoritesSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(local.saved_jobs),
+        title: Text('saved_jobs'.tr()),
         leading: IconButton(
           icon: const Icon(Icons.close, color: JobsyColors.whiteColor),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            onPressed: () =>
-                deleteAllJobs(context: context, theme: theme, local: local),
+            onPressed: () => deleteAllJobs(context: context, theme: theme),
             icon: const Icon(Icons.delete, color: JobsyColors.whiteColor),
           ),
         ],
@@ -144,8 +140,8 @@ class FavoritesSheet extends StatelessWidget {
           if (favoritesProvider.favorites.isEmpty) {
             return EmptyState(
               icon: Icons.favorite_border,
-              title: local.no_saved_jobs,
-              subTitle: local.jobs_displayed,
+              title: 'no_saved_jobs'.tr(),
+              subTitle: 'jobs_displayed'.tr(),
             );
           }
 
@@ -192,7 +188,6 @@ class FavoritesSheet extends StatelessWidget {
   void deleteAllJobs({
     required BuildContext context,
     required ThemeData theme,
-    required AppLocalizations local,
   }) {
     WoltModalSheet.show(
       context: context,
@@ -202,10 +197,10 @@ class FavoritesSheet extends StatelessWidget {
           hasTopBarLayer: false,
           mainContentSliversBuilder: (context) => [
             ModalSheetItem(
-              mainText: local.delete_jobs,
-              subText: local.confirm_delete,
-              btnText: local.delete,
-              onPressed: () => deleteJob(context: context, local: local),
+              mainText: 'delete_jobs'.tr(),
+              subText: 'confirm_delete'.tr(),
+              btnText: 'delete'.tr(),
+              onPressed: () => deleteJob(context: context),
             ),
           ],
         ),
@@ -213,16 +208,13 @@ class FavoritesSheet extends StatelessWidget {
     );
   }
 
-  void deleteJob({
-    required BuildContext context,
-    required AppLocalizations local,
-  }) async {
+  void deleteJob({required BuildContext context}) async {
     final favoritesProvider = context.read<FavoritesProvider>();
     await favoritesProvider.deleteAllFavorites();
     if (context.mounted) {
       context.pop();
       context.showToast(
-        title: 'All jobs deleted',
+        title: 'jobs_deleted'.tr(),
         type: ToastType.success,
         textColor: JobsyColors.whiteColor,
         duration: const Duration(seconds: 5),

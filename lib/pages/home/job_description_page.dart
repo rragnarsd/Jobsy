@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/providers/favorites_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
@@ -7,6 +6,7 @@ import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_buttons.dart';
 import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -19,19 +19,18 @@ class JobDescriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final job = context.watch<WorkplaceProvider>().getJobById(jobId);
 
     if (job == null) {
       return Scaffold(
-        appBar: AppBar(title: Text(local.job_description)),
-        body: Center(child: Text(local.job_not_found)),
+        appBar: AppBar(title: Text('job_description'.tr())),
+        body: Center(child: Text('job_not_found'.tr())),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(local.job_description),
+        title: Text('job_description'.tr()),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: JobsyColors.whiteColor),
           onPressed: () => Navigator.pop(context),
@@ -107,7 +106,7 @@ class JobProfession extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -116,7 +115,7 @@ class JobProfession extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                local.job_tags,
+                'job_tags'.tr(),
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -172,7 +171,7 @@ class JobType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -182,7 +181,7 @@ class JobType extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                local.job_type,
+                'job_type'.tr(),
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -204,7 +203,7 @@ class JobLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     final workplace = context.watch<WorkplaceProvider>().getWorkplaceById(
       job.workplaceId,
     );
@@ -217,7 +216,7 @@ class JobLocation extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                local.job_location,
+                'job_location'.tr(),
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -240,7 +239,7 @@ class JobLocation extends StatelessWidget {
                   children: [
                     Text(
                       job.isRemote
-                          ? local.remote
+                          ? 'remote'.tr()
                           : workplace?.location ?? 'N/A',
                       style: theme.textTheme.bodyLarge,
                     ),
@@ -270,7 +269,7 @@ class JobLanguageSkills extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -279,7 +278,7 @@ class JobLanguageSkills extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                local.language_skills,
+                'language_skills'.tr(),
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -318,7 +317,7 @@ class LanguageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: index < job.languageSkills.length - 1 ? 16 : 0,
@@ -344,7 +343,7 @@ class LanguageItem extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 child: Text(
-                  local.requirement,
+                  'requirement'.tr(),
                   style: theme.textTheme.bodyMedium,
                 ),
               ),
@@ -364,7 +363,6 @@ class JobDeadline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
 
     return SliverToBoxAdapter(
       child: Card(
@@ -376,7 +374,7 @@ class JobDeadline extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    local.ad_published,
+                    'ad_published'.tr(),
                     style: theme.textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
@@ -397,7 +395,7 @@ class JobDeadline extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    local.application_deadline,
+                    'application_deadline'.tr(),
                     style: theme.textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
@@ -418,7 +416,7 @@ class JobDeadline extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: AppIconElevatedButton(
-                  text: local.apply,
+                  text: 'apply'.tr(),
                   icon: Icons.person,
                   onPressed: () {},
                 ),
@@ -440,7 +438,6 @@ class JobSaveAndSharebtns extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final favoritesProvider = context.watch<FavoritesProvider>();
     final isFavorite = favoritesProvider.favorites.contains(jobId);
@@ -466,7 +463,7 @@ class JobSaveAndSharebtns extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                isFavorite ? local.unsave : local.save,
+                isFavorite ? 'unsave'.tr() : 'save'.tr(),
                 style: theme.textTheme.bodyLarge,
               ),
             ],
@@ -478,7 +475,7 @@ class JobSaveAndSharebtns extends StatelessWidget {
             children: [
               const Icon(Icons.share, color: JobsyColors.primaryColor),
               const SizedBox(width: 8),
-              Text(local.share, style: theme.textTheme.bodyLarge),
+              Text('share'.tr(), style: theme.textTheme.bodyLarge),
             ],
           ),
         ),
@@ -507,7 +504,7 @@ class JobQualification extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.education_requirements,
+            'education_requirements'.tr(),
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w700,
             ),
@@ -531,14 +528,14 @@ class JobResponsibility extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            local.responsibilities,
+            'responsibilities'.tr(),
             style: theme.textTheme.bodyLarge!.copyWith(
               fontWeight: FontWeight.w700,
             ),
@@ -595,7 +592,7 @@ class JobHeader extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          AppLocalizations.of(context)!.about_company,
+                          'about_company'.tr(),
                           style: theme.textTheme.bodyLarge!.copyWith(
                             color: JobsyColors.primaryColor,
                           ),

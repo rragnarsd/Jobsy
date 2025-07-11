@@ -1,10 +1,10 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_buttons.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +49,6 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -66,15 +65,17 @@ class _AuthPageState extends State<AuthPage> {
                   children: [
                     Text(
                       _isRegisterMode
-                          ? local.create_account
-                          : local.welcome_back,
+                          ? 'create_account'.tr()
+                          : 'welcome_back'.tr(),
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      _isRegisterMode ? local.signup_start : local.signin_start,
+                      _isRegisterMode
+                          ? 'signup_start'.tr()
+                          : 'signin_start'.tr(),
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: JobsyColors.greyColor.withValues(alpha: 0.6),
                       ),
@@ -84,7 +85,7 @@ class _AuthPageState extends State<AuthPage> {
                       controller: _emailController,
                       textInputAction: TextInputAction.next,
                       prefixIcon: const Icon(Icons.email),
-                      labelText: local.email,
+                      labelText: 'email'.tr(),
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) => value?.emailError,
                     ),
@@ -101,7 +102,7 @@ class _AuthPageState extends State<AuthPage> {
                               : Icons.visibility,
                         ),
                       ),
-                      labelText: local.password,
+                      labelText: 'password'.tr(),
                       obscureText: _obscurePassword,
                       validator: (value) => value?.passwordError,
                     ),
@@ -111,7 +112,7 @@ class _AuthPageState extends State<AuthPage> {
                         controller: _nameController,
                         textInputAction: TextInputAction.next,
                         prefixIcon: const Icon(Icons.person),
-                        labelText: local.name,
+                        labelText: 'name'.tr(),
                         keyboardType: TextInputType.name,
                         validator: (value) => null,
                       ),
@@ -120,7 +121,7 @@ class _AuthPageState extends State<AuthPage> {
                         controller: _phoneNumberController,
                         textInputAction: TextInputAction.next,
                         prefixIcon: const Icon(Icons.phone),
-                        labelText: local.phone_nr,
+                        labelText: 'phone_nr'.tr(),
                         keyboardType: TextInputType.phone,
                         validator: (value) => null,
                       ),
@@ -137,16 +138,16 @@ class _AuthPageState extends State<AuthPage> {
                         children: [
                           TextSpan(
                             text: _isRegisterMode
-                                ? '${local.already_have_account} '
-                                : '${local.dont_have_account} ',
+                                ? '${'already_have_account'.tr()} '
+                                : '${'dont_have_account'.tr()} ',
                             style: theme.textTheme.bodyMedium,
                           ),
                           TextSpan(
                             recognizer: TapGestureRecognizer()
                               ..onTap = _toggleAuthMode,
                             text: _isRegisterMode
-                                ? local.sign_in
-                                : local.register,
+                                ? 'sign_in'.tr()
+                                : 'register'.tr(),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               color: JobsyColors.primaryColor,
                               fontWeight: FontWeight.w600,
@@ -209,7 +210,6 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return SizedBox(
       width: double.infinity,
@@ -225,7 +225,7 @@ class SubmitButton extends StatelessWidget {
                 ),
               )
             : Text(
-                isRegisterMode ? local.register : local.sign_in,
+                isRegisterMode ? 'register'.tr() : 'sign_in'.tr(),
                 style: theme.textTheme.titleLarge?.copyWith(
                   color: JobsyColors.whiteColor,
                 ),

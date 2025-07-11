@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
 import 'package:codehatch/pages/home/job_description_page.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_buttons.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,6 @@ class CourseDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final courseProvider = context.watch<CourseProvider>();
 
     final coursesFromSameBusiness = courseProvider.getCoursesByBusinessName(
@@ -33,7 +32,7 @@ class CourseDetailsPage extends StatelessWidget {
           right: 16,
         ),
         child: AppIconElevatedButton(
-          text: local.open_course,
+          text: 'open_course'.tr(),
           icon: Icons.school,
           onPressed: () {},
         ),
@@ -50,12 +49,12 @@ class CourseDetailsPage extends StatelessWidget {
                 CourseHeader(course: course),
                 CourseWorkplaceTile(course: course),
                 CourseType(course: course),
-                CourseDivider(text: local.about_course),
+                CourseDivider(text: 'about_course'.tr()),
                 CourseInfo(course: course),
                 CourseCategory(course: course),
                 if (hasMultipleCourses)
                   CourseDivider(
-                    text: '${local.more_from} ${course.businessName}',
+                    text: '${'more_from'.tr()} ${course.businessName}',
                   ),
               ],
             ),
@@ -124,7 +123,6 @@ class CourseCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -135,7 +133,7 @@ class CourseCategory extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                local.categories,
+                'categories'.tr(),
                 style: theme.textTheme.bodyLarge!.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -181,8 +179,6 @@ class CourseType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
-
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -191,7 +187,7 @@ class CourseType extends StatelessWidget {
             CourseInfoRow(
               icon: Icons.school,
               iconSize: 22,
-              label: local.course_type,
+              label: 'course_type'.tr(),
               value: course.type == CourseTypes.remote
                   ? CourseTypes.remote.displayName
                   : CourseTypes.onSite.displayName,
@@ -205,7 +201,7 @@ class CourseType extends StatelessWidget {
             CourseInfoRow(
               icon: Icons.attach_money,
               iconSize: 26,
-              label: local.price,
+              label: 'price'.tr(),
               value: '\$${course.price.toStringAsFixed(0)}',
             ),
             Padding(
@@ -217,7 +213,7 @@ class CourseType extends StatelessWidget {
             CourseInfoRow(
               icon: Icons.calendar_today,
               iconSize: 20,
-              label: local.startDate,
+              label: 'startDate'.tr(),
               value: course.startDate.toShortFormattedDate(),
             ),
             Padding(
@@ -229,7 +225,7 @@ class CourseType extends StatelessWidget {
             CourseInfoRow(
               icon: Icons.watch_later_outlined,
               iconSize: 22,
-              label: local.duration,
+              label: 'duration'.tr(),
               value: '${course.timeSpan}',
             ),
           ],

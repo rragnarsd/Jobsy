@@ -1,10 +1,10 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -37,14 +37,13 @@ class _AboutSectionState extends State<AboutSection> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return SliverToBoxAdapter(
       child: Column(
         children: [
           ProfileHeader(
-            text: AppLocalizations.of(context)!.about_you,
-            onEditTap: () => _showEditModal(context, local),
+            text: 'about_you'.tr(),
+            onEditTap: () => _showEditModal(context),
           ),
           _aboutController.text.isEmpty
               ? SizedBox(
@@ -53,7 +52,7 @@ class _AboutSectionState extends State<AboutSection> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        local.about_you_empty,
+                        'about_you_empty'.tr(),
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: JobsyColors.greyColor,
                         ),
@@ -76,7 +75,7 @@ class _AboutSectionState extends State<AboutSection> {
     );
   }
 
-  void _showEditModal(BuildContext context, AppLocalizations local) {
+  void _showEditModal(BuildContext context) {
     WoltModalSheet.show(
       context: context,
       enableDrag: true,
@@ -101,8 +100,8 @@ class _AboutSectionState extends State<AboutSection> {
                         isMultiline: true,
                         maxLines: 6,
                         controller: _aboutController,
-                        labelText: local.about_yourself,
-                        hintText: local.describe_experience,
+                        labelText: 'about_yourself'.tr(),
+                        hintText: 'describe_experience'.tr(),
                         validator: (value) => value?.aboutError,
                         textInputAction: TextInputAction.done,
                       ),
@@ -110,13 +109,13 @@ class _AboutSectionState extends State<AboutSection> {
                       Row(
                         children: [
                           ProfileActionButton(
-                            text: local.cancel,
+                            text: 'cancel'.tr(),
                             color: JobsyColors.greyColor.withValues(alpha: 0.2),
                             onPressed: () => context.pop(),
                           ),
                           const SizedBox(width: 16),
                           ProfileActionButton(
-                            text: local.save,
+                            text: 'save'.tr(),
                             color: JobsyColors.primaryColor,
                             onPressed: _saveChanges,
                           ),

@@ -1,4 +1,3 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
@@ -9,6 +8,7 @@ import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -54,14 +54,13 @@ class _JobSectionState extends State<JobSection> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Consumer<JobProvider>(
       builder: (context, jobProvider, child) {
         return SliverList(
           delegate: SliverChildListDelegate([
-            ProfileHeader(text: local.job_experience),
+            ProfileHeader(text: 'job_experience'.tr()),
 
             if (jobProvider.isLoading)
               const Card(
@@ -77,7 +76,7 @@ class _JobSectionState extends State<JobSection> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      local.no_job_added,
+                      'no_job_added'.tr(),
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: JobsyColors.greyColor,
                       ),
@@ -167,8 +166,8 @@ class _JobSectionState extends State<JobSection> {
                 ),
               ),
             ProfileAddBtn(
-              title: local.add_job,
-              onPressed: () => _addJob(context, local, theme),
+              title: 'add_job'.tr(),
+              onPressed: () => _addJob(context, theme),
             ),
           ]),
         );
@@ -176,7 +175,7 @@ class _JobSectionState extends State<JobSection> {
     );
   }
 
-  void _addJob(BuildContext context, AppLocalizations local, ThemeData theme) {
+  void _addJob(BuildContext context, ThemeData theme) {
     clearControllers();
 
     WoltModalSheet.show(
@@ -197,21 +196,21 @@ class _JobSectionState extends State<JobSection> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      ..._buildEditFields(theme, local, context),
+                      ..._buildEditFields(theme, context),
                       Row(
                         children: [
                           ProfileActionButton(
-                            text: local.cancel,
+                            text: 'cancel'.tr(),
                             color: JobsyColors.greyColor.withValues(alpha: 0.2),
                             onPressed: () => context.pop(),
                           ),
                           const SizedBox(width: 16),
                           ProfileActionButton(
-                            text: local.save,
+                            text: 'save'.tr(),
                             color: JobsyColors.primaryColor,
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                _saveJobExperience(context, local);
+                                _saveJobExperience(context);
                               }
                             },
                           ),
@@ -237,10 +236,7 @@ class _JobSectionState extends State<JobSection> {
     _endDate = null;
   }
 
-  Future<void> _saveJobExperience(
-    BuildContext context,
-    AppLocalizations local,
-  ) async {
+  Future<void> _saveJobExperience(BuildContext context) async {
     final rangeError = context.validateDateRange(_startDate, _endDate);
     if (rangeError != null) {
       context.showToast(
@@ -268,7 +264,7 @@ class _JobSectionState extends State<JobSection> {
       if (context.mounted) {
         context.pop();
         context.showToast(
-          title: local.job_successfully_added,
+          title: 'job_successfully_added'.tr(),
           type: ToastType.success,
           textColor: JobsyColors.whiteColor,
           duration: const Duration(seconds: 5),
@@ -277,7 +273,7 @@ class _JobSectionState extends State<JobSection> {
     } catch (e) {
       if (context.mounted) {
         context.showToast(
-          title: '${local.job_add_failed}: $e',
+          title: '${'job_add_failed'.tr()}: $e',
           type: ToastType.error,
           textColor: JobsyColors.whiteColor,
           duration: const Duration(seconds: 5),
@@ -286,15 +282,11 @@ class _JobSectionState extends State<JobSection> {
     }
   }
 
-  List<Widget> _buildEditFields(
-    ThemeData theme,
-    AppLocalizations local,
-    BuildContext context,
-  ) {
+  List<Widget> _buildEditFields(ThemeData theme, BuildContext context) {
     return [
       AppTextFormField(
         controller: _companyController,
-        labelText: local.which_company,
+        labelText: 'which_company'.tr(),
         prefixIcon: const Icon(Icons.business),
         validator: (value) => value?.companyError,
         textInputAction: TextInputAction.next,
@@ -302,9 +294,9 @@ class _JobSectionState extends State<JobSection> {
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _positionController,
-        labelText: local.which_position,
+        labelText: 'which_position'.tr(),
         prefixIcon: const Icon(Icons.work),
-        validator: (value) => value?.positionError,
+        validator: (value) => value?.jobTitleError,
         textInputAction: TextInputAction.next,
       ),
       const SizedBox(height: 16),
@@ -316,9 +308,9 @@ class _JobSectionState extends State<JobSection> {
               child: AbsorbPointer(
                 child: AppTextFormField(
                   controller: _startDateController,
-                  labelText: local.start_date,
+                  labelText: 'start_date'.tr(),
                   prefixIcon: const Icon(Icons.calendar_month),
-                  validator: (value) => value?.dateError,
+                  validator: (value) => value?.startDateError,
                   textInputAction: TextInputAction.next,
                 ),
               ),
@@ -331,9 +323,9 @@ class _JobSectionState extends State<JobSection> {
               child: AbsorbPointer(
                 child: AppTextFormField(
                   controller: _endDateController,
-                  labelText: local.end_date,
+                  labelText: 'end_date'.tr(),
                   prefixIcon: const Icon(Icons.calendar_month),
-                  validator: (value) => value?.dateError,
+                  validator: (value) => value?.endDateError,
                   textInputAction: TextInputAction.done,
                 ),
               ),

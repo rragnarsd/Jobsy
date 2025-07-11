@@ -1,4 +1,3 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
@@ -10,6 +9,7 @@ import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -34,12 +34,12 @@ class _LanguageSectionState extends State<LanguageSection> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     return SliverToBoxAdapter(
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) => Column(
           children: [
-            ProfileHeader(text: local.languages),
+            ProfileHeader(text: 'languages'.tr()),
             if (languageProvider.isLoading)
               const Card(
                 child: Padding(
@@ -54,7 +54,7 @@ class _LanguageSectionState extends State<LanguageSection> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      local.no_language_added,
+                      'no_language_added'.tr(),
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: JobsyColors.greyColor,
                       ),
@@ -131,7 +131,7 @@ class _LanguageSectionState extends State<LanguageSection> {
                 ),
               ),
             ProfileAddBtn(
-              title: local.add_language,
+              title: 'add_language'.tr(),
               onPressed: () {
                 WoltModalSheet.show(
                   context: context,
@@ -182,7 +182,6 @@ class _LanguageFormState extends State<LanguageForm> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return SliverToBoxAdapter(
       child: Padding(
@@ -193,22 +192,22 @@ class _LanguageFormState extends State<LanguageForm> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ..._buildEditFields(theme, local, context),
+              ..._buildEditFields(theme, context),
               const SizedBox(height: 16),
               Row(
                 children: [
                   ProfileActionButton(
-                    text: local.cancel,
+                    text: 'cancel'.tr(),
                     color: JobsyColors.greyColor.withValues(alpha: 0.2),
                     onPressed: () => context.pop(),
                   ),
                   const SizedBox(width: 16),
                   ProfileActionButton(
-                    text: local.save,
+                    text: 'save'.tr(),
                     color: JobsyColors.primaryColor,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        _saveLanguage(context, local);
+                        _saveLanguage(context);
                       }
                     },
                   ),
@@ -221,10 +220,7 @@ class _LanguageFormState extends State<LanguageForm> {
     );
   }
 
-  Future<void> _saveLanguage(
-    BuildContext context,
-    AppLocalizations local,
-  ) async {
+  Future<void> _saveLanguage(BuildContext context) async {
     final languageProvider = context.read<LanguageProvider>();
 
     try {
@@ -239,7 +235,7 @@ class _LanguageFormState extends State<LanguageForm> {
       if (context.mounted) {
         context.pop();
         context.showToast(
-          title: local.language_succesfully_added,
+          title: 'language_succesfully_added'.tr(),
           type: ToastType.success,
           textColor: JobsyColors.whiteColor,
           duration: const Duration(seconds: 5),
@@ -248,14 +244,14 @@ class _LanguageFormState extends State<LanguageForm> {
     } catch (e) {
       if (context.mounted) {
         context.showToast(
-          title: '${local.language_add_failed}: $e',
+          title: '${'language_add_failed'.tr()}: $e',
           type: ToastType.error,
         );
       }
     }
   }
 
-  CountryListThemeData _buildCountryListTheme(AppLocalizations local) {
+  CountryListThemeData _buildCountryListTheme() {
     return CountryListThemeData(
       flagSize: 32,
       backgroundColor: JobsyColors.scaffoldColor,
@@ -267,7 +263,7 @@ class _LanguageFormState extends State<LanguageForm> {
       inputDecoration: InputDecoration(
         filled: true,
         fillColor: JobsyColors.cardColor,
-        hintText: local.search,
+        hintText: 'search'.tr(),
         hintStyle: TextStyle(
           color: JobsyColors.greyColor.withValues(alpha: 0.6),
           fontSize: 16,
@@ -282,17 +278,13 @@ class _LanguageFormState extends State<LanguageForm> {
     );
   }
 
-  List<Widget> _buildEditFields(
-    ThemeData theme,
-    AppLocalizations local,
-    BuildContext context,
-  ) {
+  List<Widget> _buildEditFields(ThemeData theme, BuildContext context) {
     return [
       GestureDetector(
         onTap: () {
           showCountryPicker(
             context: context,
-            countryListTheme: _buildCountryListTheme(local),
+            countryListTheme: _buildCountryListTheme(),
             onSelect: (Country country) {
               setState(() {
                 _selectedCountry = country;
@@ -307,8 +299,8 @@ class _LanguageFormState extends State<LanguageForm> {
             textInputAction: TextInputAction.next,
             hintText: _selectedCountry != null
                 ? _selectedCountry!.name
-                : local.which_language_do_you_speak,
-            labelText: local.which_language_do_you_speak,
+                : 'which_language_do_you_speak'.tr(),
+            labelText: 'which_language_do_you_speak'.tr(),
             suffix: const Icon(Icons.keyboard_arrow_right),
             readOnly: true,
             prefixIcon: _selectedCountry != null
@@ -358,14 +350,13 @@ class _LanguageFormState extends State<LanguageForm> {
                         ),
                         onTap: () {
                           setState(() {
-                            _proficiencyController.text = proficiency.getLabel(
-                              local,
-                            );
+                            _proficiencyController.text = proficiency
+                                .getLabel();
                           });
                           context.pop();
                         },
                         title: Text(
-                          proficiency.getLabel(local),
+                          proficiency.getLabel(),
                           style: theme.textTheme.bodyLarge,
                         ),
                       );
@@ -381,11 +372,11 @@ class _LanguageFormState extends State<LanguageForm> {
           child: AppTextFormField(
             controller: _proficiencyController,
             textInputAction: TextInputAction.done,
-            labelText: local.how_well_do_you_speak_it,
+            labelText: 'how_well_do_you_speak_it'.tr(),
             suffix: const Icon(Icons.keyboard_arrow_right),
             readOnly: true,
             prefixIcon: const Icon(Icons.school),
-            validator: (value) => value?.languageError,
+            validator: (value) => value?.proficiencyError,
           ),
         ),
       ),

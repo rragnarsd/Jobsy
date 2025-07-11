@@ -1,5 +1,4 @@
 import 'package:codehatch/firebase_options.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/providers/education_provider.dart';
@@ -12,6 +11,7 @@ import 'package:codehatch/providers/skills_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/routes.dart';
 import 'package:codehatch/utils/theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,26 +19,35 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final authProvider = AuthUserProvider();
   await authProvider.initAuth();
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: authProvider),
-        ChangeNotifierProvider(create: (_) => WorkplaceProvider()),
-        ChangeNotifierProvider(create: (_) => CourseProvider()),
-        ChangeNotifierProvider(create: (_) => JobProvider()),
-        ChangeNotifierProvider(create: (_) => EducationProvider()),
-        ChangeNotifierProvider(create: (_) => ReferenceProvider()),
-        ChangeNotifierProvider(create: (_) => LinkProvider()),
-        ChangeNotifierProvider(create: (_) => SkillsProvider()),
-        ChangeNotifierProvider(create: (_) => LanguageProvider()),
-        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
-      ],
-      child: const JobsyWrapper(),
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('is')],
+      path: 'assets/translations',
+      startLocale: const Locale('is'),
+      fallbackLocale: const Locale('en'),
+      useOnlyLangCode: true,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: authProvider),
+          ChangeNotifierProvider(create: (_) => LanguageProvider()),
+          ChangeNotifierProvider(create: (_) => WorkplaceProvider()),
+          ChangeNotifierProvider(create: (_) => CourseProvider()),
+          ChangeNotifierProvider(create: (_) => JobProvider()),
+          ChangeNotifierProvider(create: (_) => EducationProvider()),
+          ChangeNotifierProvider(create: (_) => ReferenceProvider()),
+          ChangeNotifierProvider(create: (_) => LinkProvider()),
+          ChangeNotifierProvider(create: (_) => SkillsProvider()),
+          ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+        ],
+        child: const JobsyWrapper(),
+      ),
     ),
   );
 }
@@ -67,12 +76,18 @@ class _JobsyWrapperState extends State<JobsyWrapper> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
+    // Ensure localization is ready
+    if (!context.localizationDelegates.isNotEmpty) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return MaterialApp.router(
       title: 'Jobsy',
       debugShowCheckedModeBanner: false,
       routerConfig: _router!,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: darkTheme,
     );
   }

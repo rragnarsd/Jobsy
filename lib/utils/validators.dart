@@ -1,10 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-//TODO - Localize
 extension DateRangeValidator on BuildContext {
   String? validateDateRange(DateTime? start, DateTime? end) {
-    if (start == null || end == null) return 'Start and end dates are required';
-    if (end.isBefore(start)) return 'End date cannot be before start date';
+    if (start == null || end == null) return 'start_end_validation'.tr();
+    if (end.isBefore(start)) return 'end_date_validation'.tr();
     return null;
   }
 }
@@ -30,6 +30,8 @@ extension StringValidators on String {
     return isValid;
   }
 
+  String? get proficiencyError => isEmpty ? 'language_level'.tr() : null;
+
   bool isValidGenericField(RegExp regex) => _matches(regex);
 
   bool get isValidCompany => _matches(_generalTextRegex);
@@ -43,6 +45,8 @@ extension StringValidators on String {
   bool get isValidDegree => _matches(_generalTextRegex);
 
   bool get isValidLanguage => _matches(_generalTextRegex);
+
+  bool get isValidLanguageProficiency => _matches(_generalTextRegex);
 
   bool get isValidJobTitle => _matches(_generalTextRegex);
 
@@ -67,100 +71,100 @@ extension StringValidators on String {
   }
 
   String? get emailError => _errorMessage(
-    emptyMessage: 'Email is required',
+    emptyMessage: 'email_required'.tr(),
     isValid: isValidEmail,
-    invalidMessage: 'Invalid email',
+    invalidMessage: 'invalid_email'.tr(),
   );
 
   String? get passwordError => _errorMessage(
-    emptyMessage: 'Password is required',
+    emptyMessage: 'password_required'.tr(),
     isValid: isValidPassword,
-    invalidMessage: 'Password must be at least 6 characters',
+    invalidMessage: 'invalid_password'.tr(),
   );
 
   String? get nameError => _errorMessage(
-    emptyMessage: 'Name is required',
+    emptyMessage: 'name_required'.tr(),
     isValid: isValidName,
-    invalidMessage: 'Invalid name',
+    invalidMessage: 'invalid_name'.tr(),
   );
 
   String? get phoneError => _errorMessage(
-    emptyMessage: 'Phone number is required',
+    emptyMessage: 'phone_required'.tr(),
     isValid: isValidPhone,
-    invalidMessage: 'Invalid phone number',
+    invalidMessage: 'invalid_phone'.tr(),
   );
 
   String? get companyError => _errorMessage(
-    emptyMessage: 'Please enter company name',
+    emptyMessage: 'company_required'.tr(),
     isValid: isValidCompany,
-    invalidMessage: 'Invalid company name',
+    invalidMessage: 'invalid_company'.tr(),
   );
 
   String? get positionError => _errorMessage(
-    emptyMessage: 'Please enter job position',
+    emptyMessage: 'position_required'.tr(),
     isValid: isValidPosition,
-    invalidMessage: 'Invalid position',
+    invalidMessage: 'invalid_position'.tr(),
   );
 
   String? get dateError => isEmpty ? 'Please select a date' : null;
 
   String? get aboutError => _errorMessage(
-    emptyMessage: 'Please enter about yourself',
+    emptyMessage: 'about_yourself'.tr(),
     isValid: isValidAbout,
-    invalidMessage: 'About yourself must be at least 10 characters',
+    invalidMessage: 'about_yourself_invalid'.tr(),
   );
 
   String? get schoolError => _errorMessage(
-    emptyMessage: 'Please enter school name',
+    emptyMessage: 'school_required'.tr(),
     isValid: isValidSchool,
-    invalidMessage: 'Invalid school name',
+    invalidMessage: 'invalid_school'.tr(),
   );
 
   String? get fieldError => _errorMessage(
-    emptyMessage: 'Please enter field of study',
+    emptyMessage: 'field_required'.tr(),
     isValid: isValidField,
-    invalidMessage: 'Invalid field of study',
+    invalidMessage: 'field_invalid'.tr(),
   );
 
   String? get degreeError => _errorMessage(
-    emptyMessage: 'Please enter degree',
+    emptyMessage: 'degree_required'.tr(),
     isValid: isValidDegree,
-    invalidMessage: 'Invalid degree',
+    invalidMessage: 'degree_invalid'.tr(),
   );
 
   String? get startDateError => _errorMessage(
-    emptyMessage: 'Please enter start date',
+    emptyMessage: 'start_date_required'.tr(),
     isValid: isValidStartDate,
-    invalidMessage: 'Invalid start date',
+    invalidMessage: 'start_date_invalid'.tr(),
   );
 
   String? get endDateError => _errorMessage(
-    emptyMessage: 'Please enter end date',
+    emptyMessage: 'end_date_required'.tr(),
     isValid: isValidEndDate,
-    invalidMessage: 'Invalid end date',
+    invalidMessage: 'end_date_invalid'.tr(),
   );
 
   String? get languageError => _errorMessage(
-    emptyMessage: 'Please select a language',
+    emptyMessage: 'language_required'.tr(),
     isValid: isValidLanguage,
-    invalidMessage: 'Invalid language',
+    invalidMessage: 'language_invalid'.tr(),
   );
 
   String? get jobTitleError => _errorMessage(
-    emptyMessage: 'Please enter job title',
+    emptyMessage: 'job_title_required'.tr(),
     isValid: isValidJobTitle,
-    invalidMessage: 'Invalid job title',
+    invalidMessage: 'job_title_invalid'.tr(),
   );
 
   String? get siteError => _errorMessage(
-    emptyMessage: 'Please enter site',
+    emptyMessage: 'link_site_required'.tr(),
     isValid: isValidSite,
-    invalidMessage: 'Invalid site',
+    invalidMessage: 'link_site_invalid'.tr(),
   );
 
   String? get mediaError => _errorMessage(
-    emptyMessage: 'Please enter media',
+    emptyMessage: 'link_media_required'.tr(),
     isValid: isValidMedia,
-    invalidMessage: 'Invalid media',
+    invalidMessage: 'link_media_invalid'.tr(),
   );
 }

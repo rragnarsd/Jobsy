@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/home/widgets/dividers.dart';
@@ -8,6 +7,7 @@ import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +33,7 @@ class _HomePageState extends State<HomePage> {
     final workplaceProvider = context.watch<WorkplaceProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '${AppLocalizations.of(context)!.vacancies} (${workplaceProvider.jobs.length})',
-        ),
+        title: Text('${'vacancies'.tr()} (${workplaceProvider.jobs.length})'),
         leading: GestureDetector(
           onTap: () => showProfile(),
           child: const Icon(
@@ -120,7 +118,6 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
 
     return GestureDetector(
       onTap: () => context.push('/job-description/${job.id}'),
@@ -167,7 +164,7 @@ class JobCard extends StatelessWidget {
                       IconTextRow(
                         icon: Icons.location_on,
                         text: job.isRemote
-                            ? local.remote
+                            ? 'remote'.tr()
                             : workplace.location.split(',').first.trim(),
                       ),
                       const VerticalDivider(),
@@ -184,7 +181,7 @@ class JobCard extends StatelessWidget {
               top: 12,
               right: 12,
               child: Text(
-                job.publishedDate?.timeAgo ?? local.just_now,
+                job.publishedDate?.timeAgo ?? 'just_now'.tr(),
                 style: const TextStyle(
                   color: JobsyColors.greyColor,
                   fontSize: 12,

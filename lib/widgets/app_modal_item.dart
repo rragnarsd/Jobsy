@@ -1,6 +1,6 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/utils/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,7 +21,7 @@ class ModalSheetItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -38,7 +38,7 @@ class ModalSheetItem extends StatelessWidget {
             Row(
               children: [
                 ProfileActionButton(
-                  text: local.cancel,
+                  text: 'cancel'.tr(),
                   color: JobsyColors.greyColor.withValues(alpha: 0.2),
                   onPressed: () => context.pop(),
                 ),

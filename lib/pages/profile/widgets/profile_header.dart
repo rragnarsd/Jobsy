@@ -1,5 +1,5 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/utils/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -17,7 +17,6 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
@@ -36,7 +35,7 @@ class ProfileHeader extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        trailingText ?? local.edit,
+                        trailingText ?? 'edit'.tr(),
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: JobsyColors.primaryColor,
                         ),

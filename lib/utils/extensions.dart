@@ -1,7 +1,6 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/utils/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
 
@@ -164,12 +163,12 @@ enum LanguageProficiency {
 }
 
 extension LanguageProficiencyExtension on LanguageProficiency {
-  String getLabel(AppLocalizations local) => switch (this) {
-    LanguageProficiency.beginner => local.beginner,
-    LanguageProficiency.basicSkills => local.basic_skills,
-    LanguageProficiency.intermediate => local.intermediate,
-    LanguageProficiency.advanced => local.advanced,
-    LanguageProficiency.expert => local.expert,
+  String getLabel() => switch (this) {
+    LanguageProficiency.beginner => 'beginner'.tr(),
+    LanguageProficiency.basicSkills => 'basic_skills'.tr(),
+    LanguageProficiency.intermediate => 'intermediate'.tr(),
+    LanguageProficiency.advanced => 'advanced'.tr(),
+    LanguageProficiency.expert => 'expert'.tr(),
   };
 }
 

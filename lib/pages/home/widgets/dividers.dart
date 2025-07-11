@@ -1,6 +1,6 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +15,7 @@ class AppTodayDivider extends StatelessWidget {
     return SliverPadding(
       padding: const EdgeInsets.all(16.0),
       sliver: SliverToBoxAdapter(
-        child: DividerItem(
-          text: '${AppLocalizations.of(context)!.new_today} ($todayJobsCount)',
-        ),
+        child: DividerItem(text: '${'new_today'.tr()} ($todayJobsCount)'),
       ),
     );
   }
@@ -33,9 +31,7 @@ class AppOlderDivider extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: DividerItem(
-        text: '${AppLocalizations.of(context)!.older_jobs} ($olderJobsCount)',
-      ),
+      child: DividerItem(text: '${'older_jobs'.tr()} ($olderJobsCount)'),
     );
   }
 }

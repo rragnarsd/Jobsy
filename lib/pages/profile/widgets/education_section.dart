@@ -1,4 +1,3 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
@@ -9,6 +8,7 @@ import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -53,14 +53,13 @@ class _EducationSectionState extends State<EducationSection> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return Consumer<EducationProvider>(
       builder: (context, educationProvider, child) {
         return SliverList(
           delegate: SliverChildListDelegate([
-            ProfileHeader(text: local.education),
+            ProfileHeader(text: 'education'.tr()),
             if (educationProvider.isLoading)
               const Card(
                 child: Padding(
@@ -75,7 +74,7 @@ class _EducationSectionState extends State<EducationSection> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      local.no_education_added,
+                      'no_education_added'.tr(),
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: JobsyColors.greyColor,
                       ),
@@ -169,8 +168,8 @@ class _EducationSectionState extends State<EducationSection> {
                 ),
               ),
             ProfileAddBtn(
-              title: local.add_education,
-              onPressed: () => _addEducation(context, local, theme),
+              title: 'add_education'.tr(),
+              onPressed: () => _addEducation(context, theme),
             ),
           ]),
         );
@@ -178,11 +177,7 @@ class _EducationSectionState extends State<EducationSection> {
     );
   }
 
-  void _addEducation(
-    BuildContext context,
-    AppLocalizations local,
-    ThemeData theme,
-  ) {
+  void _addEducation(BuildContext context, ThemeData theme) {
     clearControllers();
     WoltModalSheet.show(
       context: context,
@@ -202,21 +197,21 @@ class _EducationSectionState extends State<EducationSection> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      ..._buildEditFields(theme, local, context),
+                      ..._buildEditFields(theme, context),
                       Row(
                         children: [
                           ProfileActionButton(
-                            text: local.cancel,
+                            text: 'cancel'.tr(),
                             color: JobsyColors.greyColor.withValues(alpha: 0.2),
                             onPressed: () => context.pop(),
                           ),
                           const SizedBox(width: 16),
                           ProfileActionButton(
-                            text: local.save,
+                            text: 'save'.tr(),
                             color: JobsyColors.primaryColor,
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                _saveEducation(context, local);
+                                _saveEducation(context);
                               }
                             },
                           ),
@@ -243,10 +238,7 @@ class _EducationSectionState extends State<EducationSection> {
     _endDate = null;
   }
 
-  Future<void> _saveEducation(
-    BuildContext context,
-    AppLocalizations local,
-  ) async {
+  Future<void> _saveEducation(BuildContext context) async {
     final educationProvider = context.read<EducationProvider>();
     try {
       final newEducation = EducationModel(
@@ -261,7 +253,7 @@ class _EducationSectionState extends State<EducationSection> {
       if (context.mounted) {
         context.pop();
         context.showToast(
-          title: local.education_successfully_added,
+          title: 'education_successfully_added'.tr(),
           type: ToastType.success,
           textColor: JobsyColors.whiteColor,
           duration: const Duration(seconds: 5),
@@ -270,7 +262,7 @@ class _EducationSectionState extends State<EducationSection> {
     } catch (e) {
       if (context.mounted) {
         context.showToast(
-          title: '${local.education_add_failed}: $e',
+          title: '${'education_add_failed'.tr()}: $e',
           type: ToastType.error,
           textColor: JobsyColors.whiteColor,
           duration: const Duration(seconds: 5),
@@ -279,15 +271,11 @@ class _EducationSectionState extends State<EducationSection> {
     }
   }
 
-  List<Widget> _buildEditFields(
-    ThemeData theme,
-    AppLocalizations local,
-    BuildContext context,
-  ) {
+  List<Widget> _buildEditFields(ThemeData theme, BuildContext context) {
     return [
       AppTextFormField(
         controller: _schoolController,
-        labelText: local.school,
+        labelText: 'school'.tr(),
         prefixIcon: const Icon(Icons.school),
         validator: (value) => value?.schoolError,
         textInputAction: TextInputAction.next,
@@ -295,7 +283,7 @@ class _EducationSectionState extends State<EducationSection> {
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _fieldController,
-        labelText: local.field,
+        labelText: 'field'.tr(),
         prefixIcon: const Icon(Icons.school),
         validator: (value) => value?.fieldError,
         textInputAction: TextInputAction.next,
@@ -303,7 +291,7 @@ class _EducationSectionState extends State<EducationSection> {
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _degreeController,
-        labelText: local.degree,
+        labelText: 'degree'.tr(),
         prefixIcon: const Icon(Icons.school),
         validator: (value) => value?.degreeError,
         textInputAction: TextInputAction.next,
@@ -317,10 +305,11 @@ class _EducationSectionState extends State<EducationSection> {
               child: AbsorbPointer(
                 child: AppTextFormField(
                   controller: _startDateController,
-                  labelText: local.start_date,
+                  labelText: 'start_date'.tr(),
                   prefixIcon: const Icon(Icons.calendar_month),
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
+                  // validator: (value) => value?.startDateError,
                   textInputAction: TextInputAction.next,
                 ),
               ),
@@ -333,10 +322,12 @@ class _EducationSectionState extends State<EducationSection> {
               child: AbsorbPointer(
                 child: AppTextFormField(
                   controller: _endDateController,
-                  labelText: local.end_date,
+                  labelText: 'end_date'.tr(),
                   prefixIcon: const Icon(Icons.calendar_month),
+                  //TODO
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
+                  // validator: (value) => value?.endDateError,
                   textInputAction: TextInputAction.done,
                 ),
               ),

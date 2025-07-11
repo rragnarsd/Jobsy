@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/pages/home/home_page.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -15,13 +15,12 @@ class WorkplacePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final workplace = context.watch<WorkplaceProvider>().getWorkplaceById(
       workplaceId,
     );
     if (workplace == null) {
-      return Scaffold(body: Center(child: Text(local.workplace_not_found)));
+      return Scaffold(body: Center(child: Text('workplace_not_found'.tr())));
     }
 
     final workplaceProvider = context.watch<WorkplaceProvider>();
@@ -53,7 +52,7 @@ class WorkplacePage extends StatelessWidget {
                       vertical: 8,
                     ),
                     child: Text(
-                      local.newest_jobs,
+                      'newest_jobs'.tr(),
                       style: theme.textTheme.titleLarge,
                     ),
                   ),
@@ -135,7 +134,7 @@ class WorkplaceDescription extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context)!.about_company,
+                'about_company'.tr(),
                 style: Theme.of(
                   context,
                 ).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w600),
@@ -158,7 +157,6 @@ class WorkplaceSize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
     return SliverToBoxAdapter(
       child: Card(
         child: Padding(
@@ -172,7 +170,7 @@ class WorkplaceSize extends StatelessWidget {
                 ),
               ),
               Text(
-                local.employees,
+                'employees'.tr(),
                 style: theme.textTheme.bodyLarge!.copyWith(
                   color: JobsyColors.greyColor,
                 ),
@@ -247,7 +245,7 @@ class WorkplacePerks extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
-              AppLocalizations.of(context)!.work_environment,
+              'work_environment'.tr(),
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),

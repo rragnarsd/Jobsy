@@ -1,9 +1,9 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/pages/profile/skills_page.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
 import 'package:codehatch/pages/profile/widgets/profile_header.dart';
 import 'package:codehatch/providers/skills_provider.dart';
 import 'package:codehatch/utils/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +13,6 @@ class SkillSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
     final skillsProvider = context.watch<SkillsProvider>();
 
     final selectedSkills = skillsProvider.skills;
@@ -23,9 +22,9 @@ class SkillSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProfileHeader(
-            text: local.skills,
+            text: 'skills'.tr(),
             onEditTap: () => showSkills(context: context),
-            trailingText: '${local.my_skills} (${selectedSkills.length})',
+            trailingText: '${'my_skills'.tr()} (${selectedSkills.length})',
           ),
           if (selectedSkills.isEmpty)
             SizedBox(
@@ -34,7 +33,7 @@ class SkillSection extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    local.no_skills,
+                    'no_skills'.tr(),
                     style: theme.textTheme.bodyMedium!.copyWith(
                       color: JobsyColors.greyColor,
                     ),
@@ -57,7 +56,7 @@ class SkillSection extends StatelessWidget {
               ),
             ),
           ProfileAddBtn(
-            title: local.add_skills,
+            title: 'add_skills'.tr(),
             onPressed: () => showSkills(context: context, tabIndex: 1),
           ),
         ],

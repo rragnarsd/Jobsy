@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/course_model.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -30,10 +30,7 @@ class _CoursesPageState extends State<CoursesPage> {
     final courseProvider = context.watch<CourseProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '${AppLocalizations.of(context)!.courses} (${courseProvider.courses.length})',
-        ),
-
+        title: Text('${'courses'.tr()} (${courseProvider.courses.length})'),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),

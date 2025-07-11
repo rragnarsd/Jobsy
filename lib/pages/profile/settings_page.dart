@@ -1,8 +1,9 @@
-import 'package:codehatch/l10n/app_localizations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_modal_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +15,9 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text('settings'.tr()),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: JobsyColors.whiteColor),
           onPressed: () => context.pop(),
@@ -26,17 +26,18 @@ class SettingsPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SettingsSection(
-            title: local.language,
+            title: 'language'.tr(),
             tiles: [
               SettingsTileGroup(
                 tiles: [
                   SettingsTile(
-                    title: local.change_language,
-                    subtitle: local.english,
+                    title: 'change_language'.tr(),
                     leading: const Icon(
                       Icons.language,
                       color: JobsyColors.primaryColor,
                     ),
+                    //TODO
+                    onTap: () => changeLanguage(context: context, theme: theme),
                     trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
@@ -48,12 +49,12 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            title: local.theme,
+            title: 'theme'.tr(),
             tiles: [
               SettingsTileGroup(
                 tiles: [
                   SettingsTile(
-                    title: local.dark_theme,
+                    title: 'dark_theme'.tr(),
                     leading: const Icon(
                       Icons.settings,
                       color: JobsyColors.primaryColor,
@@ -69,13 +70,13 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            title: local.notification_settings,
+            title: 'notification_settings'.tr(),
             tiles: [
               SettingsTileGroup(
                 tiles: [
                   SettingsTile(
-                    title: local.new_job,
-                    subtitle: local.push_sms,
+                    title: 'new_job'.tr(),
+                    subtitle: 'push_sms'.tr(),
                     leading: const Icon(
                       Icons.watch_later,
                       color: JobsyColors.primaryColor,
@@ -91,8 +92,8 @@ class SettingsPage extends StatelessWidget {
                     thickness: 1,
                   ),
                   SettingsTile(
-                    title: local.application_updates,
-                    subtitle: local.push_emails_sms,
+                    title: 'application_updates'.tr(),
+                    subtitle: 'push_emails_sms'.tr(),
                     leading: const Icon(
                       Icons.message,
                       color: JobsyColors.primaryColor,
@@ -108,12 +109,12 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            title: local.help_support,
+            title: 'help_support'.tr(),
             tiles: [
               SettingsTileGroup(
                 tiles: [
                   SettingsTile(
-                    title: local.help_centre,
+                    title: 'help_centre'.tr(),
                     leading: const Icon(
                       Icons.question_mark,
                       color: JobsyColors.primaryColor,
@@ -129,7 +130,7 @@ class SettingsPage extends StatelessWidget {
                     thickness: 1,
                   ),
                   SettingsTile(
-                    title: local.send_email,
+                    title: 'send_email'.tr(),
                     leading: const Icon(
                       Icons.message,
                       color: JobsyColors.primaryColor,
@@ -145,18 +146,17 @@ class SettingsPage extends StatelessWidget {
             ],
           ),
           SettingsSection(
-            title: local.user,
+            title: 'user'.tr(),
             tiles: [
               SettingsTileGroup(
                 tiles: [
                   SettingsTile(
-                    title: local.log_out,
+                    title: 'log_out'.tr(),
                     leading: const Icon(
                       Icons.logout,
                       color: JobsyColors.primaryColor,
                     ),
-                    onTap: () =>
-                        _logout(context: context, local: local, theme: theme),
+                    onTap: () => _logout(context: context, theme: theme),
                     trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
@@ -173,11 +173,70 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _logout({
+  void changeLanguage({
     required BuildContext context,
-    required AppLocalizations local,
     required ThemeData theme,
   }) {
+    WoltModalSheet.show(
+      context: context,
+      pageListBuilder: (bottomSheetContext) => [
+        SliverWoltModalSheetPage(
+          trailingNavBarWidget: IconButton(
+            padding: const EdgeInsets.all(16),
+            icon: const Icon(Icons.close),
+            onPressed: Navigator.of(bottomSheetContext).pop,
+          ),
+          backgroundColor: JobsyColors.scaffoldColor,
+          mainContentSliversBuilder: (context) => [
+            SliverToBoxAdapter(
+              child: ListTile(
+                onTap: () {
+                  context.setLocale(const Locale('en'));
+                  Navigator.of(bottomSheetContext).pop();
+                },
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                leading: CachedNetworkImage(
+                  imageUrl:
+                      'https://cdn.countryflags.com/thumbs/united-kingdom/flag-400.png',
+                  height: 28,
+                  width: 28,
+                ),
+                title: Text('English', style: theme.textTheme.bodyLarge),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Divider(
+                indent: 16,
+                endIndent: 16,
+                color: JobsyColors.greyColor.withValues(alpha: 0.3),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: ListTile(
+                onTap: () {
+                  context.setLocale(const Locale('is'));
+                  Navigator.of(bottomSheetContext).pop();
+                },
+                visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                leading: CachedNetworkImage(
+                  imageUrl:
+                      'https://cdn.countryflags.com/thumbs/iceland/flag-400.png',
+                  height: 28,
+                  width: 28,
+                ),
+                title: Text('Icelandic', style: theme.textTheme.bodyLarge),
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _logout({required BuildContext context, required ThemeData theme}) {
     WoltModalSheet.show(
       context: context,
       barrierDismissible: true,
@@ -187,12 +246,12 @@ class SettingsPage extends StatelessWidget {
           hasTopBarLayer: false,
           mainContentSliversBuilder: (context) => [
             ModalSheetItem(
-              mainText: local.log_out,
-              subText: local.sure_to_logout,
-              btnText: local.log_out,
+              mainText: 'log_out'.tr(),
+              subText: 'sure_to_logout'.tr(),
+              btnText: 'log_out'.tr(),
               onPressed: () {
                 context.read<AuthUserProvider>().signOut();
-                _logoutSuccess(context, local);
+                _logoutSuccess(context);
               },
             ),
           ],
@@ -201,9 +260,9 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _logoutSuccess(BuildContext context, AppLocalizations local) {
+  void _logoutSuccess(BuildContext context) {
     context.showToast(
-      title: local.have_been_logged_out,
+      title: 'have_been_logged_out'.tr(),
       type: ToastType.success,
       textColor: JobsyColors.whiteColor,
       duration: const Duration(seconds: 5),

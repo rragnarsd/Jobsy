@@ -1,4 +1,3 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/pages/profile/widgets/profile_action_button.dart';
 import 'package:codehatch/pages/profile/widgets/profile_add_btn.dart';
@@ -9,6 +8,7 @@ import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/utils/validators.dart';
 import 'package:codehatch/widgets/app_dismissible_item.dart';
 import 'package:codehatch/widgets/app_textform_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -44,13 +44,12 @@ class _LinkSectionState extends State<LinkSection> {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Consumer<LinkProvider>(
       builder: (context, linkProvider, child) {
         return SliverList(
           delegate: SliverChildListDelegate([
-            ProfileHeader(text: local.links),
+            ProfileHeader(text: 'links'.tr()),
             if (linkProvider.isLoading)
               const Card(
                 child: Padding(
@@ -65,7 +64,7 @@ class _LinkSectionState extends State<LinkSection> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      local.no_link_added,
+                      'no_link_added'.tr(),
                       style: theme.textTheme.bodyMedium!.copyWith(
                         color: JobsyColors.greyColor,
                       ),
@@ -138,8 +137,8 @@ class _LinkSectionState extends State<LinkSection> {
                 ),
               ),
             ProfileAddBtn(
-              title: local.add_link,
-              onPressed: () => _addLink(context, local, theme),
+              title: 'add_link'.tr(),
+              onPressed: () => _addLink(context, theme),
             ),
           ]),
         );
@@ -147,7 +146,7 @@ class _LinkSectionState extends State<LinkSection> {
     );
   }
 
-  void _addLink(BuildContext context, AppLocalizations local, ThemeData theme) {
+  void _addLink(BuildContext context, ThemeData theme) {
     clearControllers();
     WoltModalSheet.show(
       context: context,
@@ -168,22 +167,22 @@ class _LinkSectionState extends State<LinkSection> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      ..._buildEditFields(theme, local, context),
+                      ..._buildEditFields(theme, context),
                       const SizedBox(height: 16),
                       Row(
                         children: [
                           ProfileActionButton(
-                            text: local.cancel,
+                            text: 'cancel'.tr(),
                             color: JobsyColors.greyColor.withValues(alpha: 0.2),
                             onPressed: () => context.pop(),
                           ),
                           const SizedBox(width: 16),
                           ProfileActionButton(
-                            text: local.save,
+                            text: 'save'.tr(),
                             color: JobsyColors.primaryColor,
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                _saveLink(context, local);
+                                _saveLink(context);
                               }
                             },
                           ),
@@ -200,15 +199,11 @@ class _LinkSectionState extends State<LinkSection> {
     );
   }
 
-  List<Widget> _buildEditFields(
-    ThemeData theme,
-    AppLocalizations local,
-    BuildContext context,
-  ) {
+  List<Widget> _buildEditFields(ThemeData theme, BuildContext context) {
     return [
       AppTextFormField(
         controller: _siteController,
-        labelText: local.link_site,
+        labelText: 'link_site'.tr(),
         prefixIcon: const Icon(Icons.link),
         validator: (value) => value?.siteError,
         textInputAction: TextInputAction.next,
@@ -216,7 +211,7 @@ class _LinkSectionState extends State<LinkSection> {
       const SizedBox(height: 16),
       AppTextFormField(
         controller: _mediaController,
-        labelText: local.link_media,
+        labelText: 'link_media'.tr(),
         prefixIcon: const Icon(Icons.language),
         validator: (value) => value?.mediaError,
         textInputAction: TextInputAction.done,
@@ -229,7 +224,7 @@ class _LinkSectionState extends State<LinkSection> {
     _mediaController.clear();
   }
 
-  Future<void> _saveLink(BuildContext context, AppLocalizations local) async {
+  Future<void> _saveLink(BuildContext context) async {
     final linkProvider = context.read<LinkProvider>();
     try {
       final newLink = LinkModel(
@@ -241,7 +236,7 @@ class _LinkSectionState extends State<LinkSection> {
       if (context.mounted) {
         context.pop();
         context.showToast(
-          title: local.link_succesfully_added,
+          title: 'link_succesfully_added'.tr(),
           type: ToastType.success,
           textColor: JobsyColors.whiteColor,
           duration: const Duration(seconds: 5),
@@ -250,7 +245,7 @@ class _LinkSectionState extends State<LinkSection> {
     } catch (e) {
       if (context.mounted) {
         context.showToast(
-          title: '${local.link_add_failed}: $e',
+          title: '${'link_add_failed'.tr()}: $e',
           type: ToastType.error,
           textColor: JobsyColors.whiteColor,
           duration: const Duration(seconds: 5),

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,7 @@ class _WorkplacesState extends State<Workplaces> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.workplaces),
+        title: Text('workplaces'.tr()),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),
@@ -65,7 +65,7 @@ class WorkplaceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
+
     final workplaceProvider = context.watch<WorkplaceProvider>();
     final jobCount = workplaceProvider.jobs
         .where((job) => job.workplaceId == workplace.id)
@@ -138,7 +138,7 @@ class WorkplaceItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        local.vacancies,
+                        'vacancies'.tr(),
                         style: theme.textTheme.bodyMedium!.copyWith(
                           color: JobsyColors.primaryColor,
                         ),

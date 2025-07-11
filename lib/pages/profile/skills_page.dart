@@ -1,9 +1,9 @@
-import 'package:codehatch/l10n/app_localizations.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:codehatch/providers/skills_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:codehatch/widgets/app_empty_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -44,12 +44,11 @@ class _SkillsPageState extends State<SkillsPage>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final local = AppLocalizations.of(context)!;
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            title: Text(local.skills),
+            title: Text('skills'.tr()),
             centerTitle: true,
             floating: false,
             pinned: true,
@@ -95,7 +94,7 @@ class _SkillsPageState extends State<SkillsPage>
                           if (_tabController.index == 0)
                             const SizedBox(width: 6),
                           Text(
-                            local.my_skills,
+                            'my_skills'.tr(),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -112,7 +111,7 @@ class _SkillsPageState extends State<SkillsPage>
                           if (_tabController.index == 1)
                             const SizedBox(width: 6),
                           Text(
-                            local.categories,
+                            'categories'.tr(),
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -229,7 +228,6 @@ class UserSkillList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final local = AppLocalizations.of(context)!;
     return Consumer<SkillsProvider>(
       builder: (context, skillsProvider, _) {
         final userSkills = skillsProvider.skills;
@@ -237,8 +235,8 @@ class UserSkillList extends StatelessWidget {
         if (userSkills.isEmpty) {
           return EmptyState(
             icon: Icons.school,
-            title: local.no_skills,
-            subTitle: local.skills_display,
+            title: 'no_skills'.tr(),
+            subTitle: 'skills_display'.tr(),
           );
         }
 
