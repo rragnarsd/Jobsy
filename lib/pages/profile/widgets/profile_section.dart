@@ -72,8 +72,13 @@ class _ProfileSectionState extends State<ProfileSection> {
     ThemeData theme = Theme.of(context);
 
     final String email = widget.profile?['email'] ?? 'email'.tr();
-    final String name = widget.profile?['name'] ?? 'name'.tr();
-    final String phone = widget.profile?['phoneNumber'] ?? 'phone_nr'.tr();
+    final String name = widget.profile?['name']?.toString().isNotEmpty == true
+        ? widget.profile!['name']
+        : 'N/A';
+    final String phone =
+        widget.profile?['phoneNumber']?.toString().isNotEmpty == true
+        ? widget.profile!['phoneNumber']
+        : 'N/A';
 
     final birthDateDisplay = _formatDateForDisplay(
       widget.profile?['dateOfBirth'],
@@ -179,7 +184,7 @@ class _ProfileSectionState extends State<ProfileSection> {
 
   String _formatDateForDisplay(dynamic birthDateData) {
     if (birthDateData == null) {
-      return 'date_of_birth'.tr();
+      return 'N/A';
     }
 
     DateTime? date;
@@ -190,11 +195,11 @@ class _ProfileSectionState extends State<ProfileSection> {
       try {
         date = DateTime.parse(birthDateData);
       } catch (e) {
-        return birthDateData;
+        return birthDateData.toString().isNotEmpty ? birthDateData : 'N/A';
       }
     }
 
-    return date != null ? date.toShortFormattedDate() : 'date_of_birth'.tr();
+    return date != null ? date.toShortFormattedDate() : 'N/A';
   }
 
   Future<void> _selectDate(BuildContext context) async {

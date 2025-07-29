@@ -153,17 +153,13 @@ class FavoritesSheet extends StatelessWidget {
                   .watch<workplace.WorkplaceProvider>();
               final job = workplaceProvider.getJobById(jobId);
 
-              if (job == null) {
-                return const SizedBox.shrink();
-              }
+              if (job == null) return const SizedBox.shrink();
 
               final workplaceModel = workplaceProvider.getWorkplaceById(
                 job.workplaceId,
               );
 
-              if (workplaceModel == null) {
-                return const SizedBox.shrink();
-              }
+              if (workplaceModel == null) return const SizedBox.shrink();
 
               return AppDismissibleItem(
                 itemKey: Key(job.workplaceId),

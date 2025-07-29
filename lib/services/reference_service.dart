@@ -2,16 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+class ReferenceException implements Exception {
+  final String message;
+  ReferenceException(this.message);
+
+  @override
+  String toString() => message;
+}
+
+/// Service class for managing user reference data in Firestore.
+/// This service provides CRUD operations for reference records associated
+/// with the current authenticated user. It stores reference data as an array
+/// within the user's profile document in Firestore.
 class ReferenceService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User? get currentUser => _auth.currentUser;
 
-  Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() {
+  /// Gets a reference to the current user's document in Firestore.
+  /// Throws a [ReferenceException] if the user is not authenticated.
+  Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw Exception('User not authenticated');
-    return Future.value(_firestore.collection('users').doc(user.uid));
+    if (user == null) throw ReferenceException('User not authenticated');
+    return _firestore.collection('users').doc(user.uid);
   }
 
   List<dynamic> _getReferenceList(DocumentSnapshot userDoc) {
@@ -26,12 +40,14 @@ class ReferenceService {
     'email': ref.email,
   };
 
+  /// Adds a new reference record to the user's profile.
+  /// Throws a [ReferenceException] if validation fails or the operation fails.
   Future<void> addReference(ReferenceModel reference) async {
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw Exception('User profile not found');
+      if (!userDoc.exists) throw ReferenceException('User profile not found');
 
       final referenceList = _getReferenceList(userDoc);
       referenceList.add(_referenceToMap(reference));
@@ -41,10 +57,14 @@ class ReferenceService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      throw Exception('Failed to add reference: $e');
+      if (e is ReferenceException) rethrow;
+      throw ReferenceException('Failed to add reference: $e');
     }
   }
 
+  /// Retrieves all reference records for the current user.
+  /// Returns an empty list if no reference records exist or if the user
+  /// profile is not found. Throws a [ReferenceException] if the operation fails.
   Future<List<ReferenceModel>> getUserReferences() async {
     try {
       final userDocRef = await _getUserDoc();
@@ -63,16 +83,20 @@ class ReferenceService {
         );
       }).toList();
     } catch (e) {
-      throw Exception('Failed to get references: $e');
+      if (e is ReferenceException) rethrow;
+      throw ReferenceException('Failed to get references: $e');
     }
   }
 
+  /// Updates an existing reference record.
+  /// Validates that all required fields are provided before updating the record.
+  /// Throws a [ReferenceException] if validation fails or the operation fails.
   Future<void> updateReference(ReferenceModel reference) async {
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw Exception('User profile not found');
+      if (!userDoc.exists) throw ReferenceException('User profile not found');
 
       final referenceList = _getReferenceList(userDoc);
       referenceList.removeWhere((r) => r['id'] == reference.id);
@@ -83,16 +107,24 @@ class ReferenceService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      throw Exception('Failed to update reference: $e');
+      if (e is ReferenceException) rethrow;
+      throw ReferenceException('Failed to update reference: $e');
     }
   }
 
+  /// Deletes a reference record by its ID.
+  /// Validates that the reference ID is provided.
+  /// Throws a [ReferenceException] if validation fails or the operation fails.
   Future<void> deleteReference(String referenceId) async {
+    if (referenceId.trim().isEmpty) {
+      throw ReferenceException('Reference ID is required');
+    }
+
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw Exception('User profile not found');
+      if (!userDoc.exists) throw ReferenceException('User profile not found');
 
       final referenceList = _getReferenceList(userDoc);
       referenceList.removeWhere((r) => r['id'] == referenceId);
@@ -102,7 +134,8 @@ class ReferenceService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      throw Exception('Failed to delete reference: $e');
+      if (e is ReferenceException) rethrow;
+      throw ReferenceException('Failed to delete reference: $e');
     }
   }
 }

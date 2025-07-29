@@ -22,6 +22,10 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.codehatch"
@@ -31,6 +35,15 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        
+        // Read environment variables
+        val googleMapKey = System.getenv("GOOGLE_MAP_KEY") ?: ""
+        
+        // Add build config fields
+        buildConfigField("String", "GOOGLE_MAP_KEY", "\"$googleMapKey\"")
+        
+        // Add manifest placeholders
+        manifestPlaceholders["GOOGLE_MAP_KEY"] = googleMapKey
     }
 
     buildTypes {

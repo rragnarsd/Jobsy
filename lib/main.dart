@@ -76,7 +76,6 @@ class _JobsyWrapperState extends State<JobsyWrapper> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    // Ensure localization is ready
     if (!context.localizationDelegates.isNotEmpty) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }

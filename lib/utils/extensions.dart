@@ -74,56 +74,32 @@ extension CategoryFormat on String {
 enum ToastType { success, error, info, warning }
 
 extension ToastTypeProperties on ToastType {
-  Color get primaryColor {
-    switch (this) {
-      case ToastType.success:
-        return JobsyColors.successColor;
-      case ToastType.error:
-        return JobsyColors.errorColor;
-      case ToastType.info:
-        return Colors.blue;
-      case ToastType.warning:
-        return Colors.orange;
-    }
-  }
+  Color get primaryColor => switch (this) {
+    ToastType.success => JobsyColors.successColor,
+    ToastType.error => JobsyColors.errorColor,
+    ToastType.info => Colors.blue,
+    ToastType.warning => Colors.orange,
+  };
 
-  IconData get icon {
-    switch (this) {
-      case ToastType.success:
-        return Icons.check_circle;
-      case ToastType.error:
-        return Icons.error;
-      case ToastType.info:
-        return Icons.info;
-      case ToastType.warning:
-        return Icons.warning;
-    }
-  }
+  IconData get icon => switch (this) {
+    ToastType.success => Icons.check_circle,
+    ToastType.error => Icons.error,
+    ToastType.info => Icons.info,
+    ToastType.warning => Icons.warning,
+  };
 
-  ToastificationType get toastificationType {
-    switch (this) {
-      case ToastType.success:
-        return ToastificationType.success;
-      case ToastType.error:
-        return ToastificationType.error;
-      case ToastType.info:
-        return ToastificationType.info;
-      case ToastType.warning:
-        return ToastificationType.warning;
-    }
-  }
+  ToastificationType get toastificationType => switch (this) {
+    ToastType.success => ToastificationType.success,
+    ToastType.error => ToastificationType.error,
+    ToastType.info => ToastificationType.info,
+    ToastType.warning => ToastificationType.warning,
+  };
 
-  Duration get defaultDuration {
-    switch (this) {
-      case ToastType.success:
-        return const Duration(seconds: 3);
-      case ToastType.error:
-        return const Duration(seconds: 5);
-      case ToastType.info:
-      case ToastType.warning:
-        return const Duration(seconds: 4);
-    }
-  }
+  Duration get defaultDuration => switch (this) {
+    ToastType.success => const Duration(seconds: 3),
+    ToastType.error => const Duration(seconds: 5),
+    ToastType.info || ToastType.warning => const Duration(seconds: 4),
+  };
 }
 
 extension ToastificationExtension on BuildContext {
@@ -170,64 +146,60 @@ extension LanguageProficiencyExtension on LanguageProficiency {
     LanguageProficiency.advanced => 'advanced'.tr(),
     LanguageProficiency.expert => 'expert'.tr(),
   };
+
+  String getEnglishValue() => switch (this) {
+    LanguageProficiency.beginner => 'beginner',
+    LanguageProficiency.basicSkills => 'basic_skills',
+    LanguageProficiency.intermediate => 'intermediate',
+    LanguageProficiency.advanced => 'advanced',
+    LanguageProficiency.expert => 'expert',
+  };
 }
+
+LanguageProficiency languageProficiencyFromEnglishValue(String value) =>
+    switch (value) {
+      'beginner' => LanguageProficiency.beginner,
+      'basic_skills' => LanguageProficiency.basicSkills,
+      'intermediate' => LanguageProficiency.intermediate,
+      'advanced' => LanguageProficiency.advanced,
+      'expert' => LanguageProficiency.expert,
+      _ => LanguageProficiency.beginner, // fallback
+    };
 
 enum CourseTypes { onSite, remote }
 
 extension CourseTypesExtension on CourseTypes {
-  String get displayName {
-    switch (this) {
-      case CourseTypes.onSite:
-        return 'On-site';
-      case CourseTypes.remote:
-        return 'Remote';
-    }
-  }
+  String get displayName => switch (this) {
+    CourseTypes.onSite => 'On-site',
+    CourseTypes.remote => 'Remote',
+  };
 }
 
 enum JobStatus { inProgress, active, ended }
 
 extension JobStatusExtension on JobStatus {
-  String get displayName {
-    switch (this) {
-      case JobStatus.inProgress:
-        return 'In Progress';
-      case JobStatus.active:
-        return 'Active';
-      case JobStatus.ended:
-        return 'Ended';
-    }
-  }
+  String get displayName => switch (this) {
+    JobStatus.inProgress => 'In Progress',
+    JobStatus.active => 'Active',
+    JobStatus.ended => 'Ended',
+  };
 
-  Color get color {
-    switch (this) {
-      case JobStatus.inProgress:
-        return Colors.orange;
-      case JobStatus.active:
-        return Colors.green;
-      case JobStatus.ended:
-        return Colors.grey;
-    }
-  }
+  Color get color => switch (this) {
+    JobStatus.inProgress => Colors.orange,
+    JobStatus.active => Colors.green,
+    JobStatus.ended => Colors.grey,
+  };
 }
 
 enum JobPerks { activity, workingHours, health, food, commute, entertainment }
 
 extension JobPerksExtension on JobPerks {
-  String get displayName {
-    switch (this) {
-      case JobPerks.activity:
-        return 'Activity';
-      case JobPerks.workingHours:
-        return 'Working Hours';
-      case JobPerks.health:
-        return 'Health';
-      case JobPerks.food:
-        return 'Food';
-      case JobPerks.commute:
-        return 'Commute';
-      case JobPerks.entertainment:
-        return 'Entertainment';
-    }
-  }
+  String get displayName => switch (this) {
+    JobPerks.activity => 'Activity',
+    JobPerks.workingHours => 'Working Hours',
+    JobPerks.health => 'Health',
+    JobPerks.food => 'Food',
+    JobPerks.commute => 'Commute',
+    JobPerks.entertainment => 'Entertainment',
+  };
 }

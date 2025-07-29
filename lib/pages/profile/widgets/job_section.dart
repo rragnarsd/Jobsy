@@ -14,8 +14,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
-//TODO - Add edit functionality
-
 class JobSection extends StatefulWidget {
   const JobSection({super.key});
 
@@ -310,7 +308,8 @@ class _JobSectionState extends State<JobSection> {
                   controller: _startDateController,
                   labelText: 'start_date'.tr(),
                   prefixIcon: const Icon(Icons.calendar_month),
-                  validator: (value) => value?.startDateError,
+                  validator: (value) =>
+                      context.validateDateRange(_startDate, _endDate),
                   textInputAction: TextInputAction.next,
                 ),
               ),
@@ -325,7 +324,8 @@ class _JobSectionState extends State<JobSection> {
                   controller: _endDateController,
                   labelText: 'end_date'.tr(),
                   prefixIcon: const Icon(Icons.calendar_month),
-                  validator: (value) => value?.endDateError,
+                  validator: (value) =>
+                      context.validateDateRange(_startDate, _endDate),
                   textInputAction: TextInputAction.done,
                 ),
               ),

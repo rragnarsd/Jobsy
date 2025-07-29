@@ -106,7 +106,9 @@ class _LanguageSectionState extends State<LanguageSection> {
                                 ],
                               ),
                               Text(
-                                language.level,
+                                languageProficiencyFromEnglishValue(
+                                  language.level,
+                                ).getLabel(),
                                 style: theme.textTheme.bodyLarge,
                               ),
                             ],
@@ -172,6 +174,7 @@ class _LanguageFormState extends State<LanguageForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Country? _selectedCountry;
+  LanguageProficiency? _selectedProficiency;
 
   @override
   void dispose() {
@@ -223,11 +226,21 @@ class _LanguageFormState extends State<LanguageForm> {
   Future<void> _saveLanguage(BuildContext context) async {
     final languageProvider = context.read<LanguageProvider>();
 
+    if (_selectedCountry == null) {
+      context.showToast(title: 'language_required'.tr(), type: ToastType.error);
+      return;
+    }
+
+    if (_selectedProficiency == null) {
+      context.showToast(title: 'language_level'.tr(), type: ToastType.error);
+      return;
+    }
+
     try {
       final newLanguage = LanguageModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         name: _languageController.text.trim(),
-        level: _proficiencyController.text.trim(),
+        level: _selectedProficiency!.getEnglishValue(),
         flagCode: _selectedCountry!.countryCode,
         flagEmoji: _selectedCountry!.flagEmoji,
       );
@@ -350,6 +363,7 @@ class _LanguageFormState extends State<LanguageForm> {
                         ),
                         onTap: () {
                           setState(() {
+                            _selectedProficiency = proficiency;
                             _proficiencyController.text = proficiency
                                 .getLabel();
                           });

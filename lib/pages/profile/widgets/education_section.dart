@@ -309,7 +309,6 @@ class _EducationSectionState extends State<EducationSection> {
                   prefixIcon: const Icon(Icons.calendar_month),
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
-                  // validator: (value) => value?.startDateError,
                   textInputAction: TextInputAction.next,
                 ),
               ),
@@ -324,10 +323,8 @@ class _EducationSectionState extends State<EducationSection> {
                   controller: _endDateController,
                   labelText: 'end_date'.tr(),
                   prefixIcon: const Icon(Icons.calendar_month),
-                  //TODO
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
-                  // validator: (value) => value?.endDateError,
                   textInputAction: TextInputAction.done,
                 ),
               ),

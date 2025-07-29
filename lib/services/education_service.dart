@@ -2,15 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+class EducationException implements Exception {
+  final String message;
+  EducationException(this.message);
+
+  @override
+  String toString() => message;
+}
+
+/// Service class for managing user education data in Firestore.
+/// This service provides CRUD operations for education records associated
+/// with the current authenticated user. It stores education data as an array
+/// within the user's profile document in Firestore.
 class EducationService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User? get currentUser => _auth.currentUser;
 
+  /// Gets a reference to the current user's document in Firestore.
+  /// Throws an [EducationException] if the user is not authenticated.
   Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw Exception('User not authenticated');
+    if (user == null) throw EducationException('User not authenticated');
     return _firestore.collection('users').doc(user.uid);
   }
 
@@ -28,12 +42,14 @@ class EducationService {
     'yearEnd': education.yearEnd,
   };
 
+  /// Adds a new education record to the user's profile.
+  /// Throws an [EducationException] if validation fails or the operation fails.
   Future<void> addEducation(EducationModel education) async {
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw Exception('User profile not found');
+      if (!userDoc.exists) throw EducationException('User profile not found');
 
       final educationList = _getEducationList(userDoc);
       educationList.add(_educationToMap(education));
@@ -43,10 +59,14 @@ class EducationService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      throw Exception('Failed to add education: $e');
+      if (e is EducationException) rethrow;
+      throw EducationException('Failed to add education: $e');
     }
   }
 
+  /// Retrieves all education records for the current user.
+  /// Returns an empty list if no education records exist or if the user
+  /// profile is not found. Throws an [EducationException] if the operation fails.
   Future<List<EducationModel>> getUserEducation() async {
     try {
       final userDocRef = await _getUserDoc();
@@ -67,7 +87,8 @@ class EducationService {
         );
       }).toList();
     } catch (e) {
-      throw Exception('Failed to get education: $e');
+      if (e is EducationException) rethrow;
+      throw EducationException('Failed to get education: $e');
     }
   }
 
@@ -76,7 +97,7 @@ class EducationService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw Exception('User profile not found');
+      if (!userDoc.exists) throw EducationException('User profile not found');
 
       final educationList = _getEducationList(userDoc);
 
@@ -84,7 +105,7 @@ class EducationService {
         (edu) => edu['id'] == education.id,
       );
 
-      if (index == -1) throw Exception('Education not found');
+      if (index == -1) throw EducationException('Education not found');
 
       educationList[index] = _educationToMap(education);
 
@@ -93,7 +114,8 @@ class EducationService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      throw Exception('Failed to update education: $e');
+      if (e is EducationException) rethrow;
+      throw EducationException('Failed to update education: $e');
     }
   }
 
@@ -102,7 +124,7 @@ class EducationService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw Exception('User profile not found');
+      if (!userDoc.exists) throw EducationException('User profile not found');
 
       final educationList = _getEducationList(userDoc);
       educationList.removeWhere((edu) => edu['id'] == educationId);
@@ -112,7 +134,8 @@ class EducationService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      throw Exception('Failed to delete education: $e');
+      if (e is EducationException) rethrow;
+      throw EducationException('Failed to delete education: $e');
     }
   }
 }

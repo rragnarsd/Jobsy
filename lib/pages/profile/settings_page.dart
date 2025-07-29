@@ -36,7 +36,6 @@ class SettingsPage extends StatelessWidget {
                       Icons.language,
                       color: JobsyColors.primaryColor,
                     ),
-                    //TODO
                     onTap: () => changeLanguage(context: context, theme: theme),
                     trailing: const Icon(
                       Icons.arrow_forward_ios,

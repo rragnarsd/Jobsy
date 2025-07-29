@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/providers/favorites_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
@@ -9,6 +10,7 @@ import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -27,7 +29,6 @@ class JobDescriptionPage extends StatelessWidget {
         body: Center(child: Text('job_not_found'.tr())),
       );
     }
-
     return Scaffold(
       appBar: AppBar(
         title: Text('job_description'.tr()),
@@ -230,7 +231,16 @@ class JobLocation extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   if (!job.isRemote) {
-                    //TODO - Add Map
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        fullscreenDialog: true,
+                        builder: (BuildContext context) {
+                          return MapPage(
+                            locationGeoPoint: workplace!.locationGeoPoint,
+                          );
+                        },
+                      ),
+                    );
                   }
                 },
                 child: Row(
@@ -607,6 +617,35 @@ class JobHeader extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class MapPage extends StatelessWidget {
+  const MapPage({super.key, required this.locationGeoPoint});
+
+  final GeoPoint locationGeoPoint;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GoogleMap(
+        padding: const EdgeInsets.all(16),
+        mapType: MapType.normal,
+        markers: {
+          Marker(
+            markerId: const MarkerId('1'),
+            position: LatLng(
+              locationGeoPoint.latitude,
+              locationGeoPoint.longitude,
+            ),
+          ),
+        },
+        initialCameraPosition: CameraPosition(
+          target: LatLng(locationGeoPoint.latitude, locationGeoPoint.longitude),
+          zoom: 14.4746,
+        ),
+      ),
     );
   }
 }

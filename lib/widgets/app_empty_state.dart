@@ -13,8 +13,6 @@ class EmptyState extends StatelessWidget {
   final String title;
   final String subTitle;
 
-  //TODO - Fix the height - center without the appbar
-
   @override
   Widget build(BuildContext context) {
     return Center(

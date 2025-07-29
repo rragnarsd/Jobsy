@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class WorkplaceModel {
   final String id;
   final String name;
   final String description;
   final String location;
+  final GeoPoint locationGeoPoint;
   final String websiteUrl;
   final String size;
   final String? imageUrl;
@@ -17,6 +20,7 @@ class WorkplaceModel {
     required this.name,
     required this.description,
     required this.location,
+    required this.locationGeoPoint,
     required this.websiteUrl,
     required this.size,
     required this.jobIds,
@@ -33,6 +37,7 @@ class WorkplaceModel {
       name: json['name'],
       description: json['description'],
       location: json['location'],
+      locationGeoPoint: json['locationGeoPoint'],
       websiteUrl: json['websiteUrl'] ?? '',
       size: json['size'],
       imageUrl: json['imageUrl'],
@@ -54,6 +59,7 @@ class WorkplaceModel {
       'name': name,
       'description': description,
       'location': location,
+      'locationGeoPoint': locationGeoPoint,
       'websiteUrl': websiteUrl,
       'size': size,
       'imageUrl': imageUrl,
