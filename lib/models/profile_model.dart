@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProfileModel {
   final String id;
   final String name;
@@ -12,6 +14,7 @@ class ProfileModel {
   final List<ReferenceModel> references;
   final List<LinkModel> links;
   final List<Favorites> favorites;
+  final List<ApplicationModel> applications;
 
   ProfileModel({
     required this.id,
@@ -27,6 +30,7 @@ class ProfileModel {
     required this.references,
     required this.links,
     required this.favorites,
+    required this.applications,
   });
 }
 
@@ -227,4 +231,50 @@ class Favorites {
   final String workplaceId;
 
   Favorites({required this.id, required this.workplaceId});
+}
+
+class ApplicationModel {
+  final String id;
+  final String jobId;
+  final String workplaceId;
+  final String jobTitle;
+  final String companyName;
+  final String status;
+  final DateTime appliedDate;
+
+  ApplicationModel({
+    required this.id,
+    required this.jobId,
+    required this.workplaceId,
+    required this.jobTitle,
+    required this.companyName,
+    required this.status,
+    required this.appliedDate,
+  });
+
+  factory ApplicationModel.fromJson(Map<String, dynamic> json) {
+    return ApplicationModel(
+      id: json['id'],
+      jobId: json['jobId'],
+      workplaceId: json['workplaceId'] ?? '',
+      jobTitle: json['jobTitle'],
+      companyName: json['companyName'],
+      status: json['status'],
+      appliedDate: json['appliedDate'] is Timestamp
+          ? (json['appliedDate'] as Timestamp).toDate()
+          : DateTime.parse(json['appliedDate']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'jobId': jobId,
+      'workplaceId': workplaceId,
+      'jobTitle': jobTitle,
+      'companyName': companyName,
+      'status': status,
+      'appliedDate': appliedDate,
+    };
+  }
 }

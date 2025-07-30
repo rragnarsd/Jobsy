@@ -1,19 +1,36 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:codehatch/models/inbox_model.dart';
+import 'package:codehatch/models/profile_model.dart';
+import 'package:codehatch/providers/application_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class InboxPage extends StatelessWidget {
+class InboxPage extends StatefulWidget {
   const InboxPage({super.key});
 
   @override
+  State<InboxPage> createState() => _InboxPageState();
+}
+
+class _InboxPageState extends State<InboxPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ApplicationProvider>().loadApplications();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final applicationProvider = context.watch<ApplicationProvider>();
+    final applications = applicationProvider.applications;
+
     return Scaffold(
       appBar: AppBar(
-        //TODO - Qty
-        title: Text('${'inbox'.tr()} (3)'),
+        title: Text('${'inbox'.tr()} (${applications.length})'),
         actions: [
           IconButton(
             onPressed: () {},
@@ -21,29 +38,66 @@ class InboxPage extends StatelessWidget {
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => InboxCard(inboxItem: inboxItems[index]),
-              childCount: inboxItems.length,
+      body: applicationProvider.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : applications.isEmpty
+          //TODO
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.inbox_outlined,
+                    size: 80,
+                    color: JobsyColors.greyColor,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'no_applications'.tr(),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: JobsyColors.greyColor,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'applications_will_appear_here'.tr(),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: JobsyColors.greyColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            )
+          : CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) =>
+                        ApplicationCard(application: applications[index]),
+                    childCount: applications.length,
+                  ),
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              ],
             ),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: 16)),
-        ],
-      ),
     );
   }
 }
 
-class InboxCard extends StatelessWidget {
-  const InboxCard({super.key, required this.inboxItem});
+class ApplicationCard extends StatelessWidget {
+  const ApplicationCard({super.key, required this.application});
 
-  final InboxModel inboxItem;
+  final ApplicationModel application;
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
+    final applicationProvider = context.watch<ApplicationProvider>();
+    final workplace = applicationProvider.getWorkplaceForApplication(
+      application.id,
+    );
+
     return Card(
       child: Column(
         children: [
@@ -58,15 +112,14 @@ class InboxCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  inboxItem.jobStatus.displayName.toUpperCase(),
+                  'applied'.tr().toUpperCase(),
                   style: theme.textTheme.bodyMedium!.copyWith(
-                    color: inboxItem.jobStatus.color,
+                    color: JobsyColors.primaryColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                //Expiry Date
                 Text(
-                  inboxItem.deadline,
+                  application.appliedDate.toShortFormattedDate(),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: JobsyColors.greyColor,
                   ),
@@ -80,28 +133,70 @@ class InboxCard extends StatelessWidget {
             child: Row(
               spacing: 16,
               children: [
-                CachedNetworkImage(
-                  imageUrl: inboxItem.logoUrl,
-                  width: 60,
-                  height: 60,
-                  fit: BoxFit.fitWidth,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      inboxItem.title,
-                      style: theme.textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.w600,
+                workplace?.logoUrl != null
+                    ? CachedNetworkImage(
+                        imageUrl: workplace!.logoUrl!,
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: JobsyColors.greyColor.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.business,
+                            color: JobsyColors.greyColor,
+                            size: 30,
+                          ),
+                        ),
+                        errorWidget: (context, url, error) => Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: JobsyColors.greyColor.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.business,
+                            color: JobsyColors.greyColor,
+                            size: 30,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: JobsyColors.greyColor.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(
+                          Icons.business,
+                          color: JobsyColors.greyColor,
+                          size: 30,
+                        ),
                       ),
-                    ),
-                    Text(
-                      inboxItem.workplace,
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        color: JobsyColors.primaryColor,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        application.jobTitle,
+                        style: theme.textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
+                      Text(
+                        application.companyName,
+                        style: theme.textTheme.bodyMedium!.copyWith(
+                          color: JobsyColors.primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

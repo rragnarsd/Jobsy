@@ -216,6 +216,12 @@
     "phone_required": "Phone number is required",
     "invalid_phone": "Invalid phone number",
     "company_required": "Company is required",
-    "invalid_company": "Invalid company name"
+    "invalid_company": "Invalid company name",
+    "already_applied": "You have already applied to this job",
+    "application_submitted": "Application submitted successfully",
+    "application_failed": "Failed to submit application",
+    "no_applications": "No applications yet",
+    "applications_will_appear_here": "Your job applications will appear here",
+    "application_submitted_message": "Your application has been submitted and is being reviewed"
     
 }

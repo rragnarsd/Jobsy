@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/job_model.dart';
+import 'package:codehatch/models/profile_model.dart';
+import 'package:codehatch/providers/application_provider.dart';
 import 'package:codehatch/providers/favorites_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/colors.dart';
@@ -14,14 +16,27 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-class JobDescriptionPage extends StatelessWidget {
+class JobDescriptionPage extends StatefulWidget {
   const JobDescriptionPage({super.key, required this.jobId});
 
   final String jobId;
 
   @override
+  State<JobDescriptionPage> createState() => _JobDescriptionPageState();
+}
+
+class _JobDescriptionPageState extends State<JobDescriptionPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ApplicationProvider>().loadApplications();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final job = context.watch<WorkplaceProvider>().getJobById(jobId);
+    final job = context.watch<WorkplaceProvider>().getJobById(widget.jobId);
 
     if (job == null) {
       return Scaffold(
@@ -425,10 +440,51 @@ class JobDeadline extends StatelessWidget {
 
               SizedBox(
                 width: double.infinity,
-                child: AppIconElevatedButton(
-                  text: 'apply'.tr(),
-                  icon: Icons.person,
-                  onPressed: () {},
+                child: Consumer<ApplicationProvider>(
+                  builder: (context, applicationProvider, child) {
+                    final hasApplied = applicationProvider.hasAppliedToJobSync(
+                      job.id,
+                    );
+
+                    if (hasApplied) {
+                      return Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        decoration: BoxDecoration(
+                          color: JobsyColors.greyColor.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: JobsyColors.greyColor.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.check_circle,
+                              color: JobsyColors.successColor,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'already_applied'.tr(),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color: JobsyColors.greyColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return AppIconElevatedButton(
+                      text: 'apply'.tr(),
+                      icon: Icons.person,
+                      onPressed: () => applyForJob(context: context, job: job),
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 8),
@@ -438,6 +494,73 @@ class JobDeadline extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> applyForJob({
+    required BuildContext context,
+    required JobModel job,
+  }) async {
+    final applicationProvider = context.read<ApplicationProvider>();
+    final workplace = context.read<WorkplaceProvider>().getWorkplaceById(
+      job.workplaceId,
+    );
+
+    if (workplace == null) {
+      if (context.mounted) {
+        context.showToast(
+          title: 'workplace_not_found'.tr(),
+          type: ToastType.error,
+          textColor: JobsyColors.whiteColor,
+          duration: const Duration(seconds: 5),
+        );
+      }
+      return;
+    }
+
+    final hasApplied = await applicationProvider.hasAppliedToJob(job.id);
+    if (hasApplied) {
+      if (context.mounted) {
+        context.showToast(
+          title: 'already_applied'.tr(),
+          type: ToastType.error,
+          textColor: JobsyColors.whiteColor,
+          duration: const Duration(seconds: 5),
+        );
+      }
+      return;
+    }
+
+    // Create application
+    final application = ApplicationModel(
+      id: '${job.id}_${DateTime.now().millisecondsSinceEpoch}',
+      jobId: job.id,
+      workplaceId: job.workplaceId,
+      jobTitle: job.title,
+      companyName: workplace.name,
+      status: 'applied',
+      appliedDate: DateTime.now(),
+    );
+
+    try {
+      await applicationProvider.addApplication(application);
+      if (context.mounted) {
+        context.showToast(
+          title: 'application_submitted'.tr(),
+          type: ToastType.success,
+          textColor: JobsyColors.whiteColor,
+          duration: const Duration(seconds: 5),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        context.showToast(
+          title: 'application_failed'.tr(),
+          type: ToastType.error,
+          textColor: JobsyColors.whiteColor,
+          duration: const Duration(seconds: 5),
+        );
+      }
+    }
   }
 }
 

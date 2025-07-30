@@ -1,4 +1,5 @@
 import 'package:codehatch/firebase_options.dart';
+import 'package:codehatch/providers/application_provider.dart';
 import 'package:codehatch/providers/auth_provider.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/providers/education_provider.dart';
@@ -45,6 +46,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => LinkProvider()),
           ChangeNotifierProvider(create: (_) => SkillsProvider()),
           ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+          ChangeNotifierProvider(create: (_) => ApplicationProvider()),
         ],
         child: const JobsyWrapper(),
       ),

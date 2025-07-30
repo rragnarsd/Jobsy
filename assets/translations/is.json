@@ -214,5 +214,12 @@
   "field_invalid": "Námsgrein er ógildur",
   "degree_invalid": "Gráða er ógildur",
   "link_site_invalid": "Vefsíða er ógild",
-  "link_media_invalid": "Miðill er ógildur"
+  "link_media_invalid": "Miðill er ógildur",
+  "already_applied": "Þú hefur þegar sótt um þetta starf",
+  "application_submitted": "Umsókn móttekin",
+  "application_failed": "Ekki tókst að senda umsókn",
+  "no_applications": "Engar umsóknir enn",
+  "applications_will_appear_here": "Umsóknir þínar munu birtast hér",
+  "application_submitted_message": "Umsókn þín hefur verið móttekin og er í yfirferð"
+
 }

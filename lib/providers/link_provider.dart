@@ -85,8 +85,4 @@ class LinkProvider extends ChangeNotifier {
     _error = error;
     notifyListeners();
   }
-
-  void clearError() {
-    _clearError();
-  }
 }

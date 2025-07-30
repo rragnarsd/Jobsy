@@ -86,8 +86,4 @@ class EducationProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
   }
-
-  void clearError() {
-    _clearError();
-  }
 }
