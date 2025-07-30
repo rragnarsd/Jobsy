@@ -1,19 +1,26 @@
 # Jobsy
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## :package: Packages
+- GoogleFonts - https://pub.dev/packages/google_fonts
+- GoRouter - https://pub.dev/packages/go_router
+- Intl - https://pub.dev/packages/intl
+- CachedNetworkImage - https://pub.dev/packages/cached_network_image
+- Provider - https://pub.dev/packages/provider
+- WoltModalSheet - https://pub.dev/packages/wolt_modal_sheet
+- FirebaseAuth - https://pub.dev/packages/firebase_auth
+- FirebaseCore - https://pub.dev/packages/firebase_core
+- CloudFirestore - https://pub.dev/packages/cloud_firestore
+- Collection - https://pub.dev/packages/collection
+- SharedPrefs - https://pub.dev/packages/shared_preferences
+- Toastification - https://pub.dev/packages/toastification
+- FlutterSvg - https://pub.dev/packages/flutter_svg
+- Freezed - https://pub.dev/packages/freezed
+- CountryPicker - https://pub.dev/packages/country_picker
+- Shimmer - https://pub.dev/packages/shimmer
+- FlutterAnimate - https://pub.dev/packages/flutter_animate
+- SharePlus - https://pub.dev/packages/share_plus
+- EasyLocalization - https://pub.dev/packages/easy_localization
+- GoogleMaps - https://pub.dev/packages/google_maps_flutter
 
 ## Environment Setup
 
