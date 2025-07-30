@@ -159,6 +159,7 @@ class JobCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   Row(
                     children: [
+                      //TODO - Translate job type
                       IconTextRow(icon: Icons.work, text: job.jobType),
                       const VerticalDivider(),
                       IconTextRow(
@@ -181,6 +182,7 @@ class JobCard extends StatelessWidget {
               top: 12,
               right: 12,
               child: Text(
+                //TODO - Translate time ago
                 job.publishedDate?.timeAgo ?? 'just_now'.tr(),
                 style: const TextStyle(
                   color: JobsyColors.greyColor,

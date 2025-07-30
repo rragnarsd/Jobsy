@@ -21,6 +21,8 @@ class InboxModel {
   });
 }
 
+//TODO - Remove this
+
 final DateFormat formatter = DateFormat('d. MMM yyyy');
 
 final List<InboxModel> inboxItems = [
