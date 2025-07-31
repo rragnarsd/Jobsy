@@ -207,6 +207,7 @@
   "invalid_company": "Ógilt fyrirtæki",
   "language_invalid": "Tungumál er ógilt",
   "language_level_invalid": "Tungumálakunnáttu stig er ógilt",
+  
   "start_date_invalid": "Upphafsdagur er ógildur",
   "end_date_invalid": "Lokadagur er ógildur",
   "about_yourself_invalid": "Um þig verður að skrifa að minnsta kosti 10 stafir",

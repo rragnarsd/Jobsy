@@ -468,11 +468,10 @@ class JobDeadline extends StatelessWidget {
                             const SizedBox(width: 8),
                             Text(
                               'already_applied'.tr(),
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(
-                                    color: JobsyColors.greyColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: JobsyColors.greyColor,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ],
                         ),
