@@ -163,7 +163,34 @@ LanguageProficiency languageProficiencyFromEnglishValue(String value) =>
       'intermediate' => LanguageProficiency.intermediate,
       'advanced' => LanguageProficiency.advanced,
       'expert' => LanguageProficiency.expert,
-      _ => LanguageProficiency.beginner, // fallback
+      _ => LanguageProficiency.beginner,
+    };
+
+enum JobType { fullTime, partTime, freelance, temporary }
+
+extension JobTypeExtension on JobType {
+  String get displayName => switch (this) {
+    JobType.fullTime => 'full_time'.tr(),
+    JobType.partTime => 'part_time'.tr(),
+    JobType.freelance => 'freelance'.tr(),
+    JobType.temporary => 'temporary'.tr(),
+  };
+
+  String get englishValue => switch (this) {
+    JobType.fullTime => 'full_time',
+    JobType.partTime => 'part_time',
+    JobType.freelance => 'freelance',
+    JobType.temporary => 'temporary',
+  };
+}
+
+JobType jobTypeFromEnglishValue(String value) =>
+    switch (value.toLowerCase().trim()) {
+      'full time' => JobType.fullTime,
+      'part time' => JobType.partTime,
+      'freelance' => JobType.freelance,
+      'temporary' => JobType.temporary,
+      _ => JobType.fullTime,
     };
 
 enum CourseTypes { onSite, remote }

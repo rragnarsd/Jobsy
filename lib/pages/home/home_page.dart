@@ -159,8 +159,10 @@ class JobCard extends StatelessWidget {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      //TODO - Translate job type
-                      IconTextRow(icon: Icons.work, text: job.jobType),
+                      IconTextRow(
+                        icon: Icons.work,
+                        text: jobTypeFromEnglishValue(job.jobType).displayName,
+                      ),
                       const VerticalDivider(),
                       IconTextRow(
                         icon: Icons.location_on,
