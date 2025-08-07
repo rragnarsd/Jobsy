@@ -100,8 +100,8 @@ class AuthUserProvider extends ChangeNotifier {
   }
 
   void _setError(Object error) {
-    if (error is AuthException) {
-      _authErrorMessage = error.message;
+    if (error is Exception) {
+      _authErrorMessage = error.toString();
     } else {
       _authErrorMessage = 'An unexpected error occurred.';
     }

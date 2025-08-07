@@ -2,14 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class LinkException implements Exception {
-  final String message;
-  LinkException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// Service class for managing user link data in Firestore.
 /// This service provides CRUD operations for link records associated
 /// with the current authenticated user. It stores link data as an array
@@ -22,7 +14,7 @@ class LinkService {
 
   Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw LinkException('User not authenticated');
+    if (user == null) throw Exception('User not authenticated');
     return _firestore.collection('users').doc(user.uid);
   }
 
@@ -44,7 +36,7 @@ class LinkService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw LinkException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final linkList = _getLinkList(userDoc);
       linkList.add(_linkToMap(link));
@@ -54,8 +46,8 @@ class LinkService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is LinkException) rethrow;
-      throw LinkException('Failed to add link: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to add link: $e');
     }
   }
 
@@ -79,8 +71,8 @@ class LinkService {
         );
       }).toList();
     } catch (e) {
-      if (e is LinkException) rethrow;
-      throw LinkException('Failed to get links: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to get links: $e');
     }
   }
 
@@ -91,7 +83,7 @@ class LinkService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw LinkException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final linkList = _getLinkList(userDoc);
       linkList.removeWhere((element) => element['id'] == link.id);
@@ -102,8 +94,8 @@ class LinkService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is LinkException) rethrow;
-      throw LinkException('Failed to update link: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to update link: $e');
     }
   }
 
@@ -112,14 +104,14 @@ class LinkService {
   /// Throws a [LinkException] if validation fails or the operation fails.
   Future<void> deleteLink(String linkId) async {
     if (linkId.trim().isEmpty) {
-      throw LinkException('Link ID is required');
+      throw Exception('Link ID is required');
     }
 
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw LinkException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final linkList = _getLinkList(userDoc);
       linkList.removeWhere((element) => element['id'] == linkId);
@@ -129,8 +121,8 @@ class LinkService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is LinkException) rethrow;
-      throw LinkException('Failed to delete link: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to delete link: $e');
     }
   }
 }

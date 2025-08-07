@@ -2,14 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class EducationException implements Exception {
-  final String message;
-  EducationException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// Service class for managing user education data in Firestore.
 /// This service provides CRUD operations for education records associated
 /// with the current authenticated user. It stores education data as an array
@@ -24,7 +16,7 @@ class EducationService {
   /// Throws an [EducationException] if the user is not authenticated.
   Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw EducationException('User not authenticated');
+    if (user == null) throw Exception('User not authenticated');
     return _firestore.collection('users').doc(user.uid);
   }
 
@@ -49,7 +41,7 @@ class EducationService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw EducationException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final educationList = _getEducationList(userDoc);
       educationList.add(_educationToMap(education));
@@ -59,8 +51,8 @@ class EducationService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is EducationException) rethrow;
-      throw EducationException('Failed to add education: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to add education: $e');
     }
   }
 
@@ -87,8 +79,8 @@ class EducationService {
         );
       }).toList();
     } catch (e) {
-      if (e is EducationException) rethrow;
-      throw EducationException('Failed to get education: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to get education: $e');
     }
   }
 
@@ -97,7 +89,7 @@ class EducationService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw EducationException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final educationList = _getEducationList(userDoc);
 
@@ -105,7 +97,7 @@ class EducationService {
         (edu) => edu['id'] == education.id,
       );
 
-      if (index == -1) throw EducationException('Education not found');
+      if (index == -1) throw Exception('Education not found');
 
       educationList[index] = _educationToMap(education);
 
@@ -114,8 +106,8 @@ class EducationService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is EducationException) rethrow;
-      throw EducationException('Failed to update education: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to update education: $e');
     }
   }
 
@@ -124,7 +116,7 @@ class EducationService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw EducationException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final educationList = _getEducationList(userDoc);
       educationList.removeWhere((edu) => edu['id'] == educationId);
@@ -134,8 +126,8 @@ class EducationService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is EducationException) rethrow;
-      throw EducationException('Failed to delete education: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to delete education: $e');
     }
   }
 }

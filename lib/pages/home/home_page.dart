@@ -140,6 +140,7 @@ class JobCard extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          //TODO - Text overflow
                           Text(
                             job.title,
                             style: theme.textTheme.bodyLarge!.copyWith(

@@ -1,14 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthException implements Exception {
-  final String message;
-  AuthException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// This service provides methods for user authentication, profile management,
 /// and password reset functionality. It integrates with Firebase Auth for
 /// authentication and Firestore for user profile storage.
@@ -33,7 +25,7 @@ class AuthService {
   /// Throws an [AuthException] if no user is currently signed in.
   void _validateAuthentication() {
     if (!isAuthenticated) {
-      throw AuthException('User not authenticated');
+      throw Exception('User not authenticated');
     }
   }
 
@@ -43,7 +35,7 @@ class AuthService {
     try {
       await _auth.signOut();
     } catch (e) {
-      throw AuthException('Failed to sign out.');
+      throw Exception('Failed to sign out.');
     }
   }
 
@@ -57,9 +49,9 @@ class AuthService {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw AuthException(_getSignInError(e));
+      throw Exception(_getSignInError(e));
     } catch (e) {
-      throw AuthException('An unexpected error occurred.');
+      throw Exception('An unexpected error occurred.');
     }
   }
 
@@ -77,9 +69,9 @@ class AuthService {
 
       await saveUserProfile(name: name, phoneNumber: phoneNumber);
     } on FirebaseAuthException catch (e) {
-      throw AuthException(_getSignUpError(e));
+      throw Exception(_getSignUpError(e));
     } catch (e) {
-      throw AuthException('An unexpected error occurred.');
+      throw Exception('An unexpected error occurred.');
     }
   }
 
@@ -110,8 +102,8 @@ class AuthService {
 
       await _firestore.collection('users').doc(user.uid).set(userData);
     } catch (e) {
-      if (e is AuthException) rethrow;
-      throw AuthException('Failed to save user profile: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to save user profile: $e');
     }
   }
 
@@ -120,7 +112,7 @@ class AuthService {
       final doc = await _firestore.collection('users').doc(userId).get();
       return doc.data();
     } catch (e) {
-      throw AuthException('Failed to get user profile: $e');
+      throw Exception('Failed to get user profile: $e');
     }
   }
 
@@ -128,7 +120,7 @@ class AuthService {
     try {
       await _firestore.collection('users').doc(uid).update(data);
     } catch (e) {
-      throw AuthException('Failed to update user profile: $e');
+      throw Exception('Failed to update user profile: $e');
     }
   }
 
@@ -145,9 +137,9 @@ class AuthService {
     try {
       await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw AuthException('Failed to send password reset email: ${e.message}');
+      throw Exception('Failed to send password reset email: ${e.message}');
     } catch (e) {
-      throw AuthException('An unexpected error occurred.');
+      throw Exception('An unexpected error occurred.');
     }
   }
 
@@ -163,9 +155,9 @@ class AuthService {
       await currentUser?.reauthenticateWithCredential(credential);
       await currentUser?.updatePassword(newPassword);
     } on FirebaseAuthException catch (e) {
-      throw AuthException('Failed to reset password: ${e.message}');
+      throw Exception('Failed to reset password: ${e.message}');
     } catch (e) {
-      throw AuthException('An unexpected error occurred.');
+      throw Exception('An unexpected error occurred.');
     }
   }
 

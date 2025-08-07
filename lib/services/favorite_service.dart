@@ -1,15 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-/// Custom exception for favorite service operations.
-class FavoriteException implements Exception {
-  final String message;
-  FavoriteException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// Service class for managing user favorite jobs in Firestore.
 /// This service provides CRUD operations for favorite job IDs associated
 /// with the current authenticated user. It stores favorite job IDs as an array
@@ -24,7 +15,7 @@ class FavoriteService {
   /// Throws a [FavoriteException] if the user is not authenticated.
   Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw FavoriteException('User not authenticated');
+    if (user == null) throw Exception('User not authenticated');
     return _firestore.collection('users').doc(user.uid);
   }
 
@@ -53,8 +44,8 @@ class FavoriteService {
           .map((favorite) => favorite.toString())
           .toList();
     } catch (e) {
-      if (e is FavoriteException) rethrow;
-      throw FavoriteException('Failed to get favorites: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to get favorites: $e');
     }
   }
 
@@ -63,14 +54,14 @@ class FavoriteService {
   /// Does not add duplicate job IDs. Throws a [FavoriteException] if validation fails or the operation fails.
   Future<void> addFavorite(String jobId) async {
     if (jobId.trim().isEmpty) {
-      throw FavoriteException('Job ID is required');
+      throw Exception('Job ID is required');
     }
 
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw FavoriteException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final favorites = _getFavorites(userDoc);
       if (!favorites.contains(jobId)) {
@@ -78,21 +69,21 @@ class FavoriteService {
         await userDocRef.update({'favorites': favorites});
       }
     } catch (e) {
-      if (e is FavoriteException) rethrow;
-      throw FavoriteException('Failed to add favorite: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to add favorite: $e');
     }
   }
 
   Future<void> removeFavorite(String jobId) async {
     if (jobId.trim().isEmpty) {
-      throw FavoriteException('Job ID is required');
+      throw Exception('Job ID is required');
     }
 
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw FavoriteException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final favorites = _getFavorites(userDoc);
       favorites.remove(jobId);
@@ -110,11 +101,11 @@ class FavoriteService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw FavoriteException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       await userDocRef.update({'favorites': []});
     } catch (e) {
-      throw FavoriteException('Failed to delete all favorites: $e');
+      throw Exception('Failed to delete all favorites: $e');
     }
   }
 }

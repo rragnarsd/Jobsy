@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:codehatch/models/profile_model.dart';
+import 'package:codehatch/models/workplace_model.dart';
 import 'package:codehatch/providers/application_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
@@ -41,34 +42,7 @@ class _InboxPageState extends State<InboxPage> {
       body: applicationProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : applications.isEmpty
-          //TODO
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.inbox_outlined,
-                    size: 80,
-                    color: JobsyColors.greyColor,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'no_applications'.tr(),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: JobsyColors.greyColor,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'applications_will_appear_here'.tr(),
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: JobsyColors.greyColor,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            )
+          ? const ApplicationEmptyState()
           : CustomScrollView(
               slivers: [
                 SliverList(
@@ -81,6 +55,41 @@ class _InboxPageState extends State<InboxPage> {
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
               ],
             ),
+    );
+  }
+}
+
+class ApplicationEmptyState extends StatelessWidget {
+  const ApplicationEmptyState({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.inbox_outlined,
+            size: 80,
+            color: JobsyColors.greyColor,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'no_applications'.tr(),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(color: JobsyColors.greyColor),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'applications_will_appear_here'.tr(),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: JobsyColors.greyColor),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -134,38 +143,7 @@ class ApplicationCard extends StatelessWidget {
               spacing: 16,
               children: [
                 workplace?.logoUrl != null
-                    ? CachedNetworkImage(
-                        imageUrl: workplace!.logoUrl!,
-                        width: 60,
-                        height: 60,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: JobsyColors.greyColor.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.business,
-                            color: JobsyColors.greyColor,
-                            size: 30,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: JobsyColors.greyColor.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Icon(
-                            Icons.business,
-                            color: JobsyColors.greyColor,
-                            size: 30,
-                          ),
-                        ),
-                      )
+                    ? LogoEmptyState(workplace: workplace)
                     : Container(
                         width: 60,
                         height: 60,
@@ -202,6 +180,48 @@ class ApplicationCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class LogoEmptyState extends StatelessWidget {
+  const LogoEmptyState({super.key, required this.workplace});
+
+  final WorkplaceModel? workplace;
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: workplace!.logoUrl!,
+      width: 60,
+      height: 60,
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: JobsyColors.greyColor.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Icon(
+          Icons.business,
+          color: JobsyColors.greyColor,
+          size: 30,
+        ),
+      ),
+      errorWidget: (context, url, error) => Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          color: JobsyColors.greyColor.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: const Icon(
+          Icons.business,
+          color: JobsyColors.greyColor,
+          size: 30,
+        ),
       ),
     );
   }

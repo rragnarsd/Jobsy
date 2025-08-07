@@ -137,6 +137,7 @@ class CoursesCard extends StatelessWidget {
                       indent: 3,
                       endIndent: 3,
                     ),
+                    //TODO - Localize course type
                     IconTextRow(
                       icon: Icons.location_on,
                       text: course.type == CourseTypes.remote

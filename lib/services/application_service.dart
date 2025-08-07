@@ -3,14 +3,6 @@ import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ApplicationException implements Exception {
-  final String message;
-  ApplicationException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// Service class for managing user job application data in Firestore.
 /// This service provides CRUD operations for application records associated
 /// with the current authenticated user. It stores application data as an array
@@ -25,7 +17,7 @@ class ApplicationService {
   /// Throws an [ApplicationException] if the user is not authenticated.
   Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw ApplicationException('User not authenticated');
+    if (user == null) throw Exception('User not authenticated');
     return _firestore.collection('users').doc(user.uid);
   }
 
@@ -54,12 +46,12 @@ class ApplicationService {
       final snapshot = await transaction.get(userDoc);
 
       if (!snapshot.exists) {
-        throw ApplicationException('User profile not found');
+        throw Exception('User profile not found');
       }
 
       final applications = _getApplicationList(snapshot);
       if (applications.any((app) => app['jobId'] == application.jobId)) {
-        throw ApplicationException('Application already exists for this job');
+        throw Exception('Application already exists for this job');
       }
 
       applications.add(_applicationToMap(application));
@@ -80,8 +72,8 @@ class ApplicationService {
 
       return applications.map((app) => ApplicationModel.fromJson(app)).toList();
     } catch (e) {
-      if (e is ApplicationException) rethrow;
-      throw ApplicationException('Failed to get applications: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to get applications: $e');
     }
   }
 

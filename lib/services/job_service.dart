@@ -2,14 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class JobException implements Exception {
-  final String message;
-  JobException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// Service class for managing user job experience data in Firestore.
 /// This service provides CRUD operations for job experience records associated
 /// with the current authenticated user. It stores job experience data as an array
@@ -24,7 +16,7 @@ class JobService {
   /// Throws a [JobException] if the user is not authenticated.
   Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw JobException('User not authenticated');
+    if (user == null) throw Exception('User not authenticated');
     return _firestore.collection('users').doc(user.uid);
   }
 
@@ -48,7 +40,7 @@ class JobService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw JobException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final jobList = _getJobList(userDoc);
       jobList.add(_jobToMap(job));
@@ -58,8 +50,8 @@ class JobService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is JobException) rethrow;
-      throw JobException('Failed to add job experience: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to add job experience: $e');
     }
   }
 
@@ -85,8 +77,8 @@ class JobService {
         );
       }).toList();
     } catch (e) {
-      if (e is JobException) rethrow;
-      throw JobException('Failed to get job experience: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to get job experience: $e');
     }
   }
 
@@ -100,12 +92,12 @@ class JobService {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw JobException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final jobList = _getJobList(userDoc);
       final index = jobList.indexWhere((job) => job['id'] == jobId);
 
-      if (index == -1) throw JobException('Job experience not found');
+      if (index == -1) throw Exception('Job experience not found');
 
       jobList[index] = _jobToMap(updatedJob);
 
@@ -114,8 +106,8 @@ class JobService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is JobException) rethrow;
-      throw JobException('Failed to update job experience: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to update job experience: $e');
     }
   }
 
@@ -124,14 +116,14 @@ class JobService {
   /// Throws a [JobException] if validation fails or the operation fails.
   Future<void> deleteJobExperience(String jobId) async {
     if (jobId.trim().isEmpty) {
-      throw JobException('Job ID is required');
+      throw Exception('Job ID is required');
     }
 
     try {
       final userDocRef = await _getUserDoc();
       final userDoc = await userDocRef.get();
 
-      if (!userDoc.exists) throw JobException('User profile not found');
+      if (!userDoc.exists) throw Exception('User profile not found');
 
       final jobList = _getJobList(userDoc);
       jobList.removeWhere((job) => job['id'] == jobId);
@@ -141,8 +133,8 @@ class JobService {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      if (e is JobException) rethrow;
-      throw JobException('Failed to delete job experience: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to delete job experience: $e');
     }
   }
 }

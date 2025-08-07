@@ -3,14 +3,6 @@ import 'package:codehatch/models/job_model.dart';
 import 'package:codehatch/models/workplace_model.dart';
 import 'package:flutter/foundation.dart';
 
-class WorkplaceException implements Exception {
-  final String message;
-  WorkplaceException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// Service class for managing workplace and job data in Firestore.
 /// This service provides stream-based access to workplace and job collections
 /// for real-time updates. It does not require user authentication as it

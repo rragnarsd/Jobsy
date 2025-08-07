@@ -2,15 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/models/profile_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-/// Custom exception for skills service operations.
-class SkillsException implements Exception {
-  final String message;
-  SkillsException(this.message);
-
-  @override
-  String toString() => message;
-}
-
 /// Service class for managing user skills data in Firestore.
 /// This service provides CRUD operations for skills records associated
 /// with the current authenticated user. It stores skills data as an array
@@ -26,7 +17,7 @@ class SkillsService {
   /// Throws a [SkillsException] if the user is not authenticated.
   Future<DocumentReference<Map<String, dynamic>>> _getUserDoc() async {
     final user = currentUser;
-    if (user == null) throw SkillsException('User not authenticated');
+    if (user == null) throw Exception('User not authenticated');
     return _firestore.collection('users').doc(user.uid);
   }
 
@@ -41,7 +32,7 @@ class SkillsService {
         }).toList();
       });
     } catch (e) {
-      throw SkillsException('Failed to get skills documents: $e');
+      throw Exception('Failed to get skills documents: $e');
     }
   }
 
@@ -56,7 +47,7 @@ class SkillsService {
             .toList();
       });
     } catch (e) {
-      throw SkillsException('Failed to get main skills: $e');
+      throw Exception('Failed to get main skills: $e');
     }
   }
 
@@ -86,7 +77,7 @@ class SkillsService {
             .toList();
       });
     } catch (e) {
-      throw SkillsException('Failed to get user skills: $e');
+      throw Exception('Failed to get user skills: $e');
     }
   }
 
@@ -103,8 +94,8 @@ class SkillsService {
         'skills': FieldValue.arrayUnion([skill.toJson()]),
       });
     } catch (e) {
-      if (e is SkillsException) rethrow;
-      throw SkillsException('Failed to add user skill: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to add user skill: $e');
     }
   }
 
@@ -121,8 +112,8 @@ class SkillsService {
         'skills': FieldValue.arrayRemove([skill.toJson()]),
       });
     } catch (e) {
-      if (e is SkillsException) rethrow;
-      throw SkillsException('Failed to delete user skill: $e');
+      if (e is Exception) rethrow;
+      throw Exception('Failed to delete user skill: $e');
     }
   }
 }
