@@ -14,7 +14,6 @@
 - SharedPrefs - https://pub.dev/packages/shared_preferences
 - Toastification - https://pub.dev/packages/toastification
 - FlutterSvg - https://pub.dev/packages/flutter_svg
-- Freezed - https://pub.dev/packages/freezed
 - CountryPicker - https://pub.dev/packages/country_picker
 - Shimmer - https://pub.dev/packages/shimmer
 - FlutterAnimate - https://pub.dev/packages/flutter_animate
