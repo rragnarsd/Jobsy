@@ -8,10 +8,10 @@
 
 #### **Job Search & Discovery**
 - **Browse Job Listings**: View all available job opportunities with detailed descriptions
-- **Smart Filtering**: Filter jobs by type (Full-time, Part-time, Internship, Freelance, Temporary)
+- **Smart Filtering**: Filter jobs by type (Full-time, Part-time, Internship, Freelance, Temporary) (Work in progress)
 - **Location-Based Search**: Find jobs by location with integrated Google Maps
 - **Remote Work Support**: Special handling for remote job opportunities
-- **Job Categories**: Browse jobs by profession and industry
+- **Job Categories**: Browse jobs by profession and industry (Work in progress)
 
 #### **Company & Workplace Information**
 - **Company Profiles**: Detailed information about employers and workplaces
@@ -26,7 +26,7 @@
 - **Education History**: Track your educational background and qualifications
 - **Language Skills**: Highlight your language proficiencies and levels
 - **References & Recommendations**: Manage professional references and endorsements
-- **Portfolio Links**: Share your work samples and online presence
+- **Portfolio Links**: Share your work samples and online presence (Work in progress)
 
 #### **Application Management**
 - **Job Applications**: Track all your job applications in one place
@@ -37,7 +37,7 @@
 #### **Professional Development**
 - **Course Discovery**: Browse available training and certification courses
 - **Course Categories**: Find courses by type (Remote, Onsite, Open courses)
-- **Professional Growth**: Track your learning and development journey
+- **Professional Growth**: Track your learning and development journey (Work in progress)
 
 ### 🌟 **Key Features**
 
