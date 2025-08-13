@@ -91,97 +91,41 @@
 
 ## Environment Setup
 
-This project uses secure configuration for Google Maps API keys. The implementation follows security best practices to prevent API keys from being committed to version control.
+This project uses Google Maps for location features. To get it working locally:
 
-### Google Maps API Key Setup
+### Quick Setup
 
-#### Prerequisites
-1. **Google Cloud Console**: Create a project and enable the Maps SDK for iOS and Android
-2. **API Key**: Generate an API key with appropriate restrictions
-3. **Billing**: Ensure billing is enabled for your Google Cloud project
+1. **Get a Google Maps API Key**:
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a project and enable Maps SDK for iOS and Android
+   - Generate an API key
 
-#### iOS Configuration
-
-1. **Update Debug Configuration** (for local development):
+2. **iOS Setup**:
    ```bash
    # Edit ios/Flutter/Debug.xcconfig
-   # Replace YOUR_API_KEY_HERE with your actual Google Maps API key
-   GOOGLE_MAPS_API_KEY=YOUR_ACTUAL_API_KEY_HERE
+   # Replace YOUR_API_KEY_HERE with your actual key
+   GOOGLE_MAPS_API_KEY=YOUR_API_KEY_HERE
    ```
 
-2. **Update Release Configuration** (for production builds):
-   ```bash
-   # Edit ios/Flutter/Release.xcconfig
-   # This references an environment variable for CI/CD
-   GOOGLE_MAPS_API_KEY=$(GOOGLE_MAPS_API_KEY_ENVIRONMENT_VARIABLE)
-   ```
-
-3. **Verify Configuration**:
-   - The `ios/Runner/Info.plist` already contains the necessary configuration
-   - The `ios/Runner/AppDelegate.swift` reads the key from configuration
-   - The `ios/.gitignore` prevents the Debug.xcconfig from being committed
-
-#### Android Configuration
-
-1. **Create/Update local.properties**:
+3. **Android Setup**:
    ```bash
    # Create android/local.properties (if it doesn't exist)
    # Add your Google Maps API key
-   googleMapsApiKey=YOUR_ACTUAL_API_KEY_HERE
+   googleMapsApiKey=YOUR_API_KEY_HERE
    ```
 
-2. **Verify build.gradle.kts**:
-   - The `android/app/build.gradle.kts` should reference the API key from local.properties
-   - The `android/.gitignore` should exclude local.properties
+4. **Set Environment Variable** (optional, for advanced users):
+   ```bash
+   export GOOGLE_MAPS_API_KEY_ENVIRONMENT_VARIABLE="your_api_key_here"
+   ```
 
-#### Environment Variables for CI/CD
+5. **Run the app**:
+   ```bash
+   flutter clean
+   flutter pub get
+   flutter run
+   ```
 
-For production builds and CI/CD pipelines, set these environment variables:
+**Note**: The configuration files are already set up to read your API key. Just add your key and you're good to go!
 
-```bash
-# iOS
-export GOOGLE_MAPS_API_KEY_ENVIRONMENT_VARIABLE="your_api_key_here"
-
-# Android
-export GOOGLE_MAPS_API_KEY="your_api_key_here"
-```
-
-#### Security Features
-
-✅ **No Hardcoded Keys**: API keys are never committed to version control  
-✅ **Graceful Fallback**: App handles missing API keys gracefully  
-✅ **Environment Separation**: Different keys for debug vs release builds  
-✅ **CI/CD Ready**: Environment variables for automated builds  
-
-#### Troubleshooting
-
-**App shows "Maps Unavailable" message?**
-- Check that your API key is correctly set in the configuration files
-- Verify the API key has Maps SDK enabled in Google Cloud Console
-- Ensure billing is enabled for your Google Cloud project
-
-**Build fails with API key errors?**
-- Verify the configuration files are properly formatted
-- Check that environment variables are set for CI/CD builds
-- Ensure the API key is not wrapped in quotes in configuration files
-
-#### File Structure
-
-```
-ios/
-├── Flutter/
-│   ├── Debug.xcconfig          # Contains your API key (gitignored)
-│   ├── Debug.xcconfig.template # Template file (committed)
-│   └── Release.xcconfig        # References environment variable
-├── Runner/
-│   ├── AppDelegate.swift       # Reads key from configuration
-│   └── Info.plist             # Contains key configuration
-└── .gitignore                 # Excludes Debug.xcconfig
-
-android/
-├── local.properties           # Contains your API key (gitignored)
-├── app/build.gradle.kts      # References the API key
-└── .gitignore                # Excludes local.properties
-```
-
-**Note**: The `Debug.xcconfig` and `local.properties` files are intentionally excluded from version control to protect your API keys.
+**Security**: Your API keys are automatically excluded from version control to keep them safe.
