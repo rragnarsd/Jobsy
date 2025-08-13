@@ -14,13 +14,15 @@
 - SharedPrefs - https://pub.dev/packages/shared_preferences
 - Toastification - https://pub.dev/packages/toastification
 - FlutterSvg - https://pub.dev/packages/flutter_svg
-- Freezed - https://pub.dev/packages/freezed
 - CountryPicker - https://pub.dev/packages/country_picker
 - Shimmer - https://pub.dev/packages/shimmer
 - FlutterAnimate - https://pub.dev/packages/flutter_animate
 - SharePlus - https://pub.dev/packages/share_plus
 - EasyLocalization - https://pub.dev/packages/easy_localization
 - GoogleMaps - https://pub.dev/packages/google_maps_flutter
+
+## Screenshot
+![White   Green Mobile Mockup Photo Collage Beauty Facebook Post](https://github.com/user-attachments/assets/2e9d8917-cf18-4dc1-9b8f-ae97e7ce85b0)
 
 ## Environment Setup
 
