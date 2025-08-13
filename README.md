@@ -2,7 +2,8 @@
 
 ## 📱 About Jobsy
 
-**Jobsy** is a comprehensive job search and career management mobile application built with Flutter. It connects job seekers with employment opportunities while providing powerful tools for managing their professional profile and career development.
+**Jobsy** is a comprehensive job search and career management mobile application built with Flutter. It connects job seekers with employment opportunities while providing powerful tools for managing their professional profile and career development. 
+<br/>(Full Stack Clone of **Alfred App** here in Iceland - www.alfred.is)
 
 ### 🎯 **Core Functionalities**
 
