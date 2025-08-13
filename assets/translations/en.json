@@ -53,6 +53,7 @@
     "apply": "Apply",
     "language_skills": "Language skills",
     "job_location": "Job location",
+    "location": "Location",
     "job_type": "Job Type",
     "job_tags": "Job Tags",
     "more_jobs": "More jobs",
@@ -222,6 +223,10 @@
     "application_failed": "Failed to submit application",
     "no_applications": "No applications yet",
     "applications_will_appear_here": "Your job applications will appear here",
-    "application_submitted_message": "Your application has been submitted and is being reviewed"
+    "application_submitted_message": "Your application has been submitted and is being reviewed",
+
+    "coordinates": "Coordinates",
+    "maps_unavailable": "Maps Unavailable",
+    "maps_unavailable_description": "Google Maps is currently unavailable. This might be due to a missing API key or network issues."
     
 }

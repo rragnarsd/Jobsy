@@ -751,21 +751,98 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        padding: const EdgeInsets.all(16),
-        mapType: MapType.normal,
-        markers: {
-          Marker(
-            markerId: const MarkerId('1'),
-            position: LatLng(
-              locationGeoPoint.latitude,
-              locationGeoPoint.longitude,
+      body: FutureBuilder<GoogleMapController?>(
+        future: _initializeMap(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError || snapshot.data == null) {
+            // Fallback UI when Google Maps is not available
+            return _buildFallbackUI(context);
+          }
+
+          return GoogleMap(
+            padding: const EdgeInsets.all(16),
+            mapType: MapType.normal,
+            markers: {
+              Marker(
+                markerId: const MarkerId('1'),
+                position: LatLng(
+                  locationGeoPoint.latitude,
+                  locationGeoPoint.longitude,
+                ),
+              ),
+            },
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                locationGeoPoint.latitude,
+                locationGeoPoint.longitude,
+              ),
+              zoom: 14.4746,
             ),
-          ),
+          );
         },
-        initialCameraPosition: CameraPosition(
-          target: LatLng(locationGeoPoint.latitude, locationGeoPoint.longitude),
-          zoom: 14.4746,
+      ),
+    );
+  }
+
+  Future<GoogleMapController?> _initializeMap() async {
+    try {
+      return null;
+    } catch (e) {
+      print('Error initializing Google Maps: $e');
+      return null;
+    }
+  }
+
+  Widget _buildFallbackUI(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.map_outlined,
+              size: 64,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'maps_unavailable'.tr(),
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'maps_unavailable_description'.tr(),
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'coordinates'.tr(),
+              style: Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                '${locationGeoPoint.latitude.toStringAsFixed(6)}, ${locationGeoPoint.longitude.toStringAsFixed(6)}',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(fontFamily: 'monospace'),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );
