@@ -22,6 +22,9 @@
 - EasyLocalization - https://pub.dev/packages/easy_localization
 - GoogleMaps - https://pub.dev/packages/google_maps_flutter
 
+## Screenshot
+![White   Green Mobile Mockup Photo Collage Beauty Facebook Post](https://github.com/user-attachments/assets/2e9d8917-cf18-4dc1-9b8f-ae97e7ce85b0)
+
 ## Environment Setup
 
 This project uses environment variables for sensitive configuration. To set up the project:
