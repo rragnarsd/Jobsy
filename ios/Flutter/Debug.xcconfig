@@ -1,5 +1,0 @@
-#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
-#include "Generated.xcconfig"
-
-// Google Maps API Key for Debug builds
-GOOGLE_MAPS_API_KEY=AIzaSyCmIYlwN2QNgCvWD2TEDac6fvbmwJSzdXc
