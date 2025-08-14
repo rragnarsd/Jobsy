@@ -88,6 +88,8 @@
 ## Screenshot
 ![White   Green Mobile Mockup Photo Collage Beauty Facebook Post](https://github.com/user-attachments/assets/2e9d8917-cf18-4dc1-9b8f-ae97e7ce85b0)
 
+https://github.com/user-attachments/assets/6f5c8f9d-3037-43bd-87fb-40d3bb44d9f5
+
 ## 🤝 Contributing
 
 You’re welcome to contribute! Please follow these steps:
