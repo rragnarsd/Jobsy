@@ -56,13 +56,5 @@
 		<string>en</string>
 		<string>is</string>
 	</array>
-	<!--Location permissions for Google Maps-->
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location to show your position on the map.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location to show your position on the map.</string>
-	<!--Google Maps API Key-->
-	<key>googleMapsApiKey</key>
-	<string>$(GOOGLE_MAPS_API_KEY)</string>
 </dict>
 </plist>

@@ -223,10 +223,5 @@
     "application_failed": "Failed to submit application",
     "no_applications": "No applications yet",
     "applications_will_appear_here": "Your job applications will appear here",
-    "application_submitted_message": "Your application has been submitted and is being reviewed",
-
-    "coordinates": "Coordinates",
-    "maps_unavailable": "Maps Unavailable",
-    "maps_unavailable_description": "Google Maps is currently unavailable. This might be due to a missing API key or network issues."
-    
+    "application_submitted_message": "Your application has been submitted and is being reviewed"
 }

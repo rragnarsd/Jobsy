@@ -223,8 +223,6 @@
   "applications_will_appear_here": "Umsóknir þínar munu birtast hér",
   "application_submitted_message": "Umsókn þín hefur verið móttekin og er í yfirferð",
 
-  "location": "Staðsetning",
-  "coordinates": "Hnit",
-  "maps_unavailable": "Kort ekki í boði",
-  "maps_unavailable_description": "Google Maps er ekki í boði núna. Þetta gæti verið vegna þess að API lykill vantar eða netvandamála."
+  "location": "Staðsetning"
+
 }

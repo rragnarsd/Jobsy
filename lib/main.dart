@@ -12,7 +12,6 @@ import 'package:codehatch/providers/skills_provider.dart';
 import 'package:codehatch/providers/workplace_provider.dart';
 import 'package:codehatch/utils/routes.dart';
 import 'package:codehatch/utils/theme.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -29,29 +28,27 @@ Future<void> main() async {
   await authProvider.initAuth();
 
   runApp(
-    DevicePreview(
-      builder: (context) => EasyLocalization(
-        supportedLocales: const [Locale('en'), Locale('is')],
-        path: 'assets/translations',
-        startLocale: const Locale('is'),
-        fallbackLocale: const Locale('en'),
-        useOnlyLangCode: true,
-        child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider.value(value: authProvider),
-            ChangeNotifierProvider(create: (_) => LanguageProvider()),
-            ChangeNotifierProvider(create: (_) => WorkplaceProvider()),
-            ChangeNotifierProvider(create: (_) => CourseProvider()),
-            ChangeNotifierProvider(create: (_) => JobProvider()),
-            ChangeNotifierProvider(create: (_) => EducationProvider()),
-            ChangeNotifierProvider(create: (_) => ReferenceProvider()),
-            ChangeNotifierProvider(create: (_) => LinkProvider()),
-            ChangeNotifierProvider(create: (_) => SkillsProvider()),
-            ChangeNotifierProvider(create: (_) => FavoritesProvider()),
-            ChangeNotifierProvider(create: (_) => ApplicationProvider()),
-          ],
-          child: const JobsyWrapper(),
-        ),
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('is')],
+      path: 'assets/translations',
+      startLocale: const Locale('is'),
+      fallbackLocale: const Locale('en'),
+      useOnlyLangCode: true,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: authProvider),
+          ChangeNotifierProvider(create: (_) => LanguageProvider()),
+          ChangeNotifierProvider(create: (_) => WorkplaceProvider()),
+          ChangeNotifierProvider(create: (_) => CourseProvider()),
+          ChangeNotifierProvider(create: (_) => JobProvider()),
+          ChangeNotifierProvider(create: (_) => EducationProvider()),
+          ChangeNotifierProvider(create: (_) => ReferenceProvider()),
+          ChangeNotifierProvider(create: (_) => LinkProvider()),
+          ChangeNotifierProvider(create: (_) => SkillsProvider()),
+          ChangeNotifierProvider(create: (_) => FavoritesProvider()),
+          ChangeNotifierProvider(create: (_) => ApplicationProvider()),
+        ],
+        child: const JobsyWrapper(),
       ),
     ),
   );
@@ -93,7 +90,6 @@ class _JobsyWrapperState extends State<JobsyWrapper> {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: darkTheme,
-      builder: DevicePreview.appBuilder,
     );
   }
 }

@@ -298,18 +298,8 @@ class WorkplaceJobsList extends StatelessWidget {
           final job = jobs[index];
 
           return Card(
-            child: Column(
-              children: [
-                JobCard(
-                  workplace: workplace,
-                  job: job,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 16,
-                  ),
-                ),
-              ],
-            ),
+            margin: EdgeInsets.zero,
+            child: JobCard(workplace: workplace, job: job),
           );
         }, childCount: jobs.length),
       ),

@@ -36,14 +36,6 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         
-        // Read environment variables
-        val googleMapKey = System.getenv("GOOGLE_MAP_KEY") ?: ""
-        
-        // Add build config fields
-        buildConfigField("String", "GOOGLE_MAP_KEY", "\"$googleMapKey\"")
-        
-        // Add manifest placeholders
-        manifestPlaceholders["GOOGLE_MAP_KEY"] = googleMapKey
     }
 
     buildTypes {

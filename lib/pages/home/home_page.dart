@@ -129,6 +129,7 @@ class JobCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       CachedNetworkImage(
@@ -157,25 +158,38 @@ class JobCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      IconTextRow(
-                        icon: Icons.work,
-                        text: jobTypeFromEnglishValue(job.jobType).displayName,
-                      ),
-                      const VerticalDivider(),
-                      IconTextRow(
-                        icon: Icons.location_on,
-                        text: job.isRemote
-                            ? 'remote'.tr()
-                            : workplace.location.split(',').first.trim(),
-                      ),
-                      const VerticalDivider(),
-                      IconTextRow(
-                        icon: Icons.calendar_today,
-                        text: job.deadline?.toShortFormattedDate() ?? 'N/A',
-                      ),
-                    ],
+                  SizedBox(
+                    height: 20,
+                    child: Row(
+                      children: [
+                        IconTextRow(
+                          icon: Icons.work,
+                          text: jobTypeFromEnglishValue(
+                            job.jobType,
+                          ).displayName,
+                        ),
+                        VerticalDivider(
+                          color: JobsyColors.greyColor.withValues(alpha: 0.5),
+                          indent: 3,
+                          endIndent: 3,
+                        ),
+                        IconTextRow(
+                          icon: Icons.location_on,
+                          text: job.isRemote
+                              ? 'remote'.tr()
+                              : workplace.location.split(',').first.trim(),
+                        ),
+                        VerticalDivider(
+                          color: JobsyColors.greyColor.withValues(alpha: 0.5),
+                          indent: 3,
+                          endIndent: 3,
+                        ),
+                        IconTextRow(
+                          icon: Icons.calendar_today,
+                          text: job.deadline?.toShortFormattedDate() ?? 'N/A',
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
