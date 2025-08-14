@@ -90,10 +90,18 @@
 
 ## 🤝 Contributing
 
-We welcome contributions!  
-Please follow these steps to ensure a smooth review process before your code gets merged into `main`:
+You’re welcome to contribute! Please follow these steps:
 
 1. **Fork** this repository.
 2. **Create a new branch** from `main`:
    ```bash
    git checkout -b feature/your-feature-name
+
+   Make your changes, then stage and commit them:
+   git add .
+   git commit -m "Describe your changes here"
+
+   Push your branch to your fork:
+   git push origin feature/your-feature-name
+
+   Open a Pull Request (PR) on GitHub targeting the main branch of this repo.
