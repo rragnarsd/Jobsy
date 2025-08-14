@@ -792,7 +792,6 @@ class MapPage extends StatelessWidget {
     try {
       return null;
     } catch (e) {
-      print('Error initializing Google Maps: $e');
       return null;
     }
   }

@@ -5,6 +5,7 @@ import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -39,16 +40,28 @@ class _WorkplacesState extends State<Workplaces> {
           const SliverToBoxAdapter(child: SizedBox(height: 8)),
           Selector<WorkplaceProvider, List<WorkplaceModel>>(
             selector: (_, provider) => provider.workplaces,
-            builder: (context, workplaces, child) => SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.76,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) => WorkplaceItem(workplace: workplaces[index]),
-                childCount: workplaces.length,
-              ),
-            ),
+            builder: (context, workplaces, child) {
+              if (workplaces.isEmpty) {
+                return const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Center(child: Text('No workplaces available')),
+                  ),
+                );
+              }
+
+              return SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverAlignedGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  itemCount: workplaces.length,
+                  itemBuilder: (context, index) =>
+                      WorkplaceItem(workplace: workplaces[index]),
+                ),
+              );
+            },
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
@@ -65,8 +78,8 @@ class WorkplaceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     final workplaceProvider = context.watch<WorkplaceProvider>();
+
     final jobCount = workplaceProvider.jobs
         .where((job) => job.workplaceId == workplace.id)
         .length;
@@ -74,81 +87,76 @@ class WorkplaceItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => context.push('/workplace-details/${workplace.id}'),
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CachedNetworkImage(
-              imageUrl: workplace.logoUrl ?? '',
-              width: 80,
-              height: 80,
-              placeholder: (_, __) =>
-                  const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
-              errorWidget: (_, __, ___) => const Icon(Icons.error),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.hardEdge,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CachedNetworkImage(
+                imageUrl: workplace.logoUrl ?? '',
+                width: 80,
+                height: 80,
+                placeholder: (_, __) =>
+                    const Placeholder(fallbackHeight: 80, fallbackWidth: 80),
+                errorWidget: (_, __, ___) => const Icon(Icons.error),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                workplace.name,
+                style: theme.textTheme.bodyLarge!.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                workplace.description,
+                style: theme.textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 6,
                 children: [
+                  const Icon(Icons.person, color: Colors.grey, size: 16),
+                  const SizedBox(width: 4),
                   Text(
-                    workplace.name,
-                    style: theme.textTheme.bodyLarge!.copyWith(
-                      fontWeight: FontWeight.w600,
+                    workplace.size,
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      color: JobsyColors.greyColor,
                     ),
-                  ),
-                  Text(
-                    workplace.description,
-                    style: theme.textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 2),
-                  Row(
-                    spacing: 8,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.person, color: Colors.grey, size: 16),
-                      Text(
-                        workplace.size,
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                          color: JobsyColors.greyColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    spacing: 8,
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          radius: 12,
-                          backgroundColor: JobsyColors.primaryColor,
-                          child: Text(
-                            jobCount.toString(),
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'vacancies'.tr(),
-                        style: theme.textTheme.bodyMedium!.copyWith(
-                          color: JobsyColors.primaryColor,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
-            ),
-          ],
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 12,
+                    backgroundColor: JobsyColors.primaryColor,
+                    child: Text(
+                      jobCount.toString(),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    'vacancies'.tr(),
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      color: JobsyColors.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
         ),
       ),
     );
