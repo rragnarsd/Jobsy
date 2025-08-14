@@ -88,3 +88,12 @@
 ## Screenshot
 ![White   Green Mobile Mockup Photo Collage Beauty Facebook Post](https://github.com/user-attachments/assets/2e9d8917-cf18-4dc1-9b8f-ae97e7ce85b0)
 
+## 🤝 Contributing
+
+We welcome contributions!  
+Please follow these steps to ensure a smooth review process before your code gets merged into `main`:
+
+1. **Fork** this repository.
+2. **Create a new branch** from `main`:
+   ```bash
+   git checkout -b feature/your-feature-name
