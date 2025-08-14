@@ -47,6 +47,7 @@ class SettingsPage extends StatelessWidget {
               ),
             ],
           ),
+          //TODO - Add light theme
           SettingsSection(
             title: 'theme'.tr(),
             tiles: [

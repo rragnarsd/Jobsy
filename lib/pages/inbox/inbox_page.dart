@@ -24,6 +24,7 @@ class _InboxPageState extends State<InboxPage> {
     });
   }
 
+  //TODO - Option to remove / undo application
   @override
   Widget build(BuildContext context) {
     final applicationProvider = context.watch<ApplicationProvider>();
