@@ -33,6 +33,8 @@ class _InboxPageState extends State<InboxPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${'inbox'.tr()} (${applications.length})'),
+        leadingWidth: 90,
+        leading: Image.asset('assets/icon/jobsy.png'),
         actions: [
           IconButton(
             onPressed: () {},

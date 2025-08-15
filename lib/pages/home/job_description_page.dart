@@ -11,6 +11,7 @@ import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -522,6 +523,7 @@ class JobDeadline extends StatelessWidget {
 
     try {
       await applicationProvider.addApplication(application);
+
       if (context.mounted) {
         context.showToast(
           title: 'application_submitted'.tr(),
@@ -530,6 +532,8 @@ class JobDeadline extends StatelessWidget {
           duration: const Duration(seconds: 5),
         );
       }
+      //TODO - Double check this
+      hapticFeedback(HapticsType.success);
     } catch (e) {
       if (context.mounted) {
         context.showToast(
@@ -539,7 +543,16 @@ class JobDeadline extends StatelessWidget {
           duration: const Duration(seconds: 5),
         );
       }
+      //TODO - Double check this
+      hapticFeedback(HapticsType.error);
     }
+  }
+
+  void hapticFeedback(HapticsType type) async {
+    final bool can = await Haptics.canVibrate();
+
+    if (!can) return;
+    await Haptics.vibrate(type);
   }
 }
 

@@ -31,6 +31,8 @@ class _CoursesPageState extends State<CoursesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('${'courses'.tr()} (${courseProvider.courses.length})'),
+        leadingWidth: 90,
+        leading: Image.asset('assets/icon/jobsy.png'),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),

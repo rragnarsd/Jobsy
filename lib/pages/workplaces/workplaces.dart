@@ -24,6 +24,8 @@ class _WorkplacesState extends State<Workplaces> {
     return Scaffold(
       appBar: AppBar(
         title: Text('workplaces'.tr()),
+        leadingWidth: 90,
+        leading: Image.asset('assets/icon/jobsy.png'),
         actions: [
           IconButton(
             onPressed: () => setState(() => _showSearch = !_showSearch),
