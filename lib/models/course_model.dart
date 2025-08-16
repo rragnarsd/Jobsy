@@ -1,61 +1,49 @@
 import 'package:codehatch/utils/extensions.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CourseModel {
-  final String id;
-  final String title;
-  final String businessName;
-  final DateTime startDate;
-  final int timeSpan;
-  final double price;
-  final CourseTypes type;
-  final String courseInfo;
-  final String logoUrl;
-  final List<String> categories;
-  final String imageUrl;
+part 'course_model.freezed.dart';
+part 'course_model.g.dart';
 
-  CourseModel({
-    required this.id,
-    required this.title,
-    required this.businessName,
-    required this.startDate,
-    required this.timeSpan,
-    required this.price,
-    required this.type,
-    required this.courseInfo,
-    required this.categories,
-    required this.logoUrl,
-    required this.imageUrl,
-  });
+class CourseTypesConverter implements JsonConverter<CourseTypes, String> {
+  const CourseTypesConverter();
 
-  factory CourseModel.fromJson(Map<String, dynamic> json) {
-    return CourseModel(
-      id: json['id'],
-      title: json['title'],
-      businessName: json['businessName'],
-      startDate: DateTime.parse(json['startDate']),
-      timeSpan: json['timeSpan'],
-      price: json['price'],
-      type: CourseTypes.values.byName(json['type']),
-      courseInfo: json['courseInfo'],
-      categories: List<String>.from(json['categories']),
-      logoUrl: json['logoUrl'],
-      imageUrl: json['imageUrl'],
-    );
+  @override
+  CourseTypes fromJson(String json) {
+    return CourseTypes.values.byName(json);
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'businessName': businessName,
-      'startDate': startDate.toIso8601String(),
-      'timeSpan': timeSpan,
-      'price': price,
-      'type': type.name,
-      'courseInfo': courseInfo,
-      'categories': categories,
-      'logoUrl': logoUrl,
-      'imageUrl': imageUrl,
-    };
+  @override
+  String toJson(CourseTypes courseType) => courseType.name;
+}
+
+class DateTimeConverter implements JsonConverter<DateTime, String> {
+  const DateTimeConverter();
+
+  @override
+  DateTime fromJson(String json) {
+    return DateTime.parse(json);
   }
+
+  @override
+  String toJson(DateTime dateTime) => dateTime.toIso8601String();
+}
+
+@freezed
+abstract class CourseModel with _$CourseModel {
+  const factory CourseModel({
+    required String id,
+    required String title,
+    required String businessName,
+    @DateTimeConverter() required DateTime startDate,
+    required int timeSpan,
+    required double price,
+    @CourseTypesConverter() required CourseTypes type,
+    required String courseInfo,
+    required List<String> categories,
+    required String logoUrl,
+    required String imageUrl,
+  }) = _CourseModel;
+
+  factory CourseModel.fromJson(Map<String, dynamic> json) =>
+      _$CourseModelFromJson(json);
 }

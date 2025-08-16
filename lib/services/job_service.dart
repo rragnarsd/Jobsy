@@ -67,15 +67,7 @@ class JobService {
 
       final jobList = _getJobList(userDoc);
 
-      return jobList.map((job) {
-        return JobExperienceModel(
-          id: job['id'],
-          jobTitle: job['jobTitle'],
-          companyName: job['companyName'],
-          startDate: (job['startDate'] as Timestamp).toDate(),
-          endDate: (job['endDate'] as Timestamp).toDate(),
-        );
-      }).toList();
+      return jobList.map((job) => JobExperienceModel.fromJson(job)).toList();
     } catch (e) {
       if (e is Exception) rethrow;
       throw Exception('Failed to get job experience: $e');

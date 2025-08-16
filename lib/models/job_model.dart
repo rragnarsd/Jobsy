@@ -1,102 +1,72 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:codehatch/utils/extensions.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class JobModel {
-  final String id;
-  final String title;
-  final String description;
-  final List<String> responsibilities;
-  final List<String> qualifications;
-  final List<LanguageSkill> languageSkills;
-  final JobType jobType;
-  final List<String> professions;
-  final DateTime? publishedDate;
-  final DateTime? deadline;
-  final String workplaceId;
-  final double? salary;
-  final bool isRemote;
-  final String? location;
+part 'job_model.freezed.dart';
+part 'job_model.g.dart';
 
-  JobModel({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.responsibilities,
-    required this.qualifications,
-    required this.languageSkills,
-    required this.jobType,
-    required this.professions,
-    this.publishedDate,
-    this.deadline,
-    required this.workplaceId,
-    this.salary,
-    this.isRemote = false,
-    this.location,
-  });
+class JobTypeConverter implements JsonConverter<JobType, String> {
+  const JobTypeConverter();
 
-  factory JobModel.fromJson(Map<String, dynamic> json) {
-    return JobModel(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      responsibilities: List<String>.from(json['responsibilities']),
-      qualifications: List<String>.from(json['qualifications']),
-      languageSkills: List<LanguageSkill>.from(
-        json['languageSkills'].map((skill) => LanguageSkill.fromJson(skill)),
-      ),
-      jobType: JobType.values.firstWhere(
-        (e) => e.englishValue == json['jobType'],
-        orElse: () => JobType.fullTime,
-      ),
-      professions: List<String>.from(json['professions']),
-      publishedDate: json['publishedDate'] != null
-          ? (json['publishedDate'] is Timestamp
-                ? (json['publishedDate'] as Timestamp).toDate()
-                : DateTime.parse(json['publishedDate']))
-          : null,
-      deadline: json['deadline'] != null
-          ? (json['deadline'] is Timestamp
-                ? (json['deadline'] as Timestamp).toDate()
-                : DateTime.parse(json['deadline']))
-          : null,
-      workplaceId: json['workplaceId'],
-      salary: (json['salary'] != null) ? json['salary'].toDouble() : null,
-      isRemote: json['isRemote'] ?? false,
-      location: json['location'],
+  @override
+  JobType fromJson(String json) {
+    return JobType.values.firstWhere(
+      (e) => e.englishValue == json,
+      orElse: () => JobType.fullTime,
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'responsibilities': responsibilities,
-      'qualifications': qualifications,
-      'languageSkills': languageSkills.map((skill) => skill.toJson()).toList(),
-      'jobType': jobType.englishValue,
-      'professions': professions,
-      'publishedDate': publishedDate,
-      'deadline': deadline,
-      'workplaceId': workplaceId,
-      'salary': salary,
-      'isRemote': isRemote,
-      'location': location,
-    };
-  }
+  @override
+  String toJson(JobType jobType) => jobType.englishValue;
 }
 
-class LanguageSkill {
-  final String title;
-  final String flagUrl;
+class TimestampConverter implements JsonConverter<DateTime, dynamic> {
+  const TimestampConverter();
 
-  LanguageSkill({required this.title, required this.flagUrl});
-
-  factory LanguageSkill.fromJson(Map<String, dynamic> json) {
-    return LanguageSkill(title: json['title'], flagUrl: json['flagUrl']);
+  @override
+  DateTime fromJson(dynamic json) {
+    if (json is Timestamp) {
+      return json.toDate();
+    } else if (json is String) {
+      return DateTime.parse(json);
+    }
+    throw FormatException('Invalid timestamp format: $json');
   }
 
-  Map<String, dynamic> toJson() {
-    return {'title': title, 'flagUrl': flagUrl};
-  }
+  @override
+  dynamic toJson(DateTime dateTime) => dateTime;
+}
+
+@freezed
+abstract class JobModel with _$JobModel {
+  const factory JobModel({
+    required String id,
+    required String title,
+    required String description,
+    required List<String> responsibilities,
+    required List<String> qualifications,
+    required List<LanguageSkill> languageSkills,
+    @JobTypeConverter() required JobType jobType,
+    required List<String> professions,
+    @TimestampConverter() DateTime? publishedDate,
+    @TimestampConverter() DateTime? deadline,
+    required String workplaceId,
+    double? salary,
+    @Default(false) bool isRemote,
+    String? location,
+  }) = _JobModel;
+
+  factory JobModel.fromJson(Map<String, dynamic> json) =>
+      _$JobModelFromJson(json);
+}
+
+@freezed
+abstract class LanguageSkill with _$LanguageSkill {
+  const factory LanguageSkill({
+    required String title,
+    required String flagUrl,
+  }) = _LanguageSkill;
+
+  factory LanguageSkill.fromJson(Map<String, dynamic> json) =>
+      _$LanguageSkillFromJson(json);
 }

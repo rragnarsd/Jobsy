@@ -23,11 +23,7 @@ class LinkService {
     return List<dynamic>.from(data['links'] ?? []);
   }
 
-  Map<String, dynamic> _linkToMap(LinkModel link) => {
-    'id': link.id,
-    'site': link.site,
-    'media': link.media,
-  };
+  Map<String, dynamic> _linkToMap(LinkModel link) => link.toJson();
 
   /// Adds a new link record to the user's profile.
   /// Throws a [LinkException] if validation fails or the operation fails.
@@ -63,13 +59,7 @@ class LinkService {
 
       final linkList = _getLinkList(userDoc);
 
-      return linkList.map((link) {
-        return LinkModel(
-          id: link['id'],
-          site: link['site'],
-          media: link['media'],
-        );
-      }).toList();
+      return linkList.map((link) => LinkModel.fromJson(link)).toList();
     } catch (e) {
       if (e is Exception) rethrow;
       throw Exception('Failed to get links: $e');

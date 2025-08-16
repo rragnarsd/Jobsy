@@ -25,13 +25,8 @@ class LanguageService {
     return List<dynamic>.from(data['languages'] ?? []);
   }
 
-  Map<String, dynamic> _languageToMap(LanguageModel language) => {
-    'id': language.id,
-    'name': language.name,
-    'level': language.level,
-    'flagCode': language.flagCode,
-    'flagEmoji': language.flagEmoji,
-  };
+  Map<String, dynamic> _languageToMap(LanguageModel language) =>
+      language.toJson();
 
   /// Adds a new language record to the user's profile.
   /// Throws a [LanguageException] if validation fails or the operation fails.
@@ -67,15 +62,7 @@ class LanguageService {
 
       final languageList = _getLanguageList(userDoc);
       return languageList
-          .map(
-            (language) => LanguageModel(
-              id: language['id'],
-              name: language['name'] ?? language['language'] ?? '',
-              level: language['level'],
-              flagCode: language['flagCode'],
-              flagEmoji: language['flagEmoji'] ?? '',
-            ),
-          )
+          .map((language) => LanguageModel.fromJson(language))
           .toList();
     } catch (e) {
       if (e is Exception) rethrow;

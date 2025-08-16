@@ -1,97 +1,54 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class WorkplaceModel {
-  final String id;
-  final String name;
-  final String description;
-  final String location;
-  final GeoPoint locationGeoPoint;
-  final String websiteUrl;
-  final String size;
-  final String? imageUrl;
-  final String? logoUrl;
-  final String motto;
-  final List<String>? awards;
-  final List<PerkModel>? perks;
-  final List<String> jobIds;
+part 'workplace_model.freezed.dart';
+part 'workplace_model.g.dart';
 
-  WorkplaceModel({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.location,
-    required this.locationGeoPoint,
-    required this.websiteUrl,
-    required this.size,
-    required this.jobIds,
-    required this.motto,
-    this.imageUrl,
-    this.logoUrl,
-    this.awards,
-    this.perks,
-  });
+class GeoPointConverter
+    implements JsonConverter<GeoPoint, Map<String, dynamic>> {
+  const GeoPointConverter();
 
-  factory WorkplaceModel.fromJson(Map<String, dynamic> json) {
-    return WorkplaceModel(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      location: json['location'],
-      locationGeoPoint: json['locationGeoPoint'],
-      websiteUrl: json['websiteUrl'] ?? '',
-      size: json['size'],
-      imageUrl: json['imageUrl'],
-      logoUrl: json['logoUrl'],
-      motto: json['motto'],
-      awards: json['awards'] != null ? List<String>.from(json['awards']) : null,
-      perks: json['perks'] != null
-          ? (json['perks'] as List).map((p) => PerkModel.fromJson(p)).toList()
-          : null,
-      jobIds: json['jobIds'] != null
-          ? List<String>.from(json['jobIds'])
-          : <String>[],
-    );
+  @override
+  GeoPoint fromJson(Map<String, dynamic> json) {
+    return GeoPoint(json['latitude'] as double, json['longitude'] as double);
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'location': location,
-      'locationGeoPoint': locationGeoPoint,
-      'websiteUrl': websiteUrl,
-      'size': size,
-      'imageUrl': imageUrl,
-      'logoUrl': logoUrl,
-      'motto': motto,
-      'awards': awards,
-      'perks': perks?.map((p) => p.toJson()).toList() ?? [],
-      'jobIds': jobIds,
-    };
+  @override
+  Map<String, dynamic> toJson(GeoPoint geoPoint) {
+    return {'latitude': geoPoint.latitude, 'longitude': geoPoint.longitude};
   }
 }
 
-class PerkModel {
-  final String title;
-  final String description;
-  final String iconUrl;
+@freezed
+abstract class WorkplaceModel with _$WorkplaceModel {
+  const factory WorkplaceModel({
+    required String id,
+    required String name,
+    required String description,
+    required String location,
+    @GeoPointConverter() required GeoPoint locationGeoPoint,
+    required String websiteUrl,
+    required String size,
+    required String motto,
+    required List<String> jobIds,
+    String? imageUrl,
+    String? logoUrl,
+    List<String>? awards,
+    List<PerkModel>? perks,
+  }) = _WorkplaceModel;
 
-  PerkModel({
-    required this.title,
-    required this.description,
-    required this.iconUrl,
-  });
+  factory WorkplaceModel.fromJson(Map<String, dynamic> json) =>
+      _$WorkplaceModelFromJson(json);
+}
 
-  factory PerkModel.fromJson(Map<String, dynamic> json) {
-    return PerkModel(
-      title: json['title'],
-      description: json['description'],
-      iconUrl: json['iconUrl'],
-    );
-  }
+@freezed
+abstract class PerkModel with _$PerkModel {
+  const factory PerkModel({
+    required String title,
+    required String description,
+    required String iconUrl,
+  }) = _PerkModel;
 
-  Map<String, dynamic> toJson() {
-    return {'title': title, 'description': description, 'iconUrl': iconUrl};
-  }
+  factory PerkModel.fromJson(Map<String, dynamic> json) =>
+      _$PerkModelFromJson(json);
 }

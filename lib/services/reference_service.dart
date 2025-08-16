@@ -25,12 +25,7 @@ class ReferenceService {
     return List<dynamic>.from(data['references'] ?? []);
   }
 
-  Map<String, dynamic> _referenceToMap(ReferenceModel ref) => {
-    'id': ref.id,
-    'name': ref.name,
-    'jobTitle': ref.jobTitle,
-    'email': ref.email,
-  };
+  Map<String, dynamic> _referenceToMap(ReferenceModel ref) => ref.toJson();
 
   /// Adds a new reference record to the user's profile.
   /// Throws a [ReferenceException] if validation fails or the operation fails.
@@ -66,14 +61,7 @@ class ReferenceService {
 
       final referenceList = _getReferenceList(userDoc);
 
-      return referenceList.map((ref) {
-        return ReferenceModel(
-          id: ref['id'],
-          name: ref['name'],
-          jobTitle: ref['jobTitle'],
-          email: ref['email'],
-        );
-      }).toList();
+      return referenceList.map((ref) => ReferenceModel.fromJson(ref)).toList();
     } catch (e) {
       if (e is Exception) rethrow;
       throw Exception('Failed to get references: $e');

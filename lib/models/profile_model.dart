@@ -1,280 +1,152 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class ProfileModel {
-  final String id;
-  final String name;
-  final String phoneNumber;
-  final DateTime dateOfBirth;
-  final String aboutYou;
-  final String idNumber;
-  final List<JobExperienceModel> jobExperience;
-  final List<EducationModel> education;
-  final List<SkillsModel> skills;
-  final List<LanguageModel> languages;
-  final List<ReferenceModel> references;
-  final List<LinkModel> links;
-  final List<Favorites> favorites;
-  final List<ApplicationModel> applications;
+part 'profile_model.freezed.dart';
+part 'profile_model.g.dart';
 
-  ProfileModel({
-    required this.id,
-    required this.name,
-    required this.phoneNumber,
-    required this.dateOfBirth,
-    required this.aboutYou,
-    required this.idNumber,
-    required this.jobExperience,
-    required this.education,
-    required this.skills,
-    required this.languages,
-    required this.references,
-    required this.links,
-    required this.favorites,
-    required this.applications,
-  });
+class TimestampConverter implements JsonConverter<DateTime, dynamic> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(dynamic json) {
+    if (json is Timestamp) {
+      return json.toDate();
+    } else if (json is String) {
+      return DateTime.parse(json);
+    }
+    throw FormatException('Invalid timestamp format: $json');
+  }
+
+  @override
+  dynamic toJson(DateTime dateTime) => dateTime;
 }
 
-class JobExperienceModel {
-  final String id;
-  final String jobTitle;
-  final String companyName;
-  final DateTime startDate;
-  final DateTime endDate;
-  final String? description;
+@freezed
+abstract class ProfileModel with _$ProfileModel {
+  const factory ProfileModel({
+    required String id,
+    required String name,
+    required String phoneNumber,
+    @TimestampConverter() required DateTime dateOfBirth,
+    required String aboutYou,
+    required String idNumber,
+    required List<JobExperienceModel> jobExperience,
+    required List<EducationModel> education,
+    required List<SkillsModel> skills,
+    required List<LanguageModel> languages,
+    required List<ReferenceModel> references,
+    required List<LinkModel> links,
+    required List<Favorites> favorites,
+    required List<ApplicationModel> applications,
+  }) = _ProfileModel;
 
-  JobExperienceModel({
-    required this.id,
-    required this.jobTitle,
-    required this.companyName,
-    required this.startDate,
-    required this.endDate,
-    this.description,
-  });
-
-  factory JobExperienceModel.fromJson(Map<String, dynamic> json) {
-    return JobExperienceModel(
-      id: json['id'],
-      jobTitle: json['jobTitle'],
-      companyName: json['companyName'],
-      startDate: json['startDate'],
-      endDate: json['endDate'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'jobTitle': jobTitle,
-      'companyName': companyName,
-      'startDate': startDate,
-      'endDate': endDate,
-    };
-  }
+  factory ProfileModel.fromJson(Map<String, dynamic> json) =>
+      _$ProfileModelFromJson(json);
 }
 
-class EducationModel {
-  final String id;
-  final String school;
-  final String field;
-  final String degree;
-  final String yearStart;
-  final String yearEnd;
+@freezed
+abstract class JobExperienceModel with _$JobExperienceModel {
+  const factory JobExperienceModel({
+    required String id,
+    required String jobTitle,
+    required String companyName,
+    @TimestampConverter() required DateTime startDate,
+    @TimestampConverter() required DateTime endDate,
+    String? description,
+  }) = _JobExperienceModel;
 
-  EducationModel({
-    required this.id,
-    required this.school,
-    required this.field,
-    required this.degree,
-    required this.yearStart,
-    required this.yearEnd,
-  });
-
-  factory EducationModel.fromJson(Map<String, dynamic> json) {
-    return EducationModel(
-      id: json['id'],
-      school: json['school'],
-      field: json['field'],
-      degree: json['degree'],
-      yearStart: json['yearStart'],
-      yearEnd: json['yearEnd'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'school': school,
-      'field': field,
-      'degree': degree,
-      'yearStart': yearStart,
-      'yearEnd': yearEnd,
-    };
-  }
+  factory JobExperienceModel.fromJson(Map<String, dynamic> json) =>
+      _$JobExperienceModelFromJson(json);
 }
 
-class ReferenceModel {
-  final String id;
-  final String name;
-  final String jobTitle;
-  final String email;
+@freezed
+abstract class EducationModel with _$EducationModel {
+  const factory EducationModel({
+    required String id,
+    required String school,
+    required String field,
+    required String degree,
+    required String yearStart,
+    required String yearEnd,
+  }) = _EducationModel;
 
-  ReferenceModel({
-    required this.id,
-    required this.name,
-    required this.jobTitle,
-    required this.email,
-  });
-
-  factory ReferenceModel.fromJson(Map<String, dynamic> json) {
-    return ReferenceModel(
-      id: json['id'],
-      name: json['name'],
-      jobTitle: json['jobTitle'],
-      email: json['email'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {'id': id, 'name': name, 'jobTitle': jobTitle, 'email': email};
-  }
+  factory EducationModel.fromJson(Map<String, dynamic> json) =>
+      _$EducationModelFromJson(json);
 }
 
-class LinkModel {
-  final String id;
-  final String site;
-  final String media;
-  final String? iconUrl;
+@freezed
+abstract class ReferenceModel with _$ReferenceModel {
+  const factory ReferenceModel({
+    required String id,
+    required String name,
+    required String jobTitle,
+    required String email,
+  }) = _ReferenceModel;
 
-  LinkModel({
-    required this.id,
-    required this.site,
-    required this.media,
-    this.iconUrl,
-  });
-
-  factory LinkModel.fromJson(Map<String, dynamic> json) {
-    return LinkModel(
-      id: json['id'],
-      site: json['site'],
-      media: json['media'],
-      iconUrl: json['iconUrl'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {'id': id, 'site': site, 'media': media, 'iconUrl': iconUrl};
-  }
+  factory ReferenceModel.fromJson(Map<String, dynamic> json) =>
+      _$ReferenceModelFromJson(json);
 }
 
-class SkillsModel {
-  final String id;
-  final String category;
-  final String categoryItem;
+@freezed
+abstract class LinkModel with _$LinkModel {
+  const factory LinkModel({
+    required String id,
+    required String site,
+    required String media,
+    String? iconUrl,
+  }) = _LinkModel;
 
-  SkillsModel({
-    required this.id,
-    required this.category,
-    required this.categoryItem,
-  });
-
-  factory SkillsModel.fromJson(Map<String, dynamic> json) {
-    return SkillsModel(
-      id: json['id'],
-      category: json['category'],
-      categoryItem: json['categoryItem'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {'id': id, 'category': category, 'categoryItem': categoryItem};
-  }
+  factory LinkModel.fromJson(Map<String, dynamic> json) =>
+      _$LinkModelFromJson(json);
 }
 
-class LanguageModel {
-  final String id;
-  final String name;
-  final String level;
-  final String flagCode;
-  final String flagEmoji;
+@freezed
+abstract class SkillsModel with _$SkillsModel {
+  const factory SkillsModel({
+    required String id,
+    required String category,
+    required String categoryItem,
+  }) = _SkillsModel;
 
-  LanguageModel({
-    required this.id,
-    required this.name,
-    required this.level,
-    required this.flagCode,
-    required this.flagEmoji,
-  });
-
-  factory LanguageModel.fromJson(Map<String, dynamic> json) {
-    return LanguageModel(
-      id: json['id'],
-      name: json['name'],
-      level: json['level'],
-      flagCode: json['flagCode'],
-      flagEmoji: json['flagEmoji'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'level': level,
-      'flagCode': flagCode,
-      'flagEmoji': flagEmoji,
-    };
-  }
+  factory SkillsModel.fromJson(Map<String, dynamic> json) =>
+      _$SkillsModelFromJson(json);
 }
 
-class Favorites {
-  final String id;
-  final String workplaceId;
+@freezed
+abstract class LanguageModel with _$LanguageModel {
+  const factory LanguageModel({
+    required String id,
+    required String name,
+    required String level,
+    required String flagCode,
+    required String flagEmoji,
+  }) = _LanguageModel;
 
-  Favorites({required this.id, required this.workplaceId});
+  factory LanguageModel.fromJson(Map<String, dynamic> json) =>
+      _$LanguageModelFromJson(json);
 }
 
-class ApplicationModel {
-  final String id;
-  final String jobId;
-  final String workplaceId;
-  final String jobTitle;
-  final String companyName;
-  final String status;
-  final DateTime appliedDate;
+@freezed
+abstract class Favorites with _$Favorites {
+  const factory Favorites({required String id, required String workplaceId}) =
+      _Favorites;
 
-  ApplicationModel({
-    required this.id,
-    required this.jobId,
-    required this.workplaceId,
-    required this.jobTitle,
-    required this.companyName,
-    required this.status,
-    required this.appliedDate,
-  });
+  factory Favorites.fromJson(Map<String, dynamic> json) =>
+      _$FavoritesFromJson(json);
+}
 
-  factory ApplicationModel.fromJson(Map<String, dynamic> json) {
-    return ApplicationModel(
-      id: json['id'],
-      jobId: json['jobId'],
-      workplaceId: json['workplaceId'] ?? '',
-      jobTitle: json['jobTitle'],
-      companyName: json['companyName'],
-      status: json['status'],
-      appliedDate: json['appliedDate'] is Timestamp
-          ? (json['appliedDate'] as Timestamp).toDate()
-          : DateTime.parse(json['appliedDate']),
-    );
-  }
+@freezed
+abstract class ApplicationModel with _$ApplicationModel {
+  const factory ApplicationModel({
+    required String id,
+    required String jobId,
+    required String workplaceId,
+    required String jobTitle,
+    required String companyName,
+    required String status,
+    @TimestampConverter() required DateTime appliedDate,
+  }) = _ApplicationModel;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'jobId': jobId,
-      'workplaceId': workplaceId,
-      'jobTitle': jobTitle,
-      'companyName': companyName,
-      'status': status,
-      'appliedDate': appliedDate,
-    };
-  }
+  factory ApplicationModel.fromJson(Map<String, dynamic> json) =>
+      _$ApplicationModelFromJson(json);
 }
