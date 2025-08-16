@@ -90,7 +90,7 @@
 - WoltModalSheet - https://pub.dev/packages/wolt_modal_sheet
 
 ## Screenshot
-![White   Green Mobile Mockup Photo Collage Beauty Facebook Post](https://github.com/user-attachments/assets/2e9d8917-cf18-4dc1-9b8f-ae97e7ce85b0)
+<img width="5760" height="3240" alt="The smarter way to job hunt (1)" src="https://github.com/user-attachments/assets/f214a891-479b-4bac-8079-d7a8dca097d6" />
 
 https://github.com/user-attachments/assets/6f5c8f9d-3037-43bd-87fb-40d3bb44d9f5
 
