@@ -28,35 +28,35 @@ extension TimeAgoExtension on DateTime {
 
     if (duration.inDays >= 365) {
       final years = (duration.inDays / 365).round();
-      return '$years year${years > 1 ? 's' : ''} ago';
+      return '$years ${years > 1 ? 'time_ago.years'.tr() : 'time_ago.year'.tr()} ${'time_ago.ago'.tr()}';
     }
 
     if (duration.inDays >= 30) {
       final months = (duration.inDays / 30).round();
-      return '$months month${months > 1 ? 's' : ''} ago';
+      return '$months ${months > 1 ? 'time_ago.months'.tr() : 'time_ago.month'.tr()} ${'time_ago.ago'.tr()}';
     }
 
     if (duration.inDays >= 7) {
       final weeks = (duration.inDays / 7).round();
-      return '$weeks week${weeks > 1 ? 's' : ''} ago';
+      return '$weeks ${weeks > 1 ? 'time_ago.weeks'.tr() : 'time_ago.week'.tr()} ${'time_ago.ago'.tr()}';
     }
 
     if (duration.inDays >= 1) {
-      return '${duration.inDays} day${duration.inDays > 1 ? 's' : ''} ago';
+      return '${duration.inDays} ${duration.inDays > 1 ? 'time_ago.days'.tr() : 'time_ago.day'.tr()} ${'time_ago.ago'.tr()}';
     }
 
     if (duration.inHours >= 1) {
-      return '${duration.inHours} hour${duration.inHours > 1 ? 's' : ''} ago';
+      return '${duration.inHours} ${duration.inHours > 1 ? 'time_ago.hours'.tr() : 'time_ago.hour'.tr()} ${'time_ago.ago'.tr()}';
     }
 
     if (duration.inMinutes >= 10) {
       final rounded = ((duration.inMinutes / 10).round()) * 10;
-      return '$rounded minute${rounded > 1 ? 's' : ''} ago';
+      return '$rounded ${rounded > 1 ? 'time_ago.minutes'.tr() : 'time_ago.minute'.tr()} ${'time_ago.ago'.tr()}';
     }
 
-    if (duration.inMinutes >= 5) return 'A few minutes ago';
+    if (duration.inMinutes >= 5) return 'time_ago.few_minutes'.tr();
 
-    return 'Just now';
+    return 'just_now'.tr();
   }
 }
 

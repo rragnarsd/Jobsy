@@ -163,6 +163,22 @@
   "reset_password": "Endustilla lykilorð",
 
   "just_now": "Rétt í þessu",
+  "time_ago": {
+    "year": "ár",
+    "years": "árum",
+    "month": "mánuður",
+    "months": "mánuðir",
+    "week": "vika",
+    "weeks": "vikur",
+    "day": "dagur",
+    "days": "dögum",
+    "hour": "klukkustund",
+    "hours": "klukkustundir",
+    "minute": "mínúta",
+    "minutes": "mínútum",
+    "few_minutes": "Nokkrar mínútur síðan",
+    "ago": "síðan"
+    },
   "remote": "Fjarvinna",
   "workplace_not_found": "Vinnustaður fannst ekki",
 

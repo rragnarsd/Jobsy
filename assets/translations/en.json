@@ -175,7 +175,23 @@
     "dont_have_account": "Don't have an account?",
     "reset_password": "Reset Password",
     "just_now": "Just now",
-  
+    "time_ago": {
+      "year": "year",
+      "years": "years",
+      "month": "month", 
+      "months": "months",
+      "week": "week",
+      "weeks": "weeks",
+      "day": "day",
+      "days": "days",
+      "hour": "hour",
+      "hours": "hours",
+      "minute": "minute",
+      "minutes": "minutes",
+      "few_minutes": "A few minutes ago",
+      "ago": "ago"
+    },
+    
     "remote": "Remote",
     "workplace_not_found": "Workplace not found",
   

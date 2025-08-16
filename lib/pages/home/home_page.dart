@@ -196,7 +196,6 @@ class JobCard extends StatelessWidget {
               top: 12,
               right: 12,
               child: Text(
-                //TODO - Translate time ago
                 job.publishedDate?.timeAgo ?? 'just_now'.tr(),
                 style: const TextStyle(
                   color: JobsyColors.greyColor,
