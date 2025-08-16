@@ -184,21 +184,17 @@ extension JobTypeExtension on JobType {
   };
 }
 
-JobType jobTypeFromEnglishValue(String value) =>
-    switch (value.toLowerCase().trim()) {
-      'full time' => JobType.fullTime,
-      'part time' => JobType.partTime,
-      'freelance' => JobType.freelance,
-      'temporary' => JobType.temporary,
-      _ => JobType.fullTime,
-    };
-
 enum CourseTypes { onSite, remote }
 
 extension CourseTypesExtension on CourseTypes {
   String get displayName => switch (this) {
-    CourseTypes.onSite => 'On-site',
-    CourseTypes.remote => 'Remote',
+    CourseTypes.onSite => 'onsite_course'.tr(),
+    CourseTypes.remote => 'remote_course'.tr(),
+  };
+
+  String get englishValue => switch (this) {
+    CourseTypes.onSite => 'onsite_course',
+    CourseTypes.remote => 'remote_course',
   };
 }
 

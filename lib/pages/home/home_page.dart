@@ -164,9 +164,7 @@ class JobCard extends StatelessWidget {
                       children: [
                         IconTextRow(
                           icon: Icons.work,
-                          text: jobTypeFromEnglishValue(
-                            job.jobType,
-                          ).displayName,
+                          text: job.jobType.displayName,
                         ),
                         VerticalDivider(
                           color: JobsyColors.greyColor.withValues(alpha: 0.5),

@@ -57,7 +57,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
           JobDeadline(job: job),
           JobLanguageSkills(job: job),
           JobLocation(job: job),
-          JobType(jobType: job.jobType),
+          JobType(jobType: job.jobType.displayName),
           JobProfession(job: job),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],

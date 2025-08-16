@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:codehatch/utils/extensions.dart';
 
 class JobModel {
   final String id;
@@ -7,7 +8,7 @@ class JobModel {
   final List<String> responsibilities;
   final List<String> qualifications;
   final List<LanguageSkill> languageSkills;
-  final String jobType;
+  final JobType jobType;
   final List<String> professions;
   final DateTime? publishedDate;
   final DateTime? deadline;
@@ -43,7 +44,10 @@ class JobModel {
       languageSkills: List<LanguageSkill>.from(
         json['languageSkills'].map((skill) => LanguageSkill.fromJson(skill)),
       ),
-      jobType: json['jobType'],
+      jobType: JobType.values.firstWhere(
+        (e) => e.englishValue == json['jobType'],
+        orElse: () => JobType.fullTime,
+      ),
       professions: List<String>.from(json['professions']),
       publishedDate: json['publishedDate'] != null
           ? (json['publishedDate'] is Timestamp
@@ -70,7 +74,7 @@ class JobModel {
       'responsibilities': responsibilities,
       'qualifications': qualifications,
       'languageSkills': languageSkills.map((skill) => skill.toJson()).toList(),
-      'jobType': jobType,
+      'jobType': jobType.englishValue,
       'professions': professions,
       'publishedDate': publishedDate,
       'deadline': deadline,
