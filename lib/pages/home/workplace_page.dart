@@ -58,6 +58,7 @@ class WorkplacePage extends StatelessWidget {
                   ),
                 )
               : const SliverToBoxAdapter(child: SizedBox.shrink()),
+          const SliverToBoxAdapter(child: SizedBox(height: 8)),
           WorkplaceJobsList(workplace: workplace),
         ],
       ),
@@ -297,10 +298,7 @@ class WorkplaceJobsList extends StatelessWidget {
         delegate: SliverChildBuilderDelegate((context, index) {
           final job = jobs[index];
 
-          return Card(
-            margin: EdgeInsets.zero,
-            child: JobCard(workplace: workplace, job: job),
-          );
+          return JobCard(workplace: workplace, job: job);
         }, childCount: jobs.length),
       ),
     );

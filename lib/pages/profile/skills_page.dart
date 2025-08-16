@@ -29,9 +29,7 @@ class _SkillsPageState extends State<SkillsPage>
       vsync: this,
       initialIndex: widget.initialTabIndex,
     );
-    _tabController.addListener(() {
-      setState(() {});
-    });
+    _tabController.addListener(() => setState(() {}));
   }
 
   @override
