@@ -125,10 +125,11 @@ class FavoritesSheet extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
         actions: [
-          IconButton(
-            onPressed: () => deleteAllJobs(context: context, theme: theme),
-            icon: const Icon(Icons.delete, color: JobsyColors.whiteColor),
-          ),
+          if (context.watch<FavoritesProvider>().favorites.isNotEmpty)
+            IconButton(
+              onPressed: () => deleteAllJobs(context: context, theme: theme),
+              icon: const Icon(Icons.delete, color: JobsyColors.whiteColor),
+            ),
         ],
       ),
       body: Consumer<FavoritesProvider>(
