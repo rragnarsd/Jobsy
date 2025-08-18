@@ -88,6 +88,10 @@
   
     "search": "Search",
     "sort_search": "Sort",
+    "search_results": "Search results",
+    "clear": "Clear",
+    "no_search_results": "No search results found",
+    "try_different_keywords": "Try different keywords or check your spelling",
   
     "profile": "Profile",
     "categories": "Categories",

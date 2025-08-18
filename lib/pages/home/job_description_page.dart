@@ -695,7 +695,7 @@ class JobHeader extends StatelessWidget {
           child: Row(
             children: [
               CachedNetworkImage(
-                imageUrl: workplace!.logoUrl ?? '',
+                imageUrl: workplace!.logoUrl,
                 width: 100,
                 height: 100,
                 placeholder: (_, __) =>

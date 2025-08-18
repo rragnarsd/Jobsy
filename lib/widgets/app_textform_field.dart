@@ -18,6 +18,7 @@ class AppTextFormField extends StatelessWidget {
     this.maxLines,
     this.readOnly,
     this.onSaved,
+    this.autovalidateMode,
     super.key,
   });
 
@@ -35,6 +36,7 @@ class AppTextFormField extends StatelessWidget {
   final int? maxLines;
   final bool? readOnly;
   final Function(String?)? onSaved;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class AppTextFormField extends StatelessWidget {
       maxLines: isMultiline ? maxLines : 1,
       readOnly: readOnly ?? false,
       onSaved: onSaved,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: autovalidateMode ?? AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         alignLabelWithHint: true,
         prefixIcon: prefixIcon,

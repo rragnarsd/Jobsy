@@ -310,6 +310,7 @@ class _EducationSectionState extends State<EducationSection> {
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
                   textInputAction: TextInputAction.next,
+                  autovalidateMode: AutovalidateMode.disabled,
                 ),
               ),
             ),
@@ -326,6 +327,7 @@ class _EducationSectionState extends State<EducationSection> {
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
                   textInputAction: TextInputAction.done,
+                  autovalidateMode: AutovalidateMode.disabled,
                 ),
               ),
             ),

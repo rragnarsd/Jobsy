@@ -311,6 +311,7 @@ class _JobSectionState extends State<JobSection> {
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
                   textInputAction: TextInputAction.next,
+                  autovalidateMode: AutovalidateMode.disabled,
                 ),
               ),
             ),
@@ -327,6 +328,7 @@ class _JobSectionState extends State<JobSection> {
                   validator: (value) =>
                       context.validateDateRange(_startDate, _endDate),
                   textInputAction: TextInputAction.done,
+                  autovalidateMode: AutovalidateMode.disabled,
                 ),
               ),
             ),

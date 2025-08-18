@@ -33,7 +33,11 @@ class _HomePageState extends State<HomePage> {
     final workplaceProvider = context.watch<WorkplaceProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('${'vacancies'.tr()} (${workplaceProvider.jobs.length})'),
+        title: Text(
+          workplaceProvider.hasActiveSearch
+              ? '${'vacancies'.tr()} (${workplaceProvider.filteredJobs.length})'
+              : '${'vacancies'.tr()} (${workplaceProvider.jobs.length})',
+        ),
         leading: GestureDetector(
           onTap: () => showProfile(),
           child: const Icon(
@@ -44,19 +48,32 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-            onPressed: () => setState(() => _showSearch = !_showSearch),
+            onPressed: () {
+              if (_showSearch && workplaceProvider.hasActiveSearch) {
+                workplaceProvider.clearSearch();
+              }
+              setState(() => _showSearch = !_showSearch);
+            },
             icon: const Icon(Icons.search, color: JobsyColors.whiteColor),
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: [
-          if (_showSearch) const AppSearchBar(),
-          if (workplaceProvider.getTodayJobsCount() > 0)
-            const AppTodayDivider(),
-          const AppJobList(),
-          const SliverToBoxAdapter(child: SizedBox(height: 24)),
-        ],
+      body: GestureDetector(
+        onTap: () => _showSearch ? FocusScope.of(context).unfocus() : null,
+        child: CustomScrollView(
+          slivers: [
+            if (_showSearch)
+              AppSearchBar(onClose: () => setState(() => _showSearch = false)),
+            if (workplaceProvider.hasActiveSearch &&
+                workplaceProvider.filteredJobs.isEmpty)
+              const SearchEmptyState(),
+            if (!workplaceProvider.hasActiveSearch &&
+                workplaceProvider.getTodayJobsCount() > 0)
+              const AppTodayDivider(),
+            const AppJobList(),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
+          ],
+        ),
       ),
     );
   }
@@ -68,6 +85,44 @@ class _HomePageState extends State<HomePage> {
         builder: (BuildContext context) {
           return const ProfilePage();
         },
+      ),
+    );
+  }
+}
+
+class SearchEmptyState extends StatelessWidget {
+  const SearchEmptyState({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverFillRemaining(
+      child: Container(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.search_off,
+              size: 64,
+              color: JobsyColors.greyColor.withValues(alpha: 0.5),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'no_search_results'.tr(),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: JobsyColors.greyColor),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'try_different_keywords'.tr(),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: JobsyColors.greyColor.withValues(alpha: 0.7),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -133,7 +188,7 @@ class JobCard extends StatelessWidget {
                   Row(
                     children: [
                       CachedNetworkImage(
-                        imageUrl: workplace.logoUrl!,
+                        imageUrl: workplace.logoUrl,
                         width: 60,
                         height: 60,
                       ),

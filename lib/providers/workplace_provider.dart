@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 class WorkplaceProvider extends ChangeNotifier {
   List<WorkplaceModel> _workplaces = [];
   List<JobModel> _jobs = [];
+  String _searchQuery = '';
 
   final WorkplaceService _workplaceService = WorkplaceService();
 
   List<WorkplaceModel> get workplaces => List.unmodifiable(_workplaces);
   List<JobModel> get jobs => List.unmodifiable(_jobs);
+  String get searchQuery => _searchQuery;
 
   Stream<List<WorkplaceModel>> get workplacesStream =>
       _workplaceService.getWorkplacesStream();
@@ -29,6 +31,48 @@ class WorkplaceProvider extends ChangeNotifier {
     });
   }
 
+  void updateSearchQuery(String query) {
+    _searchQuery = query.trim().toLowerCase();
+    notifyListeners();
+  }
+
+  void clearSearch() {
+    _searchQuery = '';
+    notifyListeners();
+  }
+
+  List<WorkplaceModel> get filteredWorkplaces {
+    if (_searchQuery.isEmpty) return _workplaces;
+
+    return _workplaces.where((workplace) {
+      return workplace.name.toLowerCase().contains(_searchQuery) ||
+          workplace.description.toLowerCase().contains(_searchQuery);
+    }).toList();
+  }
+
+  List<JobModel> get filteredJobs {
+    if (_searchQuery.isEmpty) return _jobs;
+
+    return _jobs.where((job) {
+      final workplace = getWorkplaceById(job.workplaceId);
+      final query = _searchQuery.toLowerCase();
+
+      if (job.title.toLowerCase().contains(query)) return true;
+
+      if (workplace != null && workplace.name.toLowerCase().contains(query)) {
+        return true;
+      }
+
+      if (job.professions.any(
+        (profession) => profession.toLowerCase().contains(query),
+      )) {
+        return true;
+      }
+
+      return false;
+    }).toList();
+  }
+
   WorkplaceModel? getWorkplaceById(String id) {
     return _workplaces.firstWhereOrNull((w) => w.id == id);
   }
@@ -38,7 +82,9 @@ class WorkplaceProvider extends ChangeNotifier {
   }
 
   List<MapEntry<JobModel, WorkplaceModel>> getAllJobsWithWorkplaces() {
-    final result = _jobs
+    final jobsToUse = _searchQuery.isEmpty ? _jobs : filteredJobs;
+
+    final result = jobsToUse
         .map((job) {
           WorkplaceModel? workplace = getWorkplaceById(job.workplaceId);
           return workplace != null ? MapEntry(job, workplace) : null;
@@ -123,6 +169,8 @@ class WorkplaceProvider extends ChangeNotifier {
 
     return sections;
   }
+
+  bool get hasActiveSearch => _searchQuery.isNotEmpty;
 }
 
 enum JobSection { today, older, divider }

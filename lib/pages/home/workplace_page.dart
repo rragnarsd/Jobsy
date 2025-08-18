@@ -40,7 +40,7 @@ class WorkplacePage extends StatelessWidget {
         slivers: [
           WorkplaceHeader(workplace: workplace),
           WorkplaceDescription(description: workplace.description),
-          WorkplaceSize(size: workplace.size ?? ''),
+          WorkplaceSize(size: workplace.size),
           WorkplaceAwards(awards: workplace.awards),
           WorkplacePerks(perks: workplace.perks),
           const SliverToBoxAdapter(child: SizedBox(height: 8)),
@@ -84,7 +84,7 @@ class WorkplaceHeader extends StatelessWidget {
               Row(
                 children: [
                   CachedNetworkImage(
-                    imageUrl: workplace.logoUrl!,
+                    imageUrl: workplace.logoUrl,
                     width: 80,
                     height: 100,
                   ),
@@ -95,7 +95,7 @@ class WorkplaceHeader extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Text(
-                  workplace.motto ?? '',
+                  workplace.motto,
                   style: theme.textTheme.headlineMedium!.copyWith(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
@@ -107,7 +107,7 @@ class WorkplaceHeader extends StatelessWidget {
                 errorWidget: (_, __, ___) => const Icon(Icons.error),
                 placeholder: (_, __) =>
                     const Center(child: CircularProgressIndicator()),
-                imageUrl: workplace.imageUrl!,
+                imageUrl: workplace.imageUrl,
                 width: double.infinity,
                 height: 200,
                 fit: BoxFit.cover,

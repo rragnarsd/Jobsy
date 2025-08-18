@@ -196,7 +196,7 @@ class LogoEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: workplace!.logoUrl!,
+      imageUrl: workplace!.logoUrl,
       width: 60,
       height: 60,
       fit: BoxFit.cover,

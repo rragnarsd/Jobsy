@@ -3,7 +3,6 @@ import 'package:codehatch/models/course_model.dart';
 import 'package:codehatch/providers/course_provider.dart';
 import 'package:codehatch/utils/colors.dart';
 import 'package:codehatch/utils/extensions.dart';
-import 'package:codehatch/widgets/app_search_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -17,8 +16,6 @@ class CoursesPage extends StatefulWidget {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
-  bool _showSearch = false;
-
   @override
   void initState() {
     super.initState();
@@ -35,10 +32,6 @@ class _CoursesPageState extends State<CoursesPage> {
         leading: Image.asset('assets/icon/jobsy.png'),
         actions: [
           IconButton(
-            onPressed: () => setState(() => _showSearch = !_showSearch),
-            icon: const Icon(Icons.search, color: JobsyColors.whiteColor),
-          ),
-          IconButton(
             onPressed: () {},
             icon: const Icon(Icons.filter_list, color: JobsyColors.whiteColor),
           ),
@@ -46,7 +39,6 @@ class _CoursesPageState extends State<CoursesPage> {
       ),
       body: CustomScrollView(
         slivers: [
-          if (_showSearch) const AppSearchBar(),
           CoursesList(courses: courseProvider.courses),
           const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
