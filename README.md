@@ -72,7 +72,6 @@
 - EasyLocalization - https://pub.dev/packages/easy_localization
 - FirebaseAuth - https://pub.dev/packages/firebase_auth
 - FirebaseCore - https://pub.dev/packages/firebase_core
-- FlutterAnimate - https://pub.dev/packages/flutter_animate
 - FlutterLauncherIcons - https://pub.dev/packages/flutter_launcher_icons
 - FlutterNativeSplash - https://pub.dev/packages/flutter_native_splash
 - FlutterStaggeredGridView - https://pub.dev/packages/flutter_staggered_grid_view

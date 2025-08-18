@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WorkplaceModel {
 
- String get id; String get name; String get description; String get location;@GeoPointConverter() GeoPoint get locationGeoPoint; String get websiteUrl; String get size; String get motto; List<String> get jobIds; String? get imageUrl; String? get logoUrl; List<String>? get awards; List<PerkModel>? get perks;
+ String get id; String get name; String get description; String get location;@GeoPointConverter() GeoPoint get locationGeoPoint; String? get websiteUrl; String get size; String get motto; List<String>? get jobIds; String get imageUrl; String get logoUrl; List<String>? get awards; List<PerkModel>? get perks;
 /// Create a copy of WorkplaceModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $WorkplaceModelCopyWith<$Res>  {
   factory $WorkplaceModelCopyWith(WorkplaceModel value, $Res Function(WorkplaceModel) _then) = _$WorkplaceModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String description, String location,@GeoPointConverter() GeoPoint locationGeoPoint, String websiteUrl, String size, String motto, List<String> jobIds, String? imageUrl, String? logoUrl, List<String>? awards, List<PerkModel>? perks
+ String id, String name, String description, String location,@GeoPointConverter() GeoPoint locationGeoPoint, String? websiteUrl, String size, String motto, List<String>? jobIds, String imageUrl, String logoUrl, List<String>? awards, List<PerkModel>? perks
 });
 
 
@@ -65,20 +65,20 @@ class _$WorkplaceModelCopyWithImpl<$Res>
 
 /// Create a copy of WorkplaceModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? location = null,Object? locationGeoPoint = null,Object? websiteUrl = null,Object? size = null,Object? motto = null,Object? jobIds = null,Object? imageUrl = freezed,Object? logoUrl = freezed,Object? awards = freezed,Object? perks = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? location = null,Object? locationGeoPoint = null,Object? websiteUrl = freezed,Object? size = null,Object? motto = null,Object? jobIds = freezed,Object? imageUrl = null,Object? logoUrl = null,Object? awards = freezed,Object? perks = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as String,locationGeoPoint: null == locationGeoPoint ? _self.locationGeoPoint : locationGeoPoint // ignore: cast_nullable_to_non_nullable
-as GeoPoint,websiteUrl: null == websiteUrl ? _self.websiteUrl : websiteUrl // ignore: cast_nullable_to_non_nullable
-as String,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
+as GeoPoint,websiteUrl: freezed == websiteUrl ? _self.websiteUrl : websiteUrl // ignore: cast_nullable_to_non_nullable
+as String?,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as String,motto: null == motto ? _self.motto : motto // ignore: cast_nullable_to_non_nullable
-as String,jobIds: null == jobIds ? _self.jobIds : jobIds // ignore: cast_nullable_to_non_nullable
-as List<String>,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String?,logoUrl: freezed == logoUrl ? _self.logoUrl : logoUrl // ignore: cast_nullable_to_non_nullable
-as String?,awards: freezed == awards ? _self.awards : awards // ignore: cast_nullable_to_non_nullable
+as String,jobIds: freezed == jobIds ? _self.jobIds : jobIds // ignore: cast_nullable_to_non_nullable
+as List<String>?,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String,logoUrl: null == logoUrl ? _self.logoUrl : logoUrl // ignore: cast_nullable_to_non_nullable
+as String,awards: freezed == awards ? _self.awards : awards // ignore: cast_nullable_to_non_nullable
 as List<String>?,perks: freezed == perks ? _self.perks : perks // ignore: cast_nullable_to_non_nullable
 as List<PerkModel>?,
   ));
@@ -165,7 +165,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String location, @GeoPointConverter()  GeoPoint locationGeoPoint,  String websiteUrl,  String size,  String motto,  List<String> jobIds,  String? imageUrl,  String? logoUrl,  List<String>? awards,  List<PerkModel>? perks)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String location, @GeoPointConverter()  GeoPoint locationGeoPoint,  String? websiteUrl,  String size,  String motto,  List<String>? jobIds,  String imageUrl,  String logoUrl,  List<String>? awards,  List<PerkModel>? perks)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WorkplaceModel() when $default != null:
 return $default(_that.id,_that.name,_that.description,_that.location,_that.locationGeoPoint,_that.websiteUrl,_that.size,_that.motto,_that.jobIds,_that.imageUrl,_that.logoUrl,_that.awards,_that.perks);case _:
@@ -186,7 +186,7 @@ return $default(_that.id,_that.name,_that.description,_that.location,_that.locat
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String location, @GeoPointConverter()  GeoPoint locationGeoPoint,  String websiteUrl,  String size,  String motto,  List<String> jobIds,  String? imageUrl,  String? logoUrl,  List<String>? awards,  List<PerkModel>? perks)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String location, @GeoPointConverter()  GeoPoint locationGeoPoint,  String? websiteUrl,  String size,  String motto,  List<String>? jobIds,  String imageUrl,  String logoUrl,  List<String>? awards,  List<PerkModel>? perks)  $default,) {final _that = this;
 switch (_that) {
 case _WorkplaceModel():
 return $default(_that.id,_that.name,_that.description,_that.location,_that.locationGeoPoint,_that.websiteUrl,_that.size,_that.motto,_that.jobIds,_that.imageUrl,_that.logoUrl,_that.awards,_that.perks);case _:
@@ -206,7 +206,7 @@ return $default(_that.id,_that.name,_that.description,_that.location,_that.locat
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  String location, @GeoPointConverter()  GeoPoint locationGeoPoint,  String websiteUrl,  String size,  String motto,  List<String> jobIds,  String? imageUrl,  String? logoUrl,  List<String>? awards,  List<PerkModel>? perks)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  String location, @GeoPointConverter()  GeoPoint locationGeoPoint,  String? websiteUrl,  String size,  String motto,  List<String>? jobIds,  String imageUrl,  String logoUrl,  List<String>? awards,  List<PerkModel>? perks)?  $default,) {final _that = this;
 switch (_that) {
 case _WorkplaceModel() when $default != null:
 return $default(_that.id,_that.name,_that.description,_that.location,_that.locationGeoPoint,_that.websiteUrl,_that.size,_that.motto,_that.jobIds,_that.imageUrl,_that.logoUrl,_that.awards,_that.perks);case _:
@@ -221,7 +221,7 @@ return $default(_that.id,_that.name,_that.description,_that.location,_that.locat
 @JsonSerializable()
 
 class _WorkplaceModel implements WorkplaceModel {
-  const _WorkplaceModel({required this.id, required this.name, required this.description, required this.location, @GeoPointConverter() required this.locationGeoPoint, required this.websiteUrl, required this.size, required this.motto, required final  List<String> jobIds, this.imageUrl, this.logoUrl, final  List<String>? awards, final  List<PerkModel>? perks}): _jobIds = jobIds,_awards = awards,_perks = perks;
+  const _WorkplaceModel({required this.id, required this.name, required this.description, required this.location, @GeoPointConverter() required this.locationGeoPoint, this.websiteUrl, required this.size, required this.motto, required final  List<String>? jobIds, required this.imageUrl, required this.logoUrl, final  List<String>? awards, final  List<PerkModel>? perks}): _jobIds = jobIds,_awards = awards,_perks = perks;
   factory _WorkplaceModel.fromJson(Map<String, dynamic> json) => _$WorkplaceModelFromJson(json);
 
 @override final  String id;
@@ -229,18 +229,20 @@ class _WorkplaceModel implements WorkplaceModel {
 @override final  String description;
 @override final  String location;
 @override@GeoPointConverter() final  GeoPoint locationGeoPoint;
-@override final  String websiteUrl;
+@override final  String? websiteUrl;
 @override final  String size;
 @override final  String motto;
- final  List<String> _jobIds;
-@override List<String> get jobIds {
+ final  List<String>? _jobIds;
+@override List<String>? get jobIds {
+  final value = _jobIds;
+  if (value == null) return null;
   if (_jobIds is EqualUnmodifiableListView) return _jobIds;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_jobIds);
+  return EqualUnmodifiableListView(value);
 }
 
-@override final  String? imageUrl;
-@override final  String? logoUrl;
+@override final  String imageUrl;
+@override final  String logoUrl;
  final  List<String>? _awards;
 @override List<String>? get awards {
   final value = _awards;
@@ -293,7 +295,7 @@ abstract mixin class _$WorkplaceModelCopyWith<$Res> implements $WorkplaceModelCo
   factory _$WorkplaceModelCopyWith(_WorkplaceModel value, $Res Function(_WorkplaceModel) _then) = __$WorkplaceModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String description, String location,@GeoPointConverter() GeoPoint locationGeoPoint, String websiteUrl, String size, String motto, List<String> jobIds, String? imageUrl, String? logoUrl, List<String>? awards, List<PerkModel>? perks
+ String id, String name, String description, String location,@GeoPointConverter() GeoPoint locationGeoPoint, String? websiteUrl, String size, String motto, List<String>? jobIds, String imageUrl, String logoUrl, List<String>? awards, List<PerkModel>? perks
 });
 
 
@@ -310,20 +312,20 @@ class __$WorkplaceModelCopyWithImpl<$Res>
 
 /// Create a copy of WorkplaceModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? location = null,Object? locationGeoPoint = null,Object? websiteUrl = null,Object? size = null,Object? motto = null,Object? jobIds = null,Object? imageUrl = freezed,Object? logoUrl = freezed,Object? awards = freezed,Object? perks = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? location = null,Object? locationGeoPoint = null,Object? websiteUrl = freezed,Object? size = null,Object? motto = null,Object? jobIds = freezed,Object? imageUrl = null,Object? logoUrl = null,Object? awards = freezed,Object? perks = freezed,}) {
   return _then(_WorkplaceModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,location: null == location ? _self.location : location // ignore: cast_nullable_to_non_nullable
 as String,locationGeoPoint: null == locationGeoPoint ? _self.locationGeoPoint : locationGeoPoint // ignore: cast_nullable_to_non_nullable
-as GeoPoint,websiteUrl: null == websiteUrl ? _self.websiteUrl : websiteUrl // ignore: cast_nullable_to_non_nullable
-as String,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
+as GeoPoint,websiteUrl: freezed == websiteUrl ? _self.websiteUrl : websiteUrl // ignore: cast_nullable_to_non_nullable
+as String?,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
 as String,motto: null == motto ? _self.motto : motto // ignore: cast_nullable_to_non_nullable
-as String,jobIds: null == jobIds ? _self._jobIds : jobIds // ignore: cast_nullable_to_non_nullable
-as List<String>,imageUrl: freezed == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String?,logoUrl: freezed == logoUrl ? _self.logoUrl : logoUrl // ignore: cast_nullable_to_non_nullable
-as String?,awards: freezed == awards ? _self._awards : awards // ignore: cast_nullable_to_non_nullable
+as String,jobIds: freezed == jobIds ? _self._jobIds : jobIds // ignore: cast_nullable_to_non_nullable
+as List<String>?,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
+as String,logoUrl: null == logoUrl ? _self.logoUrl : logoUrl // ignore: cast_nullable_to_non_nullable
+as String,awards: freezed == awards ? _self._awards : awards // ignore: cast_nullable_to_non_nullable
 as List<String>?,perks: freezed == perks ? _self._perks : perks // ignore: cast_nullable_to_non_nullable
 as List<PerkModel>?,
   ));

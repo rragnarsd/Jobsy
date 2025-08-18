@@ -14,14 +14,14 @@ _WorkplaceModel _$WorkplaceModelFromJson(
   description: json['description'] as String,
   location: json['location'] as String,
   locationGeoPoint: const GeoPointConverter().fromJson(
-    json['locationGeoPoint'] as Map<String, dynamic>,
+    json['locationGeoPoint'],
   ),
-  websiteUrl: json['websiteUrl'] as String,
+  websiteUrl: json['websiteUrl'] as String?,
   size: json['size'] as String,
   motto: json['motto'] as String,
-  jobIds: (json['jobIds'] as List<dynamic>).map((e) => e as String).toList(),
-  imageUrl: json['imageUrl'] as String?,
-  logoUrl: json['logoUrl'] as String?,
+  jobIds: (json['jobIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  imageUrl: json['imageUrl'] as String,
+  logoUrl: json['logoUrl'] as String,
   awards: (json['awards'] as List<dynamic>?)?.map((e) => e as String).toList(),
   perks: (json['perks'] as List<dynamic>?)
       ?.map((e) => PerkModel.fromJson(e as Map<String, dynamic>))

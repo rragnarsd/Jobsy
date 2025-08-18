@@ -4,17 +4,21 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'workplace_model.freezed.dart';
 part 'workplace_model.g.dart';
 
-class GeoPointConverter
-    implements JsonConverter<GeoPoint, Map<String, dynamic>> {
+class GeoPointConverter implements JsonConverter<GeoPoint, dynamic> {
   const GeoPointConverter();
 
   @override
-  GeoPoint fromJson(Map<String, dynamic> json) {
-    return GeoPoint(json['latitude'] as double, json['longitude'] as double);
+  GeoPoint fromJson(dynamic json) {
+    if (json is GeoPoint) {
+      return json;
+    } else if (json is Map<String, dynamic>) {
+      return GeoPoint(json['latitude'] as double, json['longitude'] as double);
+    }
+    throw FormatException('Invalid GeoPoint format: $json');
   }
 
   @override
-  Map<String, dynamic> toJson(GeoPoint geoPoint) {
+  dynamic toJson(GeoPoint geoPoint) {
     return {'latitude': geoPoint.latitude, 'longitude': geoPoint.longitude};
   }
 }
@@ -27,12 +31,12 @@ abstract class WorkplaceModel with _$WorkplaceModel {
     required String description,
     required String location,
     @GeoPointConverter() required GeoPoint locationGeoPoint,
-    required String websiteUrl,
+    String? websiteUrl,
     required String size,
     required String motto,
-    required List<String> jobIds,
-    String? imageUrl,
-    String? logoUrl,
+    required List<String>? jobIds,
+    required String imageUrl,
+    required String logoUrl,
     List<String>? awards,
     List<PerkModel>? perks,
   }) = _WorkplaceModel;

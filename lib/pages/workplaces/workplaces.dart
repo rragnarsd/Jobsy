@@ -126,7 +126,7 @@ class WorkplaceItem extends StatelessWidget {
                   const Icon(Icons.person, color: Colors.grey, size: 16),
                   const SizedBox(width: 4),
                   Text(
-                    workplace.size,
+                    workplace.size ?? '',
                     style: theme.textTheme.bodyMedium!.copyWith(
                       color: JobsyColors.greyColor,
                     ),
